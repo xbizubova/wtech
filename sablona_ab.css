@@ -1,0 +1,442 @@
+/*
+  ╔══════════════════════════════════════════════════════════╗
+  ║  LEXEM — style.css                                       ║
+  ║  Toto je CSS súbor — hovorí AKO má stránka vyzerať      ║
+  ║  HTML súbor (lexem.html) ho načíta cez <link> tag       ║
+  ╚══════════════════════════════════════════════════════════╝
+
+  CSS syntax:
+    selektor {
+      vlastnosť: hodnota;
+    }
+
+  Typy selektorov:
+    p          → vyberá všetky <p> tagy
+    .nazov     → vyberá prvky s class="nazov"
+    #nazov     → vyberá prvok s id="nazov"
+    p:hover    → platí keď je myš nad <p>
+    p::after   → pseudo-element za obsahom <p>
+*/
+
+
+/* ═══════════════════════════════════════
+   CSS PREMENNÉ (Custom Properties)
+   Definujeme ich v :root = koreň dokumentu
+   Použijeme ich cez var(--nazov-premennej)
+   ═══════════════════════════════════════ */
+:root {
+    --color-bg: #f8f6f2;          /* farba pozadia stránky */
+    --color-white: #ffffff;
+    --color-black: #1a1814;       /* takmer čierna pre text */
+    --color-gray-light: #d4d0c8;  /* svetlá sivá pre placeholder knihy */
+    --color-gray-mid: #8a8680;    /* stredná sivá pre sekundárny text */
+    --color-accent: #2c2825;      /* tmavohnedá pre akcenty */
+    --color-border: #e0dcd4;      /* farba ohraničení */
+
+    --font-display: 'Playfair Display', serif;  /* elegantné patkové písmo */
+    --font-body: 'Jost', sans-serif;            /* čisté bezpatkové písmo */
+
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 32px;
+    --spacing-lg: 64px;
+    --spacing-xl: 96px;
+}
+
+
+/* ═══════════════════════════════════════
+   RESET
+   * = universal selector = platí pre VŠETKO
+   Odstránime default margin/padding prehliadača
+   ═══════════════════════════════════════ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* padding sa počíta DO šírky, nie navyše */
+}
+
+
+/* ═══════════════════════════════════════
+   BODY — základné nastavenia celej stránky
+   ═══════════════════════════════════════ */
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    color: var(--color-black);
+    font-size: 14px;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+}
+
+
+/* ═══════════════════════════════════════
+   HEADER
+   display: flex = ukladá deti vedľa seba
+   position: sticky = zostane hore pri scrolle
+   ═══════════════════════════════════════ */
+header {
+    display: flex;
+    justify-content: space-between; /* ľavý a pravý okraj */
+    align-items: center;             /* vertikálne na stred */
+    padding: 24px 48px;
+    background-color: var(--color-white);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 100; /* číslo vrstvy — vyššie = vpredu */
+}
+
+/* .logo = CSS trieda → v HTML: class="logo" */
+.logo {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--color-black);
+    text-decoration: none; /* žiadne podčiarknutie */
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 24px; /* medzera medzi deťmi */
+}
+
+.btn-login {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    background: none;
+    border: 1.5px solid var(--color-black);
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease; /* plynulý prechod pri hover */
+}
+
+/* :hover = platí keď je myš nad prvkom */
+.btn-login:hover {
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+.cart-icon {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.cart-icon:hover {
+    opacity: 1;
+}
+
+
+/* ═══════════════════════════════════════
+   HERO — sekcia s vyhľadávačom
+   ═══════════════════════════════════════ */
+.hero {
+    padding: var(--spacing-xl) var(--spacing-md);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--color-white);
+    border: 1.5px solid var(--color-border);
+    border-radius: 60px; /* kapsulový tvar */
+    padding: 14px 32px;
+    width: 100%;
+    max-width: 700px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06); /* jemný tieň */
+    transition: box-shadow 0.2s ease;
+}
+
+/* :focus-within = platí keď je fokus na niečom VNÚTRI prvku */
+.search-bar:focus-within {
+    box-shadow: 0 4px 30px rgba(0,0,0,0.12);
+}
+
+.search-bar input {
+    border: none;
+    background: none;
+    outline: none;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    width: 100%;
+}
+
+/* ::placeholder = text v prázdnom input poli */
+.search-bar input::placeholder {
+    color: var(--color-gray-mid);
+}
+
+
+/* ═══════════════════════════════════════
+   MAIN — hlavný obsah
+   margin: 0 auto = horizontálne vycentrovanie
+   ═══════════════════════════════════════ */
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+
+/* ═══════════════════════════════════════
+   SEKCIA "WE RECOMMEND"
+   display: grid = mriežkové rozloženie
+   ═══════════════════════════════════════ */
+.recommend-section {
+    display: grid;
+    grid-template-columns: 200px 1fr; /* 1. stĺpec 200px, 2. stĺpec zvyšok */
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+/* ═══════════════════════════════════════
+   SIDEBAR MENU (ľavý stĺpec)
+   ═══════════════════════════════════════ */
+.sidebar-menu {
+    border-right: 1px solid var(--color-border);
+    padding-right: var(--spacing-md);
+}
+
+.menu-label {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gray-mid);
+    margin-bottom: var(--spacing-md);
+}
+
+/* list-style: none = žiadne bodky pred položkami */
+.sidebar-menu ul {
+    list-style: none;
+}
+
+.sidebar-menu ul li {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.sidebar-menu ul li a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.sidebar-menu ul li a:hover {
+    color: var(--color-gray-mid);
+}
+
+.menu-arrow {
+    font-size: 16px;
+    opacity: 0.4;
+}
+
+
+/* ═══════════════════════════════════════
+   ODPORÚČANÉ KNIHY (pravý stĺpec)
+   ═══════════════════════════════════════ */
+.recommend-content {
+    padding-top: var(--spacing-sm);
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-md);
+}
+
+/* Grid s 2 rovnakými stĺpcami */
+.books-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.book-card {
+    cursor: pointer;
+}
+
+.book-cover {
+    aspect-ratio: 2/3; /* pomer strán — typický formát knihy */
+    background-color: var(--color-gray-light);
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+/* Keď je myš nad .book-card, zmeníme .book-cover vnútri */
+.book-card:hover .book-cover {
+    transform: translateY(-4px); /* posunie nahor o 4px */
+}
+
+/* ::after = pseudo-element, vytvorí gradient overlay */
+.book-cover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(0,0,0,0.15), transparent);
+}
+
+.book-title {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--color-black);
+    letter-spacing: 0.05em;
+}
+
+
+/* ═══════════════════════════════════════
+   SEKCIA "BOOKTOK TRENDING"
+   ═══════════════════════════════════════ */
+.trending-section {
+    margin-bottom: var(--spacing-xl);
+    position: relative;
+}
+
+.trending-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.carousel-wrapper {
+    position: relative;
+}
+
+/* Tlačidlá karuselu — position: absolute = presná poloha */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* vertikálne vycentrovanie */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* kruh */
+    border: 1.5px solid var(--color-black);
+    background: var(--color-bg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.carousel-btn:hover {
+    background: var(--color-black);
+    color: var(--color-white);
+}
+
+.carousel-btn.prev { left: -20px; }
+.carousel-btn.next { right: -20px; }
+
+/* repeat(4, 1fr) = 4 rovnaké stĺpce */
+.books-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+}
+
+
+/* ═══════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════ */
+footer {
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-border);
+    padding: var(--spacing-lg) var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
+
+.footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr; /* 2fr = dvojnásobná šírka */
+    gap: var(--spacing-lg);
+}
+
+.footer-brand .logo {
+    font-size: 18px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.footer-tagline {
+    font-size: 12px;
+    color: var(--color-gray-mid);
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+}
+
+.footer-social {
+    color: var(--color-gray-mid);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.footer-social:hover {
+    color: var(--color-black);
+}
+
+.footer-col h4 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    margin-bottom: var(--spacing-sm);
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 8px;
+}
+
+.footer-col ul li a {
+    font-size: 12px;
+    color: var(--color-gray-mid);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-col ul li a:hover {
+    color: var(--color-black);
+}
