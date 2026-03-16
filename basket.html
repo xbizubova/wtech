@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEXEM — Your Basket</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="basket.css">
+</head>
+
+<body>
+
+<header>
+    <a href="/" class="logo">LEXEM</a>
+    <nav class="header-nav">
+        <button class="btn-login">Log In</button>
+    </nav>
+</header>
+
+<main>
+    <div class="basket-container">
+
+        <div class="basket-header">
+            <h1 class="basket-title">Your Basket</h1>
+        </div>
+        <div class="basket-items" id="basketItems">
+
+            <div class="basket-item" data-id="1" data-price="18.90">
+                <div class="item-cover"></div>
+                <div class="item-info">
+                    <p class="item-title">Book Title</p>
+                    <p class="item-author">Author</p>
+                </div>
+                <div class="item-controls">
+                    <div class="qty-stepper">
+                        <button class="qty-btn minus" aria-label="Decrease">−</button>
+                        <span class="qty-value">1</span>
+                        <button class="qty-btn plus" aria-label="Increase">+</button>
+                    </div>
+                    <button class="btn-delete" aria-label="Remove item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path d="M19 6l-1 14H6L5 6"/>
+                            <path d="M10 11v6M14 11v6"/>
+                            <path d="M9 6V4h6v2"/>
+                        </svg>
+                    </button>
+                    <span class="item-price">18,90 €</span>
+                </div>
+            </div>
+
+            <div class="basket-item" data-id="2" data-price="14.50">
+                <div class="item-cover"></div>
+                <div class="item-info">
+                    <p class="item-title">Book Title</p>
+                    <p class="item-author">Author</p>
+                </div>
+                <div class="item-controls">
+                    <div class="qty-stepper">
+                        <button class="qty-btn minus" aria-label="Decrease">−</button>
+                        <span class="qty-value">1</span>
+                        <button class="qty-btn plus" aria-label="Increase">+</button>
+                    </div>
+                    <button class="btn-delete" aria-label="Remove item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path d="M19 6l-1 14H6L5 6"/>
+                            <path d="M10 11v6M14 11v6"/>
+                            <path d="M9 6V4h6v2"/>
+                        </svg>
+                    </button>
+                    <span class="item-price">14,50 €</span>
+                </div>
+            </div>
+
+            <div class="basket-empty" id="emptyState">
+                <p>Your basket is empty</p>
+            </div>
+
+        </div>
+
+        <div class="basket-summary" id="basketSummary">
+            <span class="summary-label">Total</span>
+            <span class="summary-total" id="totalPrice">33,40 €</span>
+        </div>
+
+    </div>
+
+    <div class="step-wrapper">
+        <button class="btn-step" id="stepBtn">
+            Step 1/4
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"/>
+            </svg>
+        </button>
+    </div>
+
+</main>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <a href="/" class="logo">LEXEM</a>
+            <p class="footer-tagline">Not just selling books, we are creating our own fantasy.</p>
+            <div class="footer-social">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <circle cx="12" cy="12" r="3"/>
+                    <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <h4>Categories</h4>
+            <ul>
+                <li><a href="#">Books</a></li>
+                <li><a href="#">Sale</a></li>
+                <li><a href="#">News</a></li>
+                <li><a href="#">Other sortiment</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Learn more</h4>
+            <ul>
+                <li><a href="#">Delivery</a></li>
+                <li><a href="#">Payment</a></li>
+                <li><a href="#">Customer stories</a></li>
+                <li><a href="#">Best practices</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>LEXEM</h4>
+            <ul>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Join us</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function recalcTotal() {
+        const items = document.querySelectorAll('.basket-item:not(.basket-empty)');
+        let total = 0;
+        let visibleCount = 0;
+
+        items.forEach(item => {
+            if (item.style.display === 'none') return;
+            const price = parseFloat(item.dataset.price);
+            const qty   = parseInt(item.querySelector('.qty-value').textContent, 10);
+            total += price * qty;
+            visibleCount++;
+        });
+
+        document.getElementById('totalPrice').textContent =
+            total.toFixed(2).replace('.', ',') + ' €';
+
+        const emptyState   = document.getElementById('emptyState');
+        const basketSummary = document.getElementById('basketSummary');
+        const stepBtn       = document.getElementById('stepBtn');
+
+        if (visibleCount === 0) {
+            emptyState.style.display = 'block';
+            basketSummary.style.display = 'none';
+            stepBtn.disabled = true;
+            stepBtn.style.opacity = '0.4';
+            stepBtn.style.cursor = 'not-allowed';
+        } else {
+            emptyState.style.display = 'none';
+            basketSummary.style.display = 'flex';
+            stepBtn.disabled = false;
+            stepBtn.style.opacity = '1';
+            stepBtn.style.cursor = 'pointer';
+        }
+    }
+
+    document.getElementById('basketItems').addEventListener('click', function(e) {
+        const item = e.target.closest('.basket-item[data-id]');
+        if (!item) return;
+
+        // delete
+        if (e.target.closest('.btn-delete')) {
+            item.style.animation = 'none';
+            item.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(12px)';
+            setTimeout(() => {
+                item.style.display = 'none';
+                recalcTotal();
+            }, 260);
+            return;
+        }
+
+        const qtyEl = item.querySelector('.qty-value');
+        let qty = parseInt(qtyEl.textContent, 10);
+
+        if (e.target.closest('.minus')) {
+            if (qty > 1) {
+                qty--;
+                qtyEl.textContent = qty;
+                updateItemPrice(item, qty);
+                recalcTotal();
+            }
+        }
+
+        if (e.target.closest('.plus')) {
+            qty++;
+            qtyEl.textContent = qty;
+            updateItemPrice(item, qty);
+            recalcTotal();
+        }
+    });
+
+    function updateItemPrice(item, qty) {
+        const unit = parseFloat(item.dataset.price);
+        const priceEl = item.querySelector('.item-price');
+        priceEl.textContent = (unit * qty).toFixed(2).replace('.', ',') + ' €';
+    }
+
+    recalcTotal();
+</script>
+
+</body>
+</html>

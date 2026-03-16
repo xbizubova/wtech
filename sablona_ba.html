@@ -1,55 +1,23 @@
 <!DOCTYPE html>
-<!--
-  ╔══════════════════════════════════════════════════════════╗
-  ║  LEXEM — lexem.html                                      ║
-  ║  Toto je HTML súbor — kostra stránky                    ║
-  ║  CSS štýly sú v separátnom súbore: style.css            ║
-  ╚══════════════════════════════════════════════════════════╝
-
-  HTML = HyperText Markup Language
-  Každý tag hovorí prehliadaču ČO daný prvok je.
-  Tagy: <tag>obsah</tag>  alebo  <tag /> (samo-uzatváracie)
--->
-
 <html lang="sk">
 
 <head>
-    <!-- HEAD = neviditeľná časť, informácie O stránke -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LEXEM — Kníhkupectvo</title>
 
-    <!-- Google Fonts — načítame písma z internetu -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-
-    <!--
-      TOTO JE KĽÚČOVÝ RIADOK!
-      <link rel="stylesheet" href="style.css">
-      Hovorí prehliadaču: "Načítaj CSS pravidlá zo súboru style.css"
-      Oba súbory musia byť v TOM ISTOM priečinku, inak to nefunguje.
-    -->
     <link rel="stylesheet" href="sablona_ab.css">
 </head>
 
-<!--
-  BODY = telo stránky — všetko čo vidíš v prehliadači
-  Sémantické tagy (header, main, footer, nav, section)
-  hovoria prehliadaču aj Googlu, čo daná časť ZNAMENÁ
--->
 <body>
-
-<!-- ═══ HEADER — vrchná lišta ═══ -->
 <header>
-    <!-- <a> = odkaz. href = adresa kam vedie -->
     <a href="/" class="logo">LEXEM</a>
-
-    <!-- <nav> = navigačná časť stránky -->
     <nav class="header-nav">
-        <!-- <button> = interaktívne tlačidlo -->
         <button class="btn-login">Log In</button>
 
-        <!-- SVG = vektorová ikona priamo v HTML (košík) -->
         <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
             <line x1="3" y1="6" x2="21" y2="6"/>
@@ -58,48 +26,27 @@
     </nav>
 </header>
 
-<!-- ═══ HERO — sekcia s vyhľadávačom ═══ -->
-<!--
-  <section> = tematicky ucelená časť stránky
-  <div> = všeobecný kontajner (bez sémantického významu)
-  Používame div keď chceme len zoskupiť prvky pre CSS
--->
 <section class="hero">
     <div class="search-bar">
-        <!-- SVG ikona lupy -->
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="11" cy="11" r="8"/>
             <path d="M21 21l-4.35-4.35"/>
         </svg>
-        <!-- <input> = vstupné pole. type="text" = textový vstup -->
         <input type="text" placeholder="Search">
     </div>
 </section>
-
-<!-- ═══ MAIN — hlavný obsah stránky ═══ -->
 <main>
-
-    <!-- SEKCIA: WE RECOMMEND -->
     <section class="recommend-section">
-
-        <!-- Ľavý stĺpec: Menu -->
         <nav class="sidebar-menu">
-            <!-- <p> = paragraph = odsek textu -->
             <p class="menu-label">Menu</p>
-            <!-- <ul> = unordered list = nečíslovaný zoznam -->
             <ul>
-                <!-- <li> = list item = položka zoznamu -->
-                <!-- <span> = inline kontajner (ako div, ale pre text) -->
                 <li><a href="#">Books <span class="menu-arrow">›</span></a></li>
                 <li><a href="#">Sale <span class="menu-arrow">›</span></a></li>
                 <li><a href="#">News <span class="menu-arrow">›</span></a></li>
                 <li><a href="#">Other Sortiment <span class="menu-arrow">›</span></a></li>
             </ul>
         </nav>
-
-        <!-- Pravý stĺpec: Odporúčané knihy -->
         <div class="recommend-content">
-            <!-- <h2> = nadpis 2. úrovne (h1 = najdôležitejší, h6 = najmenej) -->
             <h2 class="section-title">We Recommend</h2>
 
             <div class="books-grid-2">
@@ -116,14 +63,12 @@
 
     </section>
 
-    <!-- SEKCIA: BOOKTOK TRENDING -->
     <section class="trending-section">
         <div class="trending-header">
             <h2 class="section-title">Booktok Trending</h2>
         </div>
 
         <div class="carousel-wrapper">
-            <!-- Tlačidlo "späť" -->
             <button class="carousel-btn prev">‹</button>
 
             <div class="books-grid-4">
@@ -144,24 +89,18 @@
                     <p class="book-title">Book #6 Title</p>
                 </div>
             </div>
-
-            <!-- Tlačidlo "ďalej" -->
             <button class="carousel-btn next">›</button>
         </div>
     </section>
 
 </main>
 
-<!-- ═══ FOOTER — päta stránky ═══ -->
 <footer>
     <div class="footer-inner">
-
-        <!-- Ľavý stĺpec: Brand -->
         <div class="footer-brand">
             <a href="/" class="logo">LEXEM</a>
             <p class="footer-tagline">Not just selling books, we are creating our own fantasy.</p>
             <div class="footer-social">
-                <!-- SVG ikona Instagramu -->
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                     <circle cx="12" cy="12" r="3"/>
@@ -202,25 +141,6 @@
     </div>
 </footer>
 
-<!--
-  JavaScript — tretí jazyk webu
-  HTML = kostra (čo je na stránke)
-  CSS  = štýl  (ako to vyzerá)
-  JS   = pohyb (čo sa deje pri interakcii)
--->
-<script>
-    // Animácia — knihy sa postupne objavia pri načítaní
-    const cards = document.querySelectorAll('.book-card');
-    cards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, 100 + index * 80);
-    });
-</script>
 
 </body>
 </html>
