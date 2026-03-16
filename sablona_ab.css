@@ -1,41 +1,15 @@
-/*
-  ╔══════════════════════════════════════════════════════════╗
-  ║  LEXEM — style.css                                       ║
-  ║  Toto je CSS súbor — hovorí AKO má stránka vyzerať      ║
-  ║  HTML súbor (lexem.html) ho načíta cez <link> tag       ║
-  ╚══════════════════════════════════════════════════════════╝
 
-  CSS syntax:
-    selektor {
-      vlastnosť: hodnota;
-    }
-
-  Typy selektorov:
-    p          → vyberá všetky <p> tagy
-    .nazov     → vyberá prvky s class="nazov"
-    #nazov     → vyberá prvok s id="nazov"
-    p:hover    → platí keď je myš nad <p>
-    p::after   → pseudo-element za obsahom <p>
-*/
-
-
-/* ═══════════════════════════════════════
-   CSS PREMENNÉ (Custom Properties)
-   Definujeme ich v :root = koreň dokumentu
-   Použijeme ich cez var(--nazov-premennej)
-   ═══════════════════════════════════════ */
 :root {
-    --color-bg: #f8f6f2;          /* farba pozadia stránky */
+    --color-bg: #f8f6f2;
     --color-white: #ffffff;
-    --color-black: #1a1814;       /* takmer čierna pre text */
-    --color-gray-light: #d4d0c8;  /* svetlá sivá pre placeholder knihy */
-    --color-gray-mid: #8a8680;    /* stredná sivá pre sekundárny text */
-    --color-accent: #2c2825;      /* tmavohnedá pre akcenty */
-    --color-border: #e0dcd4;      /* farba ohraničení */
+    --color-black: #1a1814;
+    --color-gray-light: #d4d0c8;
+    --color-gray-mid: #8a8680;
+    --color-accent: #2c2825;
+    --color-border: #e0dcd4;
 
-    --font-display: 'Playfair Display', serif;  /* elegantné patkové písmo */
-    --font-body: 'Jost', sans-serif;            /* čisté bezpatkové písmo */
-
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Jost', sans-serif;
     --spacing-xs: 8px;
     --spacing-sm: 16px;
     --spacing-md: 32px;
@@ -44,21 +18,14 @@
 }
 
 
-/* ═══════════════════════════════════════
-   RESET
-   * = universal selector = platí pre VŠETKO
-   Odstránime default margin/padding prehliadača
-   ═══════════════════════════════════════ */
-* {
+ {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* padding sa počíta DO šírky, nie navyše */
+    box-sizing: border-box;
 }
 
 
-/* ═══════════════════════════════════════
-   BODY — základné nastavenia celej stránky
-   ═══════════════════════════════════════ */
+
 body {
     font-family: var(--font-body);
     background-color: var(--color-bg);
@@ -69,37 +36,35 @@ body {
 }
 
 
-/* ═══════════════════════════════════════
-   HEADER
-   display: flex = ukladá deti vedľa seba
-   position: sticky = zostane hore pri scrolle
-   ═══════════════════════════════════════ */
+/*
+ display: flex = uklada deti vedla seba
+ position: sticky = zostane hore pri scrolle
+*/
 header {
     display: flex;
-    justify-content: space-between; /* ľavý a pravý okraj */
-    align-items: center;             /* vertikálne na stred */
+    justify-content: space-between; /* ľavy a pravy okraj */
+    align-items: center;             /* vertikalne na stred */
     padding: 24px 48px;
     background-color: var(--color-white);
     border-bottom: 1px solid var(--color-border);
     position: sticky;
     top: 0;
-    z-index: 100; /* číslo vrstvy — vyššie = vpredu */
+    z-index: 100; /* cislo vrstvy  */
 }
 
-/* .logo = CSS trieda → v HTML: class="logo" */
 .logo {
     font-family: var(--font-display);
     font-size: 28px;
     font-weight: 700;
     letter-spacing: 0.15em;
     color: var(--color-black);
-    text-decoration: none; /* žiadne podčiarknutie */
+    text-decoration: none;
 }
 
 .header-nav {
     display: flex;
     align-items: center;
-    gap: 24px; /* medzera medzi deťmi */
+    gap: 24px;
 }
 
 .btn-login {
@@ -113,10 +78,10 @@ header {
     border: 1.5px solid var(--color-black);
     padding: 8px 20px;
     cursor: pointer;
-    transition: all 0.2s ease; /* plynulý prechod pri hover */
+    transition: all 0.2s ease;
 }
 
-/* :hover = platí keď je myš nad prvkom */
+
 .btn-login:hover {
     background-color: var(--color-black);
     color: var(--color-white);
@@ -135,9 +100,6 @@ header {
 }
 
 
-/* ═══════════════════════════════════════
-   HERO — sekcia s vyhľadávačom
-   ═══════════════════════════════════════ */
 .hero {
     padding: var(--spacing-xl) var(--spacing-md);
     display: flex;
@@ -151,15 +113,14 @@ header {
     gap: 12px;
     background: var(--color-white);
     border: 1.5px solid var(--color-border);
-    border-radius: 60px; /* kapsulový tvar */
+    border-radius: 60px;
     padding: 14px 32px;
     width: 100%;
     max-width: 700px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06); /* jemný tieň */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
     transition: box-shadow 0.2s ease;
 }
 
-/* :focus-within = platí keď je fokus na niečom VNÚTRI prvku */
 .search-bar:focus-within {
     box-shadow: 0 4px 30px rgba(0,0,0,0.12);
 }
@@ -177,16 +138,11 @@ header {
     width: 100%;
 }
 
-/* ::placeholder = text v prázdnom input poli */
 .search-bar input::placeholder {
     color: var(--color-gray-mid);
 }
 
 
-/* ═══════════════════════════════════════
-   MAIN — hlavný obsah
-   margin: 0 auto = horizontálne vycentrovanie
-   ═══════════════════════════════════════ */
 main {
     max-width: 1100px;
     margin: 0 auto;
@@ -194,13 +150,9 @@ main {
 }
 
 
-/* ═══════════════════════════════════════
-   SEKCIA "WE RECOMMEND"
-   display: grid = mriežkové rozloženie
-   ═══════════════════════════════════════ */
 .recommend-section {
     display: grid;
-    grid-template-columns: 200px 1fr; /* 1. stĺpec 200px, 2. stĺpec zvyšok */
+    grid-template-columns: 200px 1fr;
     gap: var(--spacing-lg);
     margin-bottom: var(--spacing-xl);
     padding-bottom: var(--spacing-xl);
@@ -208,9 +160,6 @@ main {
 }
 
 
-/* ═══════════════════════════════════════
-   SIDEBAR MENU (ľavý stĺpec)
-   ═══════════════════════════════════════ */
 .sidebar-menu {
     border-right: 1px solid var(--color-border);
     padding-right: var(--spacing-md);
@@ -225,7 +174,6 @@ main {
     margin-bottom: var(--spacing-md);
 }
 
-/* list-style: none = žiadne bodky pred položkami */
 .sidebar-menu ul {
     list-style: none;
 }
@@ -258,9 +206,6 @@ main {
 }
 
 
-/* ═══════════════════════════════════════
-   ODPORÚČANÉ KNIHY (pravý stĺpec)
-   ═══════════════════════════════════════ */
 .recommend-content {
     padding-top: var(--spacing-sm);
 }
@@ -274,7 +219,6 @@ main {
     margin-bottom: var(--spacing-md);
 }
 
-/* Grid s 2 rovnakými stĺpcami */
 .books-grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -286,7 +230,7 @@ main {
 }
 
 .book-cover {
-    aspect-ratio: 2/3; /* pomer strán — typický formát knihy */
+    aspect-ratio: 2/3; /* pomer stran — typicky formát knihy */
     background-color: var(--color-gray-light);
     margin-bottom: 12px;
     position: relative;
@@ -294,12 +238,12 @@ main {
     transition: transform 0.3s ease;
 }
 
-/* Keď je myš nad .book-card, zmeníme .book-cover vnútri */
+
 .book-card:hover .book-cover {
     transform: translateY(-4px); /* posunie nahor o 4px */
 }
 
-/* ::after = pseudo-element, vytvorí gradient overlay */
+/* vytvorí gradient overlay */
 .book-cover::after {
     content: '';
     position: absolute;
@@ -318,9 +262,6 @@ main {
 }
 
 
-/* ═══════════════════════════════════════
-   SEKCIA "BOOKTOK TRENDING"
-   ═══════════════════════════════════════ */
 .trending-section {
     margin-bottom: var(--spacing-xl);
     position: relative;
@@ -337,7 +278,7 @@ main {
     position: relative;
 }
 
-/* Tlačidlá karuselu — position: absolute = presná poloha */
+
 .carousel-btn {
     position: absolute;
     top: 50%;
@@ -364,17 +305,12 @@ main {
 .carousel-btn.prev { left: -20px; }
 .carousel-btn.next { right: -20px; }
 
-/* repeat(4, 1fr) = 4 rovnaké stĺpce */
 .books-grid-4 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: var(--spacing-md);
 }
 
-
-/* ═══════════════════════════════════════
-   FOOTER
-   ═══════════════════════════════════════ */
 footer {
     background-color: var(--color-white);
     border-top: 1px solid var(--color-border);
