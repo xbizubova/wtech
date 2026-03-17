@@ -54,6 +54,7 @@ header {
     padding: 8px 20px;
     cursor: pointer;
     transition: all 0.2s ease; /* plynulý prechod pri hover */
+    text-decoration: none;
 }
 
 main{
@@ -74,6 +75,7 @@ main{
     background-color: #d4d0c8;
     align-items: center;
     text-align: left;
+    text-decoration: none;
 }
 
 input{
