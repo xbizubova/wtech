@@ -79,6 +79,7 @@ header {
     text-transform: uppercase;
     color: var(--color-black);
     background: none;
+    border: 1.5px solid var(--color-black);
 
     padding: 8px 20px;
     cursor: pointer;

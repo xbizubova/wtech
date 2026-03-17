@@ -2,6 +2,11 @@
 :root{
     --font-display: 'Playfair Display', serif;  /* elegantné patkové písmo */
     --font-body: 'Jost', sans-serif;
+    --color-white: #ffffff;
+    --color-black: #1a1814;
+    --color-gray-light: #d4d0c8;
+    --color-gray-mid: #9f9993;
+    --color-border: #e0dcd4;
 }
 
 * {
@@ -56,6 +61,10 @@ header {
     transition: all 0.2s ease; /* plynulý prechod pri hover */
     text-decoration: none;
 }
+.btn-create:hover {
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
 
 main{
     display: flex;
@@ -65,7 +74,11 @@ main{
 }
 
 .login-box{
-    font-family: var(--color-surface);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     display: flex;
     flex-direction: column;
     padding: 80px 60px;
@@ -76,6 +89,18 @@ main{
     align-items: center;
     text-align: left;
     text-decoration: none;
+}
+.login-box-link{
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    padding: 80px 60px;
+    text-decoration: none;
+
 }
 
 input{
@@ -132,4 +157,8 @@ input{
     text-transform: uppercase;
     cursor: pointer;
     width: 80%;
+}
+.btn-login:hover {
+    background-color: var(--color-gray-mid);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
