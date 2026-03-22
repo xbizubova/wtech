@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEXEM — Order Confirmed</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <a href="homepage.html" class="logo">LEXEM</a>
+    <nav class="header-nav">
+        <a href="login_page.html" class="btn-login">LOG IN</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+    <a href="login_page.html">Log In</a>
+    <a href="basket.html">Basket</a>
+    <a href="homepage.html">Home</a>
+</nav>
+
+<main>
+
+    <div class="order-container">
+        <a href="homepage.html" class="order-logo">LEXEM</a>
+        <p class="order-thank">Thank you for your order!</p>
+        <p class="order-number">Your order number is<br>#XXXX</p>
+    </div>
+
+    <div class="step-wrapper">
+        <button class="btn-step" onclick="window.location.href='homepage.html'">
+            Done
+        </button>
+    </div>
+
+</main>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <a href="/" class="logo">LEXEM</a>
+            <p class="footer-tagline">Not just selling books, we are creating our own fantasy.</p>
+            <div class="footer-social">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <circle cx="12" cy="12" r="3"/>
+                    <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+                </svg>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Categories</h4>
+            <ul>
+                <li><a href="#">Books</a></li>
+                <li><a href="#">Sale</a></li>
+                <li><a href="#">News</a></li>
+                <li><a href="#">Other sortiment</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Learn more</h4>
+            <ul>
+                <li><a href="#">Delivery</a></li>
+                <li><a href="#">Payment</a></li>
+                <li><a href="#">Customer stories</a></li>
+                <li><a href="#">Best practices</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>LEXEM</h4>
+            <ul>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Join us</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mobileNav.classList.toggle('open');
+    });
+</script>
+
+</body>
+</html>

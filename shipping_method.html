@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEXEM — Shipping Method</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <a href="homepage.html" class="logo">LEXEM</a>
+    <nav class="header-nav">
+        <a href="login_page.html" class="btn-login">LOG IN</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+    <a href="login_page.html">Log In</a>
+    <a href="basket.html">Basket</a>
+    <a href="homepage.html">Home</a>
+</nav>
+
+<main>
+
+    <div class="shipping-container">
+        <h1 class="shipping-title">Shipping Method</h1>
+
+        <div class="method-list">
+
+            <label class="method-option">
+                <input type="radio" name="shipping" class="method-radio" value="home">
+                <div class="method-card">
+                    <div class="method-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+                            <rect x="1" y="3" width="15" height="13" rx="1"/>
+                            <path d="M16 8h4l3 5v3h-7V8z"/>
+                            <circle cx="5.5" cy="18.5" r="2.5"/>
+                            <circle cx="18.5" cy="18.5" r="2.5"/>
+                        </svg>
+                    </div>
+                    <span class="method-name">Home delivery</span>
+                    <span class="method-price">€€</span>
+                </div>
+            </label>
+
+            <label class="method-option">
+                <input type="radio" name="shipping" class="method-radio" value="pickup-point">
+                <div class="method-card">
+                    <div class="method-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+                            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                            <path d="M9 21l3-3 3 3" stroke-width="1.2"/>
+                        </svg>
+                    </div>
+                    <span class="method-name">Pick up point</span>
+                    <span class="method-price">€€</span>
+                </div>
+            </label>
+
+            <label class="method-option">
+                <input type="radio" name="shipping" class="method-radio" value="pickup-store">
+                <div class="method-card">
+                    <div class="method-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                            <polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
+                    </div>
+                    <span class="method-name">Pick up in store</span>
+                    <span class="method-price">€€</span>
+                </div>
+            </label>
+
+        </div>
+    </div>
+
+    <div class="step-wrapper">
+    <a href="payment_method.html" class="btn-step" id="stepBtn">
+        Step 3/4
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"/>
+        </svg>
+    </a>
+</div>
+
+</main>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <a href="/" class="logo">LEXEM</a>
+            <p class="footer-tagline">Not just selling books, we are creating our own fantasy.</p>
+            <div class="footer-social">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <circle cx="12" cy="12" r="3"/>
+                    <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+                </svg>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Categories</h4>
+            <ul>
+                <li><a href="#">Books</a></li>
+                <li><a href="#">Sale</a></li>
+                <li><a href="#">News</a></li>
+                <li><a href="#">Other sortiment</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Learn more</h4>
+            <ul>
+                <li><a href="#">Delivery</a></li>
+                <li><a href="#">Payment</a></li>
+                <li><a href="#">Customer stories</a></li>
+                <li><a href="#">Best practices</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>LEXEM</h4>
+            <ul>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Join us</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mobileNav.classList.toggle('open');
+    });
+</script>
+
+</body>
+</html>
