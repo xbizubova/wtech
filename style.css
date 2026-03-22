@@ -1,0 +1,1059 @@
+/* ============================================================
+   style.css  —  merged from basket.css, ninka_temp.css, sablona_ab.css
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   CSS CUSTOM PROPERTIES
+   ---------------------------------------------------------- */
+:root {
+    /* Colors */
+    --color-bg:          #f8f6f2;
+    --color-white:       #ffffff;
+    --color-black:       #1a1814;
+    --color-gray-light:  #d4d0c8;
+    --color-gray-mid:    #8a8680;
+    --color-accent:      #2c2825;
+    --color-border:      #e0dcd4;
+    --color-surface:     #eeebe5;
+    --color-danger:      #c0392b;
+
+    /* Typography */
+    --font-display: 'Playfair Display', serif;
+    --font-body:    'Jost', sans-serif;
+
+    /* Spacing scale */
+    --spacing-xs:  8px;
+    --spacing-sm:  16px;
+    --spacing-md:  32px;
+    --spacing-lg:  64px;
+    --spacing-xl:  96px;
+}
+
+
+/* ----------------------------------------------------------
+   RESET
+   ---------------------------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* ----------------------------------------------------------
+   BASE
+   ---------------------------------------------------------- */
+html {
+    height: 100%;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    color: var(--color-black);
+    font-size: 14px;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ----------------------------------------------------------
+   HEADER
+   ---------------------------------------------------------- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    background-color: var(--color-white);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--color-black);
+    text-decoration: none;
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+
+/* ----------------------------------------------------------
+   BUTTONS  (header / global)
+   ---------------------------------------------------------- */
+
+/* Login button — used in header across all pages */
+.btn-login {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    background: none;
+    border: 1.5px solid var(--color-black);
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-login:hover {
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+/* "Create" button (ninka_temp) */
+.btn-create {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    background: none;
+    border: 1.5px solid var(--color-black);
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-create:hover {
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+/* Cart button (sablona_ab) */
+.btn-cart {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.cart-icon {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.cart-icon:hover {
+    opacity: 1;
+}
+
+/* Checkout step button (basket) */
+.btn-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    background-color: var(--color-surface);
+    border: none;
+    border-radius: 60px;
+    padding: 20px 48px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-step:hover {
+    background-color: var(--color-gray-light);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.btn-step svg {
+    transition: transform 0.2s ease;
+}
+
+.btn-step:hover svg {
+    transform: translateX(3px);
+}
+
+
+/* ----------------------------------------------------------
+   MAIN LAYOUT
+   ---------------------------------------------------------- */
+main {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    flex: 1;
+}
+
+
+/* ----------------------------------------------------------
+   HERO / SEARCH  (sablona_ab)
+   ---------------------------------------------------------- */
+.hero {
+    padding: var(--spacing-xl) var(--spacing-md);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--color-white);
+    border: 1.5px solid var(--color-border);
+    border-radius: 60px;
+    padding: 14px 32px;
+    width: 100%;
+    max-width: 700px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s ease;
+}
+
+.search-bar:focus-within {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.12);
+}
+
+.search-bar input {
+    border: none;
+    background: none;
+    outline: none;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    width: 100%;
+}
+
+.search-bar input::placeholder {
+    color: var(--color-gray-mid);
+}
+
+
+/* ----------------------------------------------------------
+   RECOMMEND SECTION  (sablona_ab)
+   ---------------------------------------------------------- */
+.recommend-section {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.sidebar-menu {
+    border-right: 1px solid var(--color-border);
+    padding-right: var(--spacing-md);
+}
+
+.menu-label {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gray-mid);
+    margin-bottom: var(--spacing-md);
+}
+
+.sidebar-menu ul {
+    list-style: none;
+}
+
+.sidebar-menu ul li {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.sidebar-menu ul li a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.sidebar-menu ul li a:hover {
+    color: var(--color-gray-mid);
+}
+
+.menu-arrow {
+    font-size: 16px;
+    opacity: 0.4;
+}
+
+.recommend-content {
+    padding-top: var(--spacing-sm);
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-md);
+}
+
+
+/* ----------------------------------------------------------
+   BOOK CARDS & GRIDS  (sablona_ab)
+   ---------------------------------------------------------- */
+.books-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.books-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+}
+
+.book-card {
+    cursor: pointer;
+}
+
+.book-cover {
+    aspect-ratio: 2 / 3;
+    background-color: var(--color-gray-light);
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.book-card:hover .book-cover {
+    transform: translateY(-4px);
+}
+
+.book-cover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.15), transparent);
+}
+
+.book-title {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--color-black);
+    letter-spacing: 0.05em;
+}
+
+
+/* ----------------------------------------------------------
+   TRENDING / CAROUSEL  (sablona_ab)
+   ---------------------------------------------------------- */
+.trending-section {
+    margin-bottom: var(--spacing-xl);
+    position: relative;
+}
+
+.trending-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.carousel-wrapper {
+    position: relative;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-black);
+    background: var(--color-bg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.carousel-btn:hover {
+    background: var(--color-black);
+    color: var(--color-white);
+}
+
+.carousel-btn.prev { left:  -20px; }
+.carousel-btn.next { right: -20px; }
+
+
+/* ----------------------------------------------------------
+   LOGIN / SIGNUP PAGE
+   ---------------------------------------------------------- */
+
+/* Centers the login box vertically on the page */
+.login-box,
+.login-box ~ * {
+    /* main on login/signup pages acts as a centering container */
+}
+
+/* Make main on login/signup pages center its content */
+body:has(.login-box) main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.login-box {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    padding: 80px 60px;
+    border-radius: 20px;
+    width: 450px;
+    gap: 20px;
+    background-color: var(--color-gray-light);
+    align-items: center;
+    text-align: left;
+}
+
+.login-box-link {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    padding: 80px 60px;
+    text-decoration: none;
+}
+
+input {
+    font-family: var(--font-body);
+    border: none;
+    border-radius: 20px;
+    padding: 15px;
+    outline: none;
+    width: 100%;
+}
+
+.email,
+.password {
+    width: 100%;
+}
+
+.input-icon1,
+.input-icon2 {
+    font-family: var(--font-body);
+    position: relative;
+}
+
+.input-icon1 input {
+    padding-left: 35px;
+}
+
+.input-icon2 input {
+    padding-right: 35px;
+}
+
+.input-icon1 i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.input-icon2 i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Login submit button (inside the login-box — slightly different style) */
+.login-box .btn-login {
+    background-color: var(--color-white);
+    border: 1.5px solid var(--color-black);
+    border-radius: 20px;
+    padding: 12px 35px;
+    width: 80%;
+}
+
+.login-box .btn-login:hover {
+    background-color: var(--color-gray-mid);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ----------------------------------------------------------
+   BASKET PAGE  (basket)
+   ---------------------------------------------------------- */
+
+/* When main contains the basket, constrain and pad it */
+body:has(.basket-container) main {
+    max-width: 860px;
+    padding: var(--spacing-lg) var(--spacing-md);
+}
+
+/* Main on sablona/home page gets max-width for content sections */
+body:has(.recommend-section) main {
+    max-width: 1100px;
+}
+.step-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.basket-container {
+    background-color: var(--color-surface);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: var(--spacing-md);
+}
+
+.basket-header {
+    padding: 36px var(--spacing-md) 28px;
+    border-bottom: 1px solid var(--color-border);
+    text-align: center;
+}
+
+.basket-title {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--color-black);
+}
+
+.basket-items {
+    background-color: var(--color-white);
+    padding: 0 var(--spacing-md);
+}
+
+.basket-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 20px 0;
+    border-bottom: 1px solid var(--color-border);
+    animation: fadeIn 0.3s ease;
+}
+
+.basket-item:last-child {
+    border-bottom: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.item-cover {
+    width: 72px;
+    height: 108px;
+    background-color: var(--color-gray-light);
+    flex-shrink: 0;
+    object-fit: cover;
+}
+
+.item-info {
+    flex: 1;
+}
+
+.item-title {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--color-black);
+    margin-bottom: 4px;
+}
+
+.item-author {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--color-gray-mid);
+    letter-spacing: 0.06em;
+}
+
+.item-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.qty-stepper {
+    display: flex;
+    align-items: center;
+    background: var(--color-bg);
+    border: 1.5px solid var(--color-border);
+    border-radius: 60px;
+    overflow: hidden;
+    padding: 0 4px;
+}
+
+.qty-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-gray-mid);
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.qty-btn:hover {
+    color: var(--color-black);
+}
+
+.qty-value {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    width: 24px;
+    text-align: center;
+    color: var(--color-black);
+}
+
+.btn-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-gray-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+    padding: 4px;
+}
+
+.btn-delete:hover {
+    color: var(--color-danger);
+}
+
+.item-price {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--color-black);
+    min-width: 56px;
+    text-align: right;
+}
+
+.basket-summary {
+    background-color: var(--color-surface);
+    padding: 24px var(--spacing-md);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.summary-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gray-mid);
+}
+
+.summary-total {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--color-black);
+}
+
+.basket-empty {
+    display: none;
+    padding: var(--spacing-lg) var(--spacing-md);
+    text-align: center;
+    background-color: var(--color-white);
+}
+
+.basket-empty p {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-gray-mid);
+}
+
+
+/* ----------------------------------------------------------
+   FOOTER  (shared — basket + sablona_ab)
+   ---------------------------------------------------------- */
+footer {
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-border);
+    padding: var(--spacing-lg) var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
+
+.footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--spacing-lg);
+}
+
+.footer-brand .logo {
+    font-size: 18px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.footer-tagline {
+    font-size: 12px;
+    color: var(--color-gray-mid);
+    margin-bottom: var(--spacing-md);
+    font-style: italic;
+}
+
+.footer-social {
+    color: var(--color-gray-mid);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.footer-social:hover {
+    color: var(--color-black);
+}
+
+.footer-col h4 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    margin-bottom: var(--spacing-sm);
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 8px;
+}
+
+.footer-col ul li a {
+    font-size: 12px;
+    color: var(--color-gray-mid);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-col ul li a:hover {
+    color: var(--color-black);
+}
+
+
+/* ============================================================
+   RESPONZÍVNY DIZAJN
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   HAMBURGER BUTTON
+   ---------------------------------------------------------- */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 200;
+}
+
+.hamburger span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background-color: var(--color-black);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+}
+
+/* Animácia na X pri otvorení */
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobilné menu (skryté panel) */
+.mobile-nav {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    position: fixed;
+    top: 73px; /* výška headeru */
+    left: 0;
+    right: 0;
+    background-color: var(--color-white);
+    border-bottom: 1px solid var(--color-border);
+    z-index: 99;
+    padding: var(--spacing-sm) var(--spacing-md);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.mobile-nav.open {
+    display: flex;
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+}
+
+.mobile-nav a {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    padding: 14px 0;
+    border-bottom: 1px solid var(--color-border);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.mobile-nav a:last-child {
+    border-bottom: none;
+}
+
+.mobile-nav a:hover {
+    color: var(--color-gray-mid);
+}
+
+
+/* ----------------------------------------------------------
+   TABLET  — max-width: 768px
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+
+    /* Header */
+    header {
+        padding: 20px 24px;
+    }
+
+    .header-nav {
+        display: none; /* skryté — nahrádza hamburger */
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    /* Hero / search */
+    .hero {
+        padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    /* Main */
+    main {
+        padding: 0 var(--spacing-sm);
+    }
+
+    body:has(.basket-container) main {
+        padding: var(--spacing-md) var(--spacing-sm);
+    }
+
+    /* Recommend sekcia — sidebar pod obsah */
+    .recommend-section {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .sidebar-menu {
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+        padding-right: 0;
+        padding-bottom: var(--spacing-md);
+    }
+
+    /* Knihy — 2 stĺpce namiesto 4 */
+    .books-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Carousel tlačidlá dovnútra */
+    .carousel-btn.prev { left: 0; }
+    .carousel-btn.next { right: 0; }
+
+    /* Basket item — cena pod controls */
+    .basket-item {
+        flex-wrap: wrap;
+    }
+
+    /* Login box */
+    .login-box {
+        width: 100%;
+        padding: 48px 32px;
+    }
+
+    /* Footer — 2 stĺpce */
+    .footer-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-md);
+    }
+
+    /* Step button */
+    .btn-step {
+        padding: 16px 32px;
+        font-size: 13px;
+    }
+}
+
+
+/* ----------------------------------------------------------
+   MOBIL  — max-width: 480px
+   ---------------------------------------------------------- */
+@media (max-width: 480px) {
+
+    /* Header */
+    header {
+        padding: 16px 20px;
+    }
+
+    .logo {
+        font-size: 22px;
+    }
+
+    /* Hero */
+    .hero {
+        padding: var(--spacing-md) var(--spacing-xs);
+    }
+
+    .search-bar {
+        padding: 12px 20px;
+    }
+
+    /* Main */
+    main {
+        padding: 0 var(--spacing-xs);
+    }
+
+    body:has(.basket-container) main {
+        padding: var(--spacing-sm) var(--spacing-xs);
+    }
+
+    /* Knihy — 1 stĺpec */
+    .books-grid-2,
+    .books-grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    /* Section title */
+    .section-title {
+        font-size: 16px;
+    }
+
+    /* Basket item — kompaktnejší */
+    .basket-items {
+        padding: 0 var(--spacing-sm);
+    }
+
+    .item-cover {
+        width: 56px;
+        height: 84px;
+    }
+
+    .item-controls {
+        gap: 8px;
+    }
+
+    /* Basket summary */
+    .basket-summary {
+        padding: 16px var(--spacing-sm);
+        gap: var(--spacing-sm);
+    }
+
+    .summary-total {
+        font-size: 18px;
+    }
+
+    /* Login box */
+    .login-box {
+        padding: 40px 20px;
+        border-radius: 16px;
+        width: 100%;
+    }
+
+    body:has(.login-box) main {
+        padding: var(--spacing-sm) var(--spacing-xs);
+        align-items: flex-start;
+        padding-top: var(--spacing-md);
+    }
+
+    /* Step button */
+    .btn-step {
+        padding: 14px 24px;
+        font-size: 12px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Footer — 1 stĺpec */
+    .footer-inner {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    footer {
+        padding: var(--spacing-md) var(--spacing-sm);
+        margin-top: var(--spacing-md);
+    }
+}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="ninka_temp.css">
+    <link rel="stylesheet" href="style.css">
     <title>Login page</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Jost:wght@400;500&display=swap" rel="stylesheet">
 </head>
@@ -11,16 +11,20 @@
 
 <header>
     <!-- <a> = odkaz. href = adresa kam vedie -->
-    <a href="sablona_ba.html" class="logo">LEXEM</a>
+    <a href="homepage.html" class="logo">LEXEM</a>
 
     <!-- <nav> = navigačná časť stránky -->
     <nav class="header-nav">
-        <!-- <button> = interaktívne tlačidlo -->
         <a href="signup_page.html" class="btn-create">CREATE AN ACCOUNT</a>
-
     </nav>
-
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
 </header>
+<nav class="mobile-nav" id="mobileNav">
+    <a href="signup_page.html">Create an Account</a>
+    <a href="homepage.html">Home</a>
+</nav>
 <main>
     <div class="login-box">
         <h2>LOGIN IN</h2>
@@ -40,8 +44,16 @@
                 <i class="fa-regular fa-eye"></i>
             </div>
         </div>
-        <button class="btn-login" onclick="window.location.href='sablona_ba.html'">LOGIN IN</button>
+        <button class="btn-login" onclick="window.location.href='homepage.html'">LOGIN IN</button>
     </div>
 </main>
+<script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mobileNav.classList.toggle('open');
+    });
+</script>
 </body>
 </html>

@@ -8,7 +8,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="basket.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -18,7 +18,14 @@
     <nav class="header-nav">
         <a href="login_page.html" class="btn-login">LOGIN IN</a>
     </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
 </header>
+<nav class="mobile-nav" id="mobileNav">
+    <a href="login_page.html">Login In</a>
+    <a href="homepage.html">Home</a>
+</nav>
 
 <main>
     <div class="basket-container">
@@ -225,6 +232,13 @@
     }
 
     recalcTotal();
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mobileNav.classList.toggle('open');
+    });
 </script>
 
 </body>
