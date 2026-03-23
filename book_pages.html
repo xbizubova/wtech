@@ -29,6 +29,13 @@
         <span></span><span></span><span></span>
     </button>
 </header>
+<nav class="mobile-nav" id="mobileNav">
+    <a href="login_page.html">Login In</a>
+    <a href="basket.html">Basket</a>
+    <a href="book_pages.html">Books</a>
+    <a href="book_pages.html">Sale</a>
+    <a href="book_pages.html">News</a>
+</nav>
 
 <section class="hero">
     <div class="search-bar">
@@ -213,6 +220,13 @@
         }
     }
     buildNumbering();
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mobileNav.classList.toggle('open');
+    });
 
 </script>
 </html>
