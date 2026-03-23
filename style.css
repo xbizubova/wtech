@@ -726,7 +726,7 @@ body:has(.recommend-section) main {
 
 
 /* ----------------------------------------------------------
-   FOOTER  (shared — basket + sablona_ab)
+   FOOTER
    ---------------------------------------------------------- */
 footer {
     background-color: var(--color-white);
@@ -1564,4 +1564,85 @@ body:has(.books) main {
     background-color: var(--color-black);
     color: var(--color-white);
     border-color: var(--color-black);
+}
+/* ----------------------------------------------------------
+   RESPONZÍVNOSŤ — BOOK PAGE & DETAIL PAGE
+   ---------------------------------------------------------- */
+
+/* ── TABLET (768px) ── */
+@media (max-width: 768px) {
+
+    /* BOOK PAGE
+       Desktop: filters vľavo (260px) + knihy vpravo (3 stĺpce)
+       Tablet:  filters navrchu, knihy pod nimi (2 stĺpce) */
+    .book-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .books {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* DETAIL PAGE
+       Desktop: obálka vľavo (300px) + info vpravo
+       Tablet:  obálka navrchu, info pod ňou */
+    .book-detail {
+        grid-template-columns: 1fr;
+    }
+
+    .book-detail-cover {
+        max-width: 260px;
+        margin: 0 auto;
+    }
+
+    /* extras a rating sa presunú do jedného stĺpca */
+    .book-detail-extras {
+        grid-column: 1;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .rating {
+        grid-column: 1;
+    }
+
+    .star {
+        font-size: 36px;
+    }
+}
+
+/* ── MOBIL (480px) ── */
+@media (max-width: 480px) {
+
+    /* BOOK PAGE
+       Mobil: knihy na 1 stĺpec */
+    .books {
+        grid-template-columns: 1fr;
+    }
+
+    body:has(.books) main {
+        padding: var(--spacing-sm) var(--spacing-xs);
+    }
+
+    /* DETAIL PAGE */
+    body:has(.book-detail) main {
+        padding: var(--spacing-md) var(--spacing-xs);
+    }
+
+    .book-detail-title {
+        font-size: 32px;
+    }
+
+    .book-detail-author {
+        font-size: 15px;
+    }
+
+    .book-detail-extras {
+        flex-direction: column;
+    }
+
+    .star {
+        font-size: 28px;
+    }
 }
