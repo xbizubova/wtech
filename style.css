@@ -1646,3 +1646,168 @@ body:has(.books) main {
         font-size: 28px;
     }
 }
+
+/* ----------------------------------------------------------
+   ORDER SUMMARY PAGE
+   ---------------------------------------------------------- */
+
+body:has(.summary-container) main {
+    max-width: 600px;
+    padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.summary-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.summary-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gray-mid);
+    margin-bottom: 4px;
+}
+
+/* Knihy */
+.summary-book-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background-color: var(--color-white);
+    border-radius: 16px;
+    padding: 12px 18px;
+}
+
+.summary-book-cover {
+    width: 44px;
+    height: 66px;
+    background-color: var(--color-border);
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.summary-book-info {
+    flex: 1;
+}
+
+.summary-book-title {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--color-black);
+    margin-bottom: 3px;
+}
+
+.summary-book-author {
+    font-size: 11px;
+    color: var(--color-gray-mid);
+    letter-spacing: 0.06em;
+}
+
+.summary-book-price {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--color-black);
+}
+
+/* Delivery & Payment riadky */
+.summary-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-white);
+    border-radius: 16px;
+    padding: 16px 20px;
+}
+
+.summary-detail-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.summary-detail-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-gray-mid);
+}
+
+.summary-detail-value {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--color-black);
+    padding-left: 21px;
+}
+
+.summary-detail-price {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--color-black);
+}
+
+/* Adresa */
+.summary-address-card {
+    background-color: var(--color-white);
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.summary-address-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--color-black);
+}
+
+.summary-address-row svg {
+    color: var(--color-gray-mid);
+    flex-shrink: 0;
+}
+
+/* Total bar */
+.summary-total-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px;
+    border-top: 1px solid var(--color-border);
+    margin-top: 4px;
+}
+
+.summary-total-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gray-mid);
+}
+
+.summary-total-amount {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-black);
+}
+
+@media (max-width: 480px) {
+    body:has(.summary-container) main {
+        padding: var(--spacing-md) var(--spacing-xs);
+    }
+}
