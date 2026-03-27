@@ -1873,3 +1873,44 @@ body:has(.summary-container) main {
     border-radius: 16px;
 
 }
+/* ── SORT BAR ── */
+.sort-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.sort-bar span {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gray-mid);
+    white-space: nowrap;
+}
+
+.sort-btn {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    background: none;
+    border: 1.5px solid var(--color-border);
+    padding: 7px 16px;
+    cursor: pointer;
+    border-radius: 60px;
+    transition: all 0.2s ease;
+}
+
+.sort-btn:hover {
+    border-color: var(--color-black);
+}
+
+.sort-btn.active {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border-color: var(--color-black);
+}

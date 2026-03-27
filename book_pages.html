@@ -48,18 +48,20 @@
     <div class="book-layout">
         <div class="filters">
             <div class="filters-by-price">
-                <p>Price</p>
+                <p>Show only</p>
                 <ul>
-                    <li><label><input type="checkbox"> Od najdrahších</label></li>
-                    <li><label><input type="checkbox"> Od najlacnejších</label></li>
+                    <li><label><input type="checkbox"> On Sale</label></li>
+                    <li><label><input type="checkbox"> New Releases</label></li>
+                    <li><label><input type="checkbox"> Booktok Trending</label></li>
+
                 </ul>
             </div>
             <div class="filters-by-language">
                 <p>Language</p>
                 <ul>
-                    <li><label><input type="checkbox"> Anglický jazyk</label></li>
-                    <li><label><input type="checkbox"> Slovenský jazyk</label></li>
-                    <li><label><input type="checkbox"> Český jazyk</label></li>
+                    <li><label><input type="checkbox"> English</label></li>
+                    <li><label><input type="checkbox"> Slovak</label></li>
+                    <li><label><input type="checkbox"> Czech</label></li>
                 </ul>
             </div>
             <div class="filters-by-type">
@@ -67,9 +69,10 @@
                 <ul>
                     <li><label><input type="checkbox"> Fantasy</label></li>
                     <li><label><input type="checkbox"> Comics</label></li>
+                    <li><label><input type="checkbox"> Manga</label></li>
                     <li><label><input type="checkbox"> Poetry</label></li>
                     <li><label><input type="checkbox"> For kids</label></li>
-                    <li><label><input type="checkbox"> Encyklopedia</label></li>
+                    <li><label><input type="checkbox"> Encyclopedia</label></li>
                     <li><label><input type="checkbox"> Cooking</label></li>
                     <li><label><input type="checkbox"> Romance</label></li>
                     <li><label><input type="checkbox"> Detectives</label></li>
@@ -77,6 +80,14 @@
             </div>
         </div>
 
+        <div class="book-section">
+            <div class="sort-bar">
+                <span>Sort by</span>
+                <button class="sort-btn active">Price ↑</button>
+                <button class="sort-btn">Price ↓</button>
+                <button class="sort-btn">A → Z</button>
+                <button class="sort-btn">Z → A</button>
+            </div>
         <div class="books">
             <a href="detail_book_page.html" class="book-card">
                 <img class="book-cover" src="pictures/mate.JPG" alt="Mate">
@@ -127,6 +138,7 @@
                 <p class="book-price">10.00€</p>
             </a>
         </div>
+    </div>
     </div>
     <div class="numbering">
 
@@ -180,6 +192,12 @@
 </footer>
 </body>
 <script>
+    document.querySelectorAll('.sort-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
     const allBooks = document.querySelectorAll('.book-card');
     const booksPerPage  = 6;
     const totalPages = Math.ceil(allBooks.length/booksPerPage);
