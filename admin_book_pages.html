@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Book Pages</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+<header>
+    <a href="admin_homepage.html" class="logo">LEXEM</a>
+    <nav class="header-nav">
+        <a href="#" class="btn-login">ACCOUNT</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+
+<section class="hero">
+    <div class="search-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <input type="text" placeholder="Search">
+    </div>
+</section>
+
+<main>
+    <div class="book-layout">
+        <div class="filters">
+            <div class="filters-by-price">
+                <p>Price</p>
+                <ul>
+                    <li><label><input type="checkbox"> Od najdrahších</label></li>
+                    <li><label><input type="checkbox"> Od najlacnejších</label></li>
+                </ul>
+            </div>
+            <div class="filters-by-language">
+                <p>Language</p>
+                <ul>
+                    <li><label><input type="checkbox"> Anglický jazyk</label></li>
+                    <li><label><input type="checkbox"> Slovenský jazyk</label></li>
+                    <li><label><input type="checkbox"> Český jazyk</label></li>
+                </ul>
+            </div>
+            <div class="filters-by-type">
+                <p>Type</p>
+                <ul>
+                    <li><label><input type="checkbox"> Fantasy</label></li>
+                    <li><label><input type="checkbox"> Comics</label></li>
+                    <li><label><input type="checkbox"> Poetry</label></li>
+                    <li><label><input type="checkbox"> For kids</label></li>
+                    <li><label><input type="checkbox"> Encyklopedia</label></li>
+                    <li><label><input type="checkbox"> Cooking</label></li>
+                    <li><label><input type="checkbox"> Romance</label></li>
+                    <li><label><input type="checkbox"> Detectives</label></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="books">
+            <a href="admin_book_detail.html" class="book-card">
+                <img class="book-cover" src="pictures/mate.JPG" alt="Mate">
+                <p class="book-title">Mate</p>
+                <p class="book-author">Ali Hazelwood</p>
+                <p class="book-price">15.99€</p>
+            </a>
+            <a href="admin_book_detail.html" class="book-card">
+                <img class="book-cover" src="pictures/looking_for_alaska.JPG" alt="Looking for Alaska">
+                <p class="book-title">Looking for Alaska</p>
+                <p class="book-author">John Green</p>
+                <p class="book-price">12.99€</p>
+            </a>
+            <a href="admin_book_detail.html" class="book-card">
+                <img class="book-cover" src="pictures/problematic_summer_romance.JPG" alt="Problematic Summer Romance">
+                <p class="book-title">Problematic Summer Romance</p>
+                <p class="book-author">Ali Hazelwood</p>
+                <p class="book-price">14.50€</p>
+            </a>
+            <a href="admin_book_detail.html" class="book-card">
+                <img class="book-cover" src="pictures/attack_on_titan_1.JPG" alt="Attack on Titan vol.1">
+                <p class="book-title">Attack on Titan vol.1</p>
+                <p class="book-author">Hajime Isayama</p>
+                <p class="book-price">10.00€</p>
+            </a>
+            <a href="admin_book_detail.html" class="book-card">
+                <img class="book-cover" src="pictures/attack_on_titan_2.JPG" alt="Attack on Titan vol.2">
+                <p class="book-title">Attack on Titan vol.2</p>
+                <p class="book-author">Hajime Isayama</p>
+                <p class="book-price">10.00€</p>
+            </a>
+            <a href="admin_book_detail.html" class="book-card">
+                <img class="book-cover" src="pictures/attack_on_titan_3.JPG" alt="Attack on Titan vol.3">
+                <p class="book-title">Attack on Titan vol.3</p>
+                <p class="book-author">Hajime Isayama</p>
+                <p class="book-price">10.00€</p>
+            </a>
+            <a href="admin_book_detail.html" class="book-card">
+                <img class="book-cover" src="pictures/attack_on_titan_4.JPG" alt="Attack on Titan vol.4">
+                <p class="book-title">Attack on Titan vol.4</p>
+                <p class="book-author">Hajime Isayama</p>
+                <p class="book-price">10.00€</p>
+            </a>
+            <a href="admin_book_detail.html" class="book-card">
+                <img class="book-cover" src="pictures/attack_on_titan_5.JPG" alt="Attack on Titan vol.5">
+                <p class="book-title">Attack on Titan vol.5</p>
+                <p class="book-author">Hajime Isayama</p>
+                <p class="book-price">10.00€</p>
+            </a>
+        </div>
+    </div>
+    <div class="numbering">
+
+    </div>
+</main>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <a href="/" class="logo">LEXEM</a>
+            <p class="footer-tagline">Not just selling books, we are creating our own fantasy.</p>
+            <div class="footer-social">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <circle cx="12" cy="12" r="3"/>
+                    <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <h4>Categories</h4>
+            <ul>
+                <li><a href="#">Books</a></li>
+                <li><a href="#">Sale</a></li>
+                <li><a href="#">News</a></li>
+                <li><a href="#">Other sortiment</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Learn more</h4>
+            <ul>
+                <li><a href="#">Delivery</a></li>
+                <li><a href="#">Payment</a></li>
+                <li><a href="#">Customer stories</a></li>
+                <li><a href="#">Best practices</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>LEXEM</h4>
+            <ul>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Join us</a></li>
+            </ul>
+        </div>
+
+    </div>
+</footer>
+</body>
+<script>
+    const allBooks = document.querySelectorAll('.book-card');
+    const booksPerPage  = 6;
+    const totalPages = Math.ceil(allBooks.length/booksPerPage);
+    let currentPage = 1;
+    const numbering = document.querySelector('.numbering');
+    function showPage(page){
+        allBooks.forEach((book,index)=>{
+            if (index >= (page - 1) * booksPerPage && index < page * booksPerPage) {
+                book.style.display = 'block';
+            } else {
+                book.style.display = 'none';
+            }
+
+        });
+    }
+    showPage(currentPage);
+
+    function buildNumbering() {
+        numbering.innerHTML = '';
+
+        for (let i = 1; i <= totalPages; i++) {
+            const a = document.createElement('a');
+            a.href = '#';
+            a.textContent = i;
+            if (i === currentPage) {
+                a.classList.add('active');
+            }
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentPage = i;
+                showPage(currentPage);
+                buildNumbering();
+            });
+            numbering.appendChild(a);
+        }
+    }
+    buildNumbering();
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mobileNav.classList.toggle('open');
+    });
+
+</script>
+</html>

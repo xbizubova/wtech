@@ -1386,6 +1386,17 @@ body:has(.book-detail) main {
     text-transform: uppercase;
 }
 
+.book-detail-title-write {
+    font-family: var(--font-display);
+    font-size: 50px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background-color: var(--color-surface);
+    border-radius: 16px;
+}
+
+
 .book-detail-author {
     font-size: 20px;
     font-weight: 500;
@@ -1393,7 +1404,15 @@ body:has(.book-detail) main {
     text-transform: uppercase;
     color: var(--color-gray-mid);
 }
-
+.book-detail-author-write {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-gray-mid);
+    background-color: var(--color-surface);
+    border-radius: 16px;
+}
 .book-detail-description {
     font-size: 16px;
     line-height: 1.8;
@@ -1419,6 +1438,7 @@ body:has(.book-detail) main {
     background-color: var(--color-surface);
     border-radius: 60px;
     padding: 12px 20px;
+    text-align: center;
 }
 
 .book-detail-add {
@@ -1467,8 +1487,33 @@ body:has(.book-detail) main {
     color: var(--color-black);
 }
 
+.book-detail-save{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--color-surface);
+    border-radius: 16px;
+    padding: 20px 28px;
+    align-self: start;
+    grid-column: 2;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.book-detail-save {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.book-detail-save:hover {
+    background-color: var(--color-gray-light);
+}
+
 .description-wrapper {
-    max-height: 200px;
+    max-height: 300px;
     overflow: hidden;
     transition: max-height 0.4s ease;
 }
@@ -1810,4 +1855,18 @@ body:has(.summary-container) main {
     body:has(.summary-container) main {
         padding: var(--spacing-md) var(--spacing-xs);
     }
+}
+
+.big-field-input {
+
+    border: none;
+    width: 100%;
+    min-height: 250px;
+    padding: 10px;
+    font-size: 14px;
+    resize: none;
+    font: var(--font-display);/* umožní meniť veľkosť */
+    background-color: var(--color-surface);
+    border-radius: 16px;
+
 }

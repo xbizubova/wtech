@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Book Detail</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <a href="admin_homepage.html" class="logo">LEXEM</a>
+    <nav class="header-nav">
+        <a href="#" class="btn-login">ACCOUNT</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+    <a href="#">Account</a>
+</nav>
+
+<main>
+    <div class="book-detail">
+        <div class="book-detail-cover">
+            <img src="pictures/mate.JPG" alt="Book cover">
+        </div>
+
+
+        <div class="book-detail-info">
+            <div>
+                <input type="text" class="book-detail-title-write" placeholder="" value="MATE">
+            </div>
+            <div>
+                <input type="text" class="book-detail-author-write" placeholder="" value="Ali Hazelwood">
+            </div>
+            <div class="description-wrapper">
+                <label class="field-label">Description</label>
+                <textarea class="big-field-input" rows="10" placeholder="" >
+                    A Human hybrid and an Alpha Were claw against the bonds of fate in the highly anticipated companion novel to the New York Times bestselling Bride.
+                    Serena Paris is orphaned, pack-less, and one of a kind. Coming forward as the first Human-Were hybrid was supposed to heal a centuries-long rift between species. Instead, it made her a target, prey to the ruthless political machinations between Weres, Vampyres, and Humans. With her enemies closing in on her, she has only one option left—if he’ll have her.
+                    As Alpha of the Northwest pack, Koen Alexander commands obedience. His authority is so absolute, only a fool would threaten his mate. It doesn’t matter if Serena doesn’t reciprocate his feelings, nothing will stop him from keeping her safe.
+                    But power-hungry Vampyres and Weres are not the only threats chasing Serena. Sooner or later, her past is bound to catch up with her—and Koen might be the only thing standing between her and total annihilation…
+                </textarea>
+            </div>
+        </div>
+        <div class="book-detail-extras">
+            <div>
+            <input type="text" class="book-detail-price" placeholder="" value="15.99€">
+            </div>
+            <div>
+            <input type="text" class="book-detail-language" placeholder="" value="ENGLISH">
+            </div>
+            <div class="book-detail-add"> <a >REMOVE </a></div>
+        </div>
+        <div class="rating">
+            <p class="rating-label">RATING</p>
+            <div class="stars">
+                <span class="star" data-value="1">☆</span>
+                <span class="star" data-value="2">☆</span>
+                <span class="star" data-value="3">☆</span>
+                <span class="star" data-value="4">☆</span>
+                <span class="star" data-value="5">☆</span>
+            </div>
+        </div>
+        <div class="book-detail-save"> <a >SAVE </a></div>
+
+    </div>
+</main>
+
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <a href="/" class="logo">LEXEM</a>
+            <p class="footer-tagline">Not just selling books, we are creating our own fantasy.</p>
+            <div class="footer-social">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <circle cx="12" cy="12" r="3"/>
+                    <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <h4>Categories</h4>
+            <ul>
+                <li><a href="book_pages.html">Books</a></li>
+                <li><a href="book_pages.html">Sale</a></li>
+                <li><a href="book_pages.html">News</a></li>
+
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Learn more</h4>
+            <ul>
+                <li><a href="#">Delivery</a></li>
+                <li><a href="#">Payment</a></li>
+                <li><a href="#">Customer stories</a></li>
+                <li><a href="#">Best practices</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>LEXEM</h4>
+            <ul>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Join us</a></li>
+            </ul>
+        </div>
+
+    </div>
+</footer>
+<script>
+    const stars = document.querySelectorAll('.star');
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const val = +star.dataset.value;
+            stars.forEach(s => s.classList.toggle('active', +s.dataset.value <= val));
+        });
+    });
+
+    const btn = document.getElementById('btnShowMore');
+    const wrapper = document.querySelector('.description-wrapper');
+
+    btn.addEventListener('click', () => {
+        wrapper.classList.toggle('expanded');
+        btn.textContent = wrapper.classList.contains('expanded') ? 'Show less' : 'Show more';
+    });
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mobileNav.classList.toggle('open');
+    });
+</script>
+</body>
+</html>
