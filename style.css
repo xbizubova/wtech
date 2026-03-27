@@ -101,7 +101,7 @@ header {
    ---------------------------------------------------------- */
 
 /* Login button — used in header across all pages */
-.btn-login {
+.btn-login, .btn-signup, .btn-account {
     font-family: var(--font-body);
     font-size: 13px;
     font-weight: 500;
@@ -116,7 +116,7 @@ header {
     text-decoration: none;
 }
 
-.btn-login:hover {
+.btn-login:hover, .btn-account:hover {
     background-color: var(--color-black);
     color: var(--color-white);
 }
@@ -1473,6 +1473,9 @@ body:has(.book-detail) main {
 .stars {
     display: flex;
     gap: 8px;
+}
+.rating-value {
+    font-size: 43px;
 }
 
 .star {
