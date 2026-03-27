@@ -3,58 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
+    <title>Admin Login page</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Jost:wght@400;500&display=swap" rel="stylesheet">
-    <title>Admin Sign Up</title>
 </head>
 <body>
 
 <header>
-    <a href="homepage.html" class="logo">LEXEM</a>
+    <!-- <a> = odkaz. href = adresa kam vedie -->
+    <a href="../homepage.html" class="logo">LEXEM</a>
+
+    <!-- <nav> = navigačná časť stránky -->
+    <nav class="header-nav">
+        <a href="admin_signup.html" class="btn-create">CREATE ADMIN ACCOUNT</a>
+    </nav>
     <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
     </button>
 </header>
 <nav class="mobile-nav" id="mobileNav">
-    <a href="admin_login.html">Admin Log In</a>
-    <a href="homepage.html">Home</a>
+    <a href="admin_signup.html">Create admin account</a>
+    <a href="../homepage.html">Home</a>
 </nav>
-
 <main>
     <div class="login-box">
-        <h2>ADMIN SIGN UP</h2>
-        <div class="info">
+        <h2> ADMIN LOG IN</h2>
+        <div class="email">
             <label>email</label>
             <div class="input-icon1">
                 <input type="email" placeholder="" value="admin@lexem.sk">
                 <i class="fa-regular fa-user"></i>
             </div>
         </div>
-        <div class="info">
-            <label>First name</label>
-            <div class="input-icon1">
-                <input type="text" value="Olympia">
+
+        <div class="password">
+            <label>password</label>
+            <div class="input-icon2">
+                <input type="password" placeholder="" value="ilovetowork">
+                <i class="fa-regular fa-eye"></i>
             </div>
         </div>
-        <div class="info">
-            <label>Last name</label>
-            <div class="input-icon1">
-                <input type="text" value="Spellmanová">
-            </div>
-        </div>
-        <div class="info">
-            <label>Create a password</label>
-            <div class="input-icon1">
-                <input type="password" value="ilovetowork">
-            </div>
-        </div>
-        <div class="info">
-            <label>Repeat password</label>
-            <div class="input-icon1">
-                <input type="password" value="ilovetowork">
-            </div>
-        </div>
-        <button class="btn-login" onclick="window.location.href='admin_homepage.html'">REGISTER</button>
+        <button class="btn-login" onclick="window.location.href='admin_homepage.html'">LOG IN</button>
     </div>
 </main>
 <script>

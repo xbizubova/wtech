@@ -3,71 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Book Detail</title>
+    <title>Client detail bookpage</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 <header>
-    <a href="admin_homepage.html" class="logo">LEXEM</a>
+    <a href="client_homepage.html" class="logo">LEXEM</a>
     <nav class="header-nav">
-        <a href="#" class="btn-login">ACCOUNT</a>
+        <a href="client_account.html" class="btn-login">ACCOUNT</a>
+        <a href="client_basket.html" class="btn-cart">
+            <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+        </a>
     </nav>
     <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
     </button>
 </header>
 <nav class="mobile-nav" id="mobileNav">
-    <a href="#">Account</a>
+    <a href="client_account.html">Account</a>
+    <a href="client_basket.html">Basket</a>
+
 </nav>
 
 <main>
     <div class="book-detail">
         <div class="book-detail-cover">
-            <img src="pictures/mate.JPG" alt="Book cover">
+            <img src="../pictures/mate.JPG" alt="Book cover">
         </div>
 
 
         <div class="book-detail-info">
-            <div>
-                <input type="text" class="book-detail-title-write" placeholder="" value="MATE">
-            </div>
-            <div>
-                <input type="text" class="book-detail-author-write" placeholder="" value="Ali Hazelwood">
-            </div>
+            <h1 class="book-detail-title">Mate</h1>
+            <p class="book-detail-author">Ali Hazelwood</p>
+
             <div class="description-wrapper">
-                <label class="field-label">Description</label>
-                <textarea class="big-field-input" rows="10" placeholder="" >
-                    A Human hybrid and an Alpha Were claw against the bonds of fate in the highly anticipated companion novel to the New York Times bestselling Bride.
+                <p class="book-detail-description">A Human hybrid and an Alpha Were claw against the bonds of fate in the highly anticipated companion novel to the New York Times bestselling Bride.
+
                     Serena Paris is orphaned, pack-less, and one of a kind. Coming forward as the first Human-Were hybrid was supposed to heal a centuries-long rift between species. Instead, it made her a target, prey to the ruthless political machinations between Weres, Vampyres, and Humans. With her enemies closing in on her, she has only one option left—if he’ll have her.
+
                     As Alpha of the Northwest pack, Koen Alexander commands obedience. His authority is so absolute, only a fool would threaten his mate. It doesn’t matter if Serena doesn’t reciprocate his feelings, nothing will stop him from keeping her safe.
-                    But power-hungry Vampyres and Weres are not the only threats chasing Serena. Sooner or later, her past is bound to catch up with her—and Koen might be the only thing standing between her and total annihilation…
-                </textarea>
+
+                    But power-hungry Vampyres and Weres are not the only threats chasing Serena. Sooner or later, her past is bound to catch up with her—and Koen might be the only thing standing between her and total annihilation…</p>
             </div>
+
+            <button class="btn-show-more" id="btnShowMore">Show more</button>
         </div>
         <div class="book-detail-extras">
-            <div>
-            <input type="text" class="book-detail-price" placeholder="" value="15.99€">
-            </div>
-            <div>
-            <input type="text" class="book-detail-language" placeholder="" value="ENGLISH">
-            </div>
-            <div class="book-detail-add"> <a >REMOVE </a></div>
+            <div class="book-detail-price">15.99€</div>
+            <div class="book-detail-language">english</div>
+            <div class="book-detail-add"> <a href="client_basket.html">ADD TO BASKET</a></div>
         </div>
         <div class="rating">
             <p class="rating-label">RATING</p>
-            <div class="stars">
-                <span class="star" data-value="1">★</span>
-                <span class="star" data-value="2">★</span>
-                <span class="star" data-value="3">★</span>
-                <span class="star" data-value="4">★</span>
-                <span class="star" data-value="5">★</span>
+            <div class="stars-client">
+                <h1 class="rating-value">★ ★ ★ ★ ☆</h1>
             </div>
         </div>
-        <div class="book-detail-save"> <a >SAVE </a></div>
 
     </div>
 </main>
@@ -90,9 +89,9 @@
         <div class="footer-col">
             <h4>Categories</h4>
             <ul>
-                <li><a href="book_pages.html">Books</a></li>
-                <li><a href="book_pages.html">Sale</a></li>
-                <li><a href="book_pages.html">News</a></li>
+                <li><a href="client_bookpages.html">Books</a></li>
+                <li><a href="client_bookpages.html">Sale</a></li>
+                <li><a href="client_bookpages.html">News</a></li>
 
             </ul>
         </div>
