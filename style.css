@@ -474,7 +474,7 @@ input {
     width: 100%;
 }
 
-.email,
+.info, .email,
 .password {
     width: 100%;
 }
