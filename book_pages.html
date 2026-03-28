@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
@@ -47,26 +48,32 @@
 <main>
     <div class="book-layout">
         <div class="filters">
-            <div class="filters-by-price">
-                <p>Show only</p>
-                <ul>
+            <div class="filter-group open">
+                <button class="filter-toggle" onclick="this.parentElement.classList.toggle('open')">
+                    SHOW ONLY <span class="filter-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+                <ul class="filter-list">
                     <li><label><input type="checkbox"> On Sale</label></li>
                     <li><label><input type="checkbox"> New Releases</label></li>
                     <li><label><input type="checkbox"> Booktok Trending</label></li>
 
                 </ul>
             </div>
-            <div class="filters-by-language">
-                <p>Language</p>
-                <ul>
+            <div class="filter-group open">
+                <button class="filter-toggle" onclick="this.parentElement.classList.toggle('open')">
+                    LANGUAGE <span class="filter-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+                <ul class="filter-list">
                     <li><label><input type="checkbox"> English</label></li>
                     <li><label><input type="checkbox"> Slovak</label></li>
                     <li><label><input type="checkbox"> Czech</label></li>
                 </ul>
             </div>
-            <div class="filters-by-type">
-                <p>Type</p>
-                <ul>
+            <div class="filter-group open">
+                <button class="filter-toggle" onclick="this.parentElement.classList.toggle('open')">
+                    TYPE <span class="filter-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                </button>
+                <ul class="filter-list">
                     <li><label><input type="checkbox"> Fantasy</label></li>
                     <li><label><input type="checkbox"> Comics</label></li>
                     <li><label><input type="checkbox"> Manga</label></li>
