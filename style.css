@@ -1914,3 +1914,132 @@ body:has(.summary-container) main {
     color: var(--color-white);
     border-color: var(--color-black);
 }
+
+
+/* ----------------------------------------------------------
+   Account
+   ---------------------------------------------------------- */
+
+body:has(.account-container) main {
+    max-width: 860px;
+    padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.account-container {
+    background-color: var(--color-gray-light);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.account-title {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    text-align: center;
+}
+
+.account-form {
+    display: contents; /* form-grid sits directly in container */
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md) var(--spacing-lg);
+}
+
+.form-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.field-group{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-black);
+}
+.field-group-btn {
+    margin-top: 24px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    background-color: var(--color-border);
+    border: none;
+    border-radius: 20px;
+    padding: 15px 18px;
+    width: 100%;
+    cursor: pointer;
+    appearance: none;
+    transition: background-color 0.2s ease;
+}
+
+.field-group-btn:hover {
+    background-color: var(--color-gray-mid);
+}
+
+.account-container input[type="text"],
+.account-container input[type="email"],
+.account-container input[type="tel"] {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--color-black);
+    background-color: var(--color-white);
+    border: none;
+    border-radius: 20px;
+    padding: 15px 18px;
+    outline: none;
+    width: 100%;
+    letter-spacing: 0.04em;
+    transition: box-shadow 0.2s ease;
+}
+
+.account-container input[type="text"]:focus,
+.account-container input[type="email"]:focus,
+.account-container input[type="tel"]:focus {
+    box-shadow: 0 0 0 2px rgba(26, 24, 20, 0.15);
+}
+.history{
+    font: var(--font-body);
+    font-size: 20px;
+    letter-spacing: 0.04em;
+
+}
+.order-history{
+    background-color: var(--color-border);
+    border-radius: 16px;
+    padding: var(--spacing-md);
+}
+
+/* Responsive — account */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+}
+
+@media (max-width: 480px) {
+    .account-container {
+        padding: var(--spacing-sm);
+    }
+}

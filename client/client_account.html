@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="../style.css">
 </head>
 
+
+
+<body>
+
 <header>
     <a href="client_homepage.html" class="logo">LEXEM</a>
     <nav class="header-nav">
@@ -31,7 +35,77 @@
 
 </nav>
 
-<body>
+    <main>
+        <div class="account-container">
+            <h1 class="account-title">ACCOUNT INFORMATION</h1>
+            <div class="account-form">
+                <div class="form-grid">
 
+                    <!-- Left column -->
+                    <div class="form-col">
+                        <div class="field-group">
+                            <label class="field-label">Email</label>
+                            <input type="email" class="field-input" placeholder="" value="novakova.jana@stuba.sk">
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">First name</label>
+                            <input type="text" class="field-input" placeholder="" value="Jana">
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">Surname</label>
+                            <input type="text" class="field-input" placeholder="" value="Nováková">
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">Phone number</label>
+                            <input type="tel" class="field-input" placeholder="" value="+421903456789">
+                        </div>
+                    </div>
+
+                    <!-- Right column -->
+                    <div class="form-col">
+                        <div class="field-group">
+                            <label class="field-label">Street and house number</label>
+                            <input type="text" class="field-input" placeholder="" value="Hlavná 12">
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">City</label>
+                            <input type="text" class="field-input" placeholder="" value="Bratislava">
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">State</label>
+                            <input type="text" class="field-input" placeholder="" value="Slovakia">
+                        </div>
+                        <div class="field-group">
+                            <button class="field-group-btn">CHANGE INFORMATION</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="book-history">
+                <h1 class="history">BOOKS YOU PURCHASED</h1>
+                <div class="order-history">
+                    <div class="books-grid-4">
+                        <a href="client_detail_book_page.html" class="book-card">
+                            <img class="book-cover" src="../pictures/six_of_crows.JPG" alt="Six of crows">
+                            <p class="book-title">Six of Crows</p>
+                        </a>
+                        <a href="client_detail_book_page.html" class="book-card">
+                            <img class="book-cover" src="../pictures/mate.JPG" alt="Mate">
+                            <p class="book-title">Mate</p>
+                        </a>
+                        <a href="client_detail_book_page.html" class="book-card">
+                            <img class="book-cover" src="../pictures/pacient.JPG" alt="Pacient">
+                            <p class="book-title">Pacient</p>
+                        </a>
+                        <a href="client_detail_book_page.html" class="book-card">
+                            <img class="book-cover" src="../pictures/girl_in_pieces.JPG" alt="Girl in pieces">
+                            <p class="book-title">Girl in pieces</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
