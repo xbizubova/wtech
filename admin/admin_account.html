@@ -1,10 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Admin Account</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
 
+<header>
+    <a href="admin_homepage.html" class="logo">LEXEM</a>
+    <nav class="header-nav">
+        <a href="../homepage.html" class="btn-login">LOG OUT</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+    <a href="../homepage.html">LOG OUT</a>
+</nav>
+
+<main>
+    <div class="account-container">
+        <h1 class="account-title">ACCOUNT INFORMATION</h1>
+        <div class="account-form">
+            <div class="form-grid">
+
+                <!-- Left column -->
+                <div class="form-col">
+                    <div class="field-group">
+                        <label class="field-label">Email</label>
+                        <input type="email" class="field-input" placeholder="" value="admin@lexem.sk">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">First name</label>
+                        <input type="text" class="field-input" placeholder="" value="Olympia">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Surname</label>
+                        <input type="text" class="field-input" placeholder="" value="Spellmanová">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Phone number</label>
+                        <input type="tel" class="field-input" placeholder="" value="+421903456789">
+                    </div>
+                </div>
+
+                <!-- Right column -->
+                <div class="form-col">
+                    <div class="field-group">
+                        <label class="field-label">Street and house number</label>
+                        <input type="text" class="field-input" placeholder="" value="Šikmá 12">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">City</label>
+                        <input type="text" class="field-input" placeholder="" value="Bratislava">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">State</label>
+                        <input type="text" class="field-input" placeholder="" value="Slovakia">
+                    </div>
+                    <div class="field-group">
+                        <a href="admin_homepage.html" class="field-group-btn">MANAGE BOOKS</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        </div>
+    </div>
+</main>
+<script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mobileNav.classList.toggle('open');
+    });
+</script>
 </body>
+
 </html>
