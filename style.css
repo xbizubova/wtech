@@ -1,12 +1,6 @@
-/* ============================================================
-   style.css  —  merged from basket.css, ninka_temp.css, sablona_ab.css
-   ============================================================ */
 
-/* ----------------------------------------------------------
-   CSS CUSTOM PROPERTIES
-   ---------------------------------------------------------- */
 :root {
-    /* Colors */
+    /* farby */
     --color-bg:          #f8f6f2;
     --color-white:       #ffffff;
     --color-black:       #1a1814;
@@ -17,11 +11,11 @@
     --color-surface:     #eeebe5;
     --color-danger:      #c0392b;
 
-    /* Typography */
+    /* fonty */
     --font-display: 'Playfair Display', serif;
     --font-body:    'Jost', sans-serif;
 
-    /* Spacing scale */
+    /* medzierky */
     --spacing-xs:  8px;
     --spacing-sm:  16px;
     --spacing-md:  32px;
@@ -31,14 +25,14 @@
 
 
 /* ----------------------------------------------------------
-   RESET
+   RESET-zjednocuje styly pri nacitani
    ---------------------------------------------------------- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
+/*zmena preklikov aby neboli inej farby a neboli podciarknute*/
 a {
     color: inherit;
     text-decoration: none;
@@ -60,7 +54,7 @@ body {
     line-height: 1.6;
     letter-spacing: 0.02em;
     min-height: 100%;
-    display: flex;
+    display: flex; /*umiestnenie veci*/
     flex-direction: column;
 }
 
@@ -77,7 +71,7 @@ header {
     border-bottom: 1px solid var(--color-border);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 100; /*header je vzdy nad ostatnymi elementami*/
 }
 
 .logo {
@@ -97,10 +91,10 @@ header {
 
 
 /* ----------------------------------------------------------
-   BUTTONS  (header / global)
+   BUTTONY
    ---------------------------------------------------------- */
 
-/* Login button — used in header across all pages */
+
 .btn-login, .btn-signup, .btn-account {
     font-family: var(--font-body);
     font-size: 13px;
@@ -121,7 +115,7 @@ header {
     color: var(--color-white);
 }
 
-/* "Create" button (ninka_temp) */
+
 .btn-create {
     font-family: var(--font-body);
     font-size: 13px;
@@ -142,7 +136,7 @@ header {
     color: var(--color-white);
 }
 
-/* Cart button (sablona_ab) */
+
 .btn-cart {
     display: flex;
     align-items: center;
@@ -162,12 +156,12 @@ header {
     opacity: 1;
 }
 
-/* Checkout step button (basket) */
+
 .btn-step {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-family: var(--font-body);
+    font: var(--font-body);
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.12em;
@@ -196,24 +190,24 @@ header {
 
 
 /* ----------------------------------------------------------
-   MAIN LAYOUT
+   HLAVNY LAYOUT
    ---------------------------------------------------------- */
 main {
     width: 100%;
-    margin: 0 auto;
+    margin: 0 auto; /*vycentruje main horizontálne*/
     padding: 0 var(--spacing-md);
-    flex: 1;
+    flex: 1;/*vyplni sa na dlzku stranky*/
 }
 
 
 /* ----------------------------------------------------------
-   HERO / SEARCH  (sablona_ab)
+   VYHLADAVANIE
    ---------------------------------------------------------- */
 .hero {
     padding: var(--spacing-xl) var(--spacing-md);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center;/*horizontalne*/
+    align-items: center;/*vertikalne*/
 }
 
 .search-bar {
@@ -253,7 +247,7 @@ main {
 
 
 /* ----------------------------------------------------------
-   RECOMMEND SECTION  (sablona_ab)
+   ODPORUCANE
    ---------------------------------------------------------- */
 .recommend-section {
     display: grid;
@@ -324,7 +318,7 @@ main {
 
 
 /* ----------------------------------------------------------
-   BOOK CARDS & GRIDS  (sablona_ab)
+   OBALKY NA KNIHY A MRIEZKY
    ---------------------------------------------------------- */
 .books-grid-2 {
     display: grid;
@@ -346,7 +340,7 @@ main {
     aspect-ratio: 2 / 3;
     background-color: var(--color-gray-light);
     margin-bottom: 12px;
-    position: relative;
+    position: relative;/*aby sme mohli do obalky davat ze sale*/
     overflow: hidden;
     transition: transform 0.3s ease;
 }
@@ -354,8 +348,6 @@ main {
 .book-card:hover .book-cover {
     transform: translateY(-4px);
 }
-
-
 
 .book-cover {
     width: 100%;
@@ -373,7 +365,7 @@ main {
 
 
 /* ----------------------------------------------------------
-   TRENDING / CAROUSEL  (sablona_ab)
+   TRENDING
    ---------------------------------------------------------- */
 .trending-section {
     margin-bottom: var(--spacing-xl);
@@ -387,48 +379,16 @@ main {
     margin-bottom: var(--spacing-md);
 }
 
-.carousel-wrapper {
-    position: relative;
-}
-
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 1.5px solid var(--color-black);
-    background: var(--color-bg);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    font-size: 16px;
-    transition: all 0.2s ease;
-}
-
-.carousel-btn:hover {
-    background: var(--color-black);
-    color: var(--color-white);
-}
-
-.carousel-btn.prev { left:  -20px; }
-.carousel-btn.next { right: -20px; }
-
-
 /* ----------------------------------------------------------
-   LOGIN / SIGNUP PAGE
+   LOGIN / SIGNUP
    ---------------------------------------------------------- */
 
-/* Centers the login box vertically on the page */
+/* vycentruje ten boxik vertikalne */
 .login-box,
 .login-box ~ * {
-    /* main on login/signup pages acts as a centering container */
+    /* sprava sa ako centrujuci kontainer */
 }
 
-/* Make main on login/signup pages center its content */
 body:has(.login-box) main {
     display: flex;
     justify-content: center;
@@ -453,18 +413,8 @@ body:has(.login-box) main {
     text-align: left;
 }
 
-.login-box-link {
-    font-family: var(--font-body);
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    display: flex;
-    flex-direction: column;
-    padding: 80px 60px;
-    text-decoration: none;
-}
 
+/*definovany input-html*/
 input {
     font-family: var(--font-body);
     border: none;
@@ -507,7 +457,7 @@ input {
     transform: translateY(-50%);
 }
 
-/* Login submit button (inside the login-box — slightly different style) */
+
 .login-box .btn-login {
     background-color: var(--color-white);
     border: 1.5px solid var(--color-black);
@@ -523,16 +473,16 @@ input {
 
 
 /* ----------------------------------------------------------
-   BASKET PAGE  (basket)
+   KOSIK
    ---------------------------------------------------------- */
 
-/* When main contains the basket, constrain and pad it */
+
 body:has(.basket-container) main {
     max-width: 860px;
     padding: var(--spacing-lg) var(--spacing-md);
 }
 
-/* Main on sablona/home page gets max-width for content sections */
+
 body:has(.recommend-section) main {
     max-width: 1100px;
 }
@@ -556,9 +506,9 @@ body:has(.recommend-section) main {
 }
 
 .basket-title {
-    font-family: var(--font-display);
-    font-size: 13px;
-    font-weight: 700;
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 500;
     letter-spacing: 0.35em;
     text-transform: uppercase;
     color: var(--color-black);
@@ -581,7 +531,7 @@ body:has(.recommend-section) main {
 .basket-item:last-child {
     border-bottom: none;
 }
-
+/*transition ked sa vymaze*/
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -797,7 +747,7 @@ footer {
 
 
 /* ----------------------------------------------------------
-   SHIPPING INFORMATION FORM
+   ZAKAZNIK INFO
    ---------------------------------------------------------- */
 
 body:has(.shipping-container) main {
@@ -827,7 +777,7 @@ body:has(.shipping-container) main {
 }
 
 .shipping-form {
-    display: contents; /* form-grid sits directly in container */
+    display: contents; /* udaje su v kontaineri pekne */
 }
 
 .form-grid {
@@ -878,7 +828,6 @@ body:has(.shipping-container) main {
     box-shadow: 0 0 0 2px rgba(26, 24, 20, 0.15);
 }
 
-/* Checkboxes */
 .form-checkboxes {
     display: flex;
     flex-direction: column;
@@ -935,7 +884,7 @@ body:has(.shipping-container) main {
     line-height: 1.6;
 }
 
-/* Responsive — shipping form */
+/* Responzivnost */
 @media (max-width: 768px) {
     .form-grid {
         grid-template-columns: 1fr;
@@ -970,7 +919,7 @@ body:has(.shipping-container) main {
 }
 
 .hamburger span {
-    display: block;
+    display: block;/*zabera celu sirku riadku a riadkuje sa*/
     width: 100%;
     height: 1.5px;
     background-color: var(--color-black);
@@ -1049,7 +998,7 @@ body:has(.shipping-container) main {
         display: flex;
     }
 
-    /* Hero / search */
+    /* vyhladavanie */
     .hero {
         padding: var(--spacing-lg) var(--spacing-sm);
     }
@@ -1080,10 +1029,6 @@ body:has(.shipping-container) main {
     .books-grid-4 {
         grid-template-columns: repeat(2, 1fr);
     }
-
-    /* Carousel tlačidlá dovnútra */
-    .carousel-btn.prev { left: 0; }
-    .carousel-btn.next { right: 0; }
 
     /* Basket item — cena pod controls */
     .basket-item {
@@ -1211,7 +1156,7 @@ body:has(.shipping-container) main {
 }
 
 /* ----------------------------------------------------------
-   SHIPPING METHOD PAGE
+   Vyber dorucenia
    ---------------------------------------------------------- */
 
 body:has(.method-list) main {
@@ -1288,7 +1233,7 @@ body:has(.method-list) main {
 }
 
 /* ----------------------------------------------------------
-   ORDER FINISH PAGE
+   Koniec objednavky
    ---------------------------------------------------------- */
 
 body:has(.order-container) main {
@@ -1352,7 +1297,7 @@ body:has(.order-container) main {
 }
 
 /* ----------------------------------------------------------
-   BOOK DETAIL PAGE
+   DETAIL knihy
    ---------------------------------------------------------- */
 
 body:has(.book-detail) main {
@@ -1549,7 +1494,7 @@ body:has(.book-detail) main {
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.15em;
-    color: darkred;
+    color: var(--color-danger);
     text-transform: uppercase;
 }
 
@@ -1563,8 +1508,6 @@ body:has(.book-detail) main {
     font-size: 16px;
 
     letter-spacing: 0.15em;
-
-
 }
 
 .book-detail-sale {
@@ -1581,12 +1524,11 @@ body:has(.book-detail) main {
     text-align: center;
     border: none;
     appearance: none;
-    -webkit-appearance: none;
     cursor: pointer;
 }
 
 /* ----------------------------------------------------------
-   BOOK PAGE
+   KNIHY všetko
    ---------------------------------------------------------- */
 
 body:has(.books) main {
@@ -1619,7 +1561,7 @@ body:has(.books) main {
     align-items: center;
     gap: 17px;
     cursor: pointer;
-    white-space: nowrap;
+    white-space: nowrap;/*text sa nezlomi aj ked je malo miesta*/
 }
 
 .filters p {
@@ -1696,16 +1638,55 @@ body:has(.books) main {
 }
 
 
+.sort-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.sort-bar span {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gray-mid);
+    white-space: nowrap;
+}
+
+.sort-btn {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    background: none;
+    border: 1.5px solid var(--color-border);
+    padding: 7px 16px;
+    cursor: pointer;
+    border-radius: 60px;
+    transition: all 0.2s ease;
+}
+
+.sort-btn:hover {
+    border-color: var(--color-black);
+}
+
+.sort-btn.active {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border-color: var(--color-black);
+}
+
 /* ----------------------------------------------------------
    RESPONZÍVNOSŤ — BOOK PAGE & DETAIL PAGE
    ---------------------------------------------------------- */
 
-/* ── TABLET (768px) ── */
+
 @media (max-width: 768px) {
 
-    /* BOOK PAGE
-       Desktop: filters vľavo (260px) + knihy vpravo (3 stĺpce)
-       Tablet:  filters navrchu, knihy pod nimi (2 stĺpce) */
+
     .book-layout {
         grid-template-columns: 1fr;
     }
@@ -1714,9 +1695,7 @@ body:has(.books) main {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    /* DETAIL PAGE
-       Desktop: obálka vľavo (300px) + info vpravo
-       Tablet:  obálka navrchu, info pod ňou */
+
     .book-detail {
         grid-template-columns: 1fr;
     }
@@ -1726,7 +1705,7 @@ body:has(.books) main {
         margin: 0 auto;
     }
 
-    /* extras a rating sa presunú do jedného stĺpca */
+
     .book-detail-extras {
         grid-column: 1;
         flex-direction: row;
@@ -1743,11 +1722,10 @@ body:has(.books) main {
     }
 }
 
-/* ── MOBIL (480px) ── */
+
 @media (max-width: 480px) {
 
-    /* BOOK PAGE
-       Mobil: knihy na 1 stĺpec */
+
     .books {
         grid-template-columns: 1fr;
     }
@@ -1756,7 +1734,7 @@ body:has(.books) main {
         padding: var(--spacing-sm) var(--spacing-xs);
     }
 
-    /* DETAIL PAGE */
+
     body:has(.book-detail) main {
         padding: var(--spacing-md) var(--spacing-xs);
     }
@@ -1787,7 +1765,7 @@ body:has(.books) main {
 }
 
 /* ----------------------------------------------------------
-   ORDER SUMMARY PAGE
+   ZHRNUTIE OBJEDNAVKY
    ---------------------------------------------------------- */
 
 body:has(.summary-container) main {
@@ -1810,7 +1788,7 @@ body:has(.summary-container) main {
     margin-bottom: 4px;
 }
 
-/* Knihy */
+
 .summary-book-item {
     display: flex;
     align-items: center;
@@ -1964,51 +1942,11 @@ body:has(.summary-container) main {
     border-radius: 16px;
 
 }
-/* ── SORT BAR ── */
-.sort-bar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 24px;
-}
 
-.sort-bar span {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--color-gray-mid);
-    white-space: nowrap;
-}
-
-.sort-btn {
-    font-family: var(--font-body);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-black);
-    background: none;
-    border: 1.5px solid var(--color-border);
-    padding: 7px 16px;
-    cursor: pointer;
-    border-radius: 60px;
-    transition: all 0.2s ease;
-}
-
-.sort-btn:hover {
-    border-color: var(--color-black);
-}
-
-.sort-btn.active {
-    background-color: var(--color-black);
-    color: var(--color-white);
-    border-color: var(--color-black);
-}
 
 
 /* ----------------------------------------------------------
-   Account
+   Ucet
    ---------------------------------------------------------- */
 
 body:has(.account-container) main {
@@ -2038,7 +1976,7 @@ body:has(.account-container) main {
 }
 
 .account-form {
-    display: contents; /* form-grid sits directly in container */
+    display: contents;
 }
 
 .form-grid {
@@ -2121,7 +2059,7 @@ body:has(.account-container) main {
     padding: var(--spacing-md);
 }
 
-/* Responsive — account */
+
 @media (max-width: 768px) {
     .form-grid {
         grid-template-columns: 1fr;
@@ -2134,5 +2072,3 @@ body:has(.account-container) main {
         padding: var(--spacing-sm);
     }
 }
-
-/*skusam */
