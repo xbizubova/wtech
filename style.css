@@ -739,7 +739,7 @@ footer {
     max-width: 1100px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr;
     gap: var(--spacing-lg);
 }
 
@@ -777,6 +777,7 @@ footer {
 
 .footer-col ul {
     list-style: none;
+
 }
 
 .footer-col ul li {
