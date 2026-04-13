@@ -1402,6 +1402,16 @@ body:has(.book-detail) main {
     text-align: center;
 }
 
+.price-original {
+    text-decoration: line-through;
+    color: gray;
+    margin-right: 8px;
+}
+
+.price-sale {
+    color: red;
+}
+
 .book-detail-add {
     cursor: pointer;
     transition: background-color 0.2s ease;
