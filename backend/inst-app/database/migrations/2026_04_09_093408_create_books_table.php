@@ -25,6 +25,8 @@ return new class extends Migration
             $table->date('release_date')->nullable();
             $table->boolean('is_on_sale')->default(false);
             $table->timestamps();
+            $table->boolean('is_booktok')->default(false);
+            $table->boolean('is_recommended')->default(false);
         });
     }
 
