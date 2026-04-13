@@ -24,6 +24,11 @@ class BookController extends Controller
             $query->where('is_recommended', true);
         }
 
+        //Filtrovanie podľa on sale
+        if ($request->has('on_sale') && $request->on_sale == '1') {
+            $query->where('is_on_sale', true);
+        }
+
         // Filtrovanie podľa jazyka
         if ($request->filled('language')) {
             $query->whereIn('language', $request->language);

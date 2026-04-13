@@ -145,12 +145,12 @@
                         @endif
                         <p class="book-title">{{ $book->name }}</p>
                         <p class="book-author">{{ $book->author }}</p>
-                        @if($book->is_on_sale)
-                            <p class="book-price"><s>{{ number_format($book->price, 2) }}€</s></p>
-                            <p class="book-sale">SALE</p>
-                        @else
-                            <p class="book-price">{{ number_format($book->price, 2) }}€</p>
-                        @endif
+                            @if($book->is_on_sale)
+                                <p class="book-price"><s>{{ number_format($book->original_price, 2) }}€</s> {{ number_format($book->price, 2) }}€</p>
+                                <p class="book-sale">SALE</p>
+                            @else
+                                <p class="book-price">{{ number_format($book->price, 2) }}€</p>
+                            @endif
                     </a>
                 @empty
                     <p>Žiadne knihy sa nenašli.</p>
