@@ -18,4 +18,11 @@ class Book extends Model
     {
         return $this->belongsToMany(Category::class, 'book_category', 'book_id', 'category_id');
     }
+
+    public function baskets()
+    {
+        return $this->belongsToMany(Basket::class, 'book_basket', 'book_id', 'basket_id')
+            ->withPivot('amount')
+            ->withTimestamps();
+    }
 }

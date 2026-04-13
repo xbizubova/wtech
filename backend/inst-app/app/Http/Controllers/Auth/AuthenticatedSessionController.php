@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Http\Controllers\BasketController;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -28,6 +29,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        BasketController::mergeSessionBasket();
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
@@ -44,4 +47,6 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+
 }
