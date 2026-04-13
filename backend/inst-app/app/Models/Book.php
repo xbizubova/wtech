@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Book extends Model
+{
+    protected $primaryKey = 'book_id';
+    protected $fillable = [
+        'name', 'author', 'price', 'detail',
+        'language', 'rating', 'photo1', 'photo2',
+        'amount', 'release_date', 'is_on_sale'
+    ];
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'book_category', 'book_id', 'category_id');
+    }
+}
