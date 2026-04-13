@@ -75,6 +75,12 @@
                         <li><label><input type="checkbox" name="on_sale" value="1"
                                           {{ request('on_sale') ? 'checked' : '' }}
                                           onchange="document.getElementById('filterForm').submit()"> On Sale</label></li>
+                        <li><label><input type="checkbox" name="is_booktok" value="1"
+                                          {{ request('is_booktok') ? 'checked' : '' }}
+                                          onchange="document.getElementById('filterForm').submit()"> Booktok Trending</label></li>
+                        <li><label><input type="checkbox" name="is_recommended" value="1"
+                                          {{ request('is_recommended') ? 'checked' : '' }}
+                                          onchange="document.getElementById('filterForm').submit()"> We Recommend</label></li>
                     </ul>
                 </div>
 
@@ -153,7 +159,47 @@
 
             {{-- STRÁNKOVANIE --}}
             <div class="numbering">
-                {{ $books->links() }}
+                {{-- Previous --}}
+                @if ($books->onFirstPage())
+                    <span class="page-disabled">«</span>
+                @else
+                    <a href="{{ $books->previousPageUrl() }}">«</a>
+                @endif
+
+                {{-- Čísla stránok - max 3 --}}
+                @php
+                    $current = $books->currentPage();
+                    $last = $books->lastPage();
+
+                    if ($last <= 3) {
+                        $start = 1;
+                        $end = $last;
+                    } elseif ($current == 1) {
+                        $start = 1;
+                        $end = 3;
+                    } elseif ($current == $last) {
+                        $start = $last - 2;
+                        $end = $last;
+                    } else {
+                        $start = $current - 1;
+                        $end = $current + 1;
+                    }
+                @endphp
+
+                @for ($page = $start; $page <= $end; $page++)
+                    @if ($page == $current)
+                        <a class="active">{{ $page }}</a>
+                    @else
+                        <a href="{{ $books->url($page) }}">{{ $page }}</a>
+                    @endif
+                @endfor
+
+                {{-- Next --}}
+                @if ($books->hasMorePages())
+                    <a href="{{ $books->nextPageUrl() }}">»</a>
+                @else
+                    <span class="page-disabled">»</span>
+                @endif
             </div>
         </div>
 

@@ -10,7 +10,8 @@ class Book extends Model
     protected $fillable = [
         'name', 'author', 'price', 'detail',
         'language', 'rating', 'photo1', 'photo2',
-        'amount', 'release_date', 'is_on_sale'
+        'amount', 'release_date', 'is_on_sale',
+        'is_booktok', 'is_recommended'
     ];
 
     public function categories()

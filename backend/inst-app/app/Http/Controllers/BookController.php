@@ -14,6 +14,16 @@ class BookController extends Controller
         $categories = Category::all();
         $query = Book::with('categories');
 
+        // Filtrovanie podľa booktok
+        if ($request->filled('is_booktok')) {
+            $query->where('is_booktok', true);
+        }
+
+        // Filtrovanie podľa recommended
+        if ($request->filled('is_recommended')) {
+            $query->where('is_recommended', true);
+        }
+
         // Filtrovanie podľa jazyka
         if ($request->filled('language')) {
             $query->whereIn('language', $request->language);
@@ -32,6 +42,14 @@ class BookController extends Controller
         }
         if ($request->filled('price_max')) {
             $query->where('price', '<=', $request->price_max);
+        }
+
+        // Vyhľadávanie
+        if ($request->filled('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%')
+                    ->orWhere('author', 'like', '%' . $request->search . '%');
+            });
         }
 
         // Zoraďovanie
@@ -54,5 +72,12 @@ class BookController extends Controller
     {
         $book = Book::with('categories')->findOrFail($id);
         return view('books.show', compact('book'));
+    }
+    public function home()
+    {
+        $recommended = Book::where('is_recommended', true)->get();
+        $trending = Book::where('is_booktok', true)->get();
+
+        return view('home', compact('recommended', 'trending'));
     }
 }
