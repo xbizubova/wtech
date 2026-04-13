@@ -624,6 +624,22 @@ body:has(.recommend-section) main {
     color: var(--color-black);
 }
 
+.qty-value {
+    width: 40px;
+    text-align: center;
+    border: none;
+    background: transparent;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    -moz-appearance: textfield;
+}
+
+.qty-value::-webkit-outer-spin-button,
+.qty-value::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .btn-delete {
     background: none;
     border: none;
@@ -1702,6 +1718,22 @@ body:has(.books) main {
     background-color: var(--color-black);
     color: var(--color-white);
     border-color: var(--color-black);
+}
+.filter-price {
+    padding: 8px 0;
+}
+
+.price-range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.price-slider {
+    width: 100%;
+    accent-color: #2c2c2a;
 }
 
 /* ----------------------------------------------------------

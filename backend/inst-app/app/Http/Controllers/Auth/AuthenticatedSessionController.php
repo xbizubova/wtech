@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
 
         BasketController::mergeSessionBasket();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(route('home'));
     }
 
     /**

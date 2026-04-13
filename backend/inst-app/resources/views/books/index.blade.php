@@ -117,6 +117,23 @@
                         @endforeach
                     </ul>
                 </div>
+                <div class="filter-group open">
+                    <button type="button" class="filter-toggle"
+                            onclick="this.parentElement.classList.toggle('open')">
+                        PRICE <span class="filter-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div class="filter-price">
+                        <div class="price-range-labels">
+                            <span>2 €</span>
+                            <span id="priceMaxLabel">{{ request('price_max', 100) }} €</span>
+                        </div>
+                        <input type="range" name="price_max" min="2" max="100" step="1"
+                               value="{{ request('price_max', 100) }}"
+                               class="price-slider" id="sliderMax"
+                               oninput="document.getElementById('priceMaxLabel').textContent = this.value + ' €'"
+                               onchange="document.getElementById('filterForm').submit()">
+                    </div>
+                </div>
             </div>
         </form>
 
@@ -236,6 +253,25 @@
     hamburger.addEventListener('click', () => {
         hamburger.classList.toggle('open');
         mobileNav.classList.toggle('open');
+    });
+
+    function updateSlider() {
+        const min = parseInt(document.getElementById('sliderMin').value);
+        const max = parseInt(document.getElementById('sliderMax').value);
+
+        if (min > max) {
+            document.getElementById('sliderMin').value = max;
+        }
+
+        document.getElementById('priceMinLabel').textContent = Math.min(min, max) + ' €';
+        document.getElementById('priceMaxLabel').textContent = Math.max(min, max) + ' €';
+    }
+
+    // Po pustení slidera odošli form
+    document.querySelectorAll('.price-slider').forEach(slider => {
+        slider.addEventListener('change', () => {
+            document.getElementById('filterForm').submit();
+        });
     });
 </script>
 

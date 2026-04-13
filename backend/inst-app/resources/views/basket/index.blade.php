@@ -73,7 +73,13 @@
                                 <button type="submit" class="qty-btn minus" aria-label="Decrease">−</button>
                             </form>
 
-                            <span class="qty-value">{{ $item['quantity'] }}</span>
+                            <form method="POST" action="{{ url('/basket/update/' . $item['book_id']) }}">
+                                @csrf
+                                @method('PATCH')
+                                <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="1" max="99"
+                                       class="qty-value" style="width:48px; text-align:center; border:none; background:transparent;"
+                                       onchange="this.form.submit()">
+                            </form>
 
                             <form method="POST" action="{{ url('/basket/update/' . $item['book_id']) }}">
                                 @csrf

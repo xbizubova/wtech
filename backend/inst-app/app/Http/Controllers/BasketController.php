@@ -44,7 +44,7 @@ class BasketController extends Controller
 
         if (Auth::check()) {
             $basket = Basket::firstOrCreate(['customer_id' => Auth::id()]);
-            $existing = $basket->books()->where('book_id', $bookId)->first();
+            $existing = $basket->books()->wherePivot('book_id', $bookId)->first();
 
             if ($existing) {
                 $basket->books()->updateExistingPivot($bookId, [
@@ -130,7 +130,7 @@ class BasketController extends Controller
         $basket = Basket::firstOrCreate(['customer_id' => Auth::id()]);
 
         foreach ($sessionBasket as $item) {
-            $existing = $basket->books()->where('book_id', $item['book_id'])->first();
+            $existing = $basket->books()->wherePivot('book_id', $item['book_id'])->first();
             if ($existing) {
                 $basket->books()->updateExistingPivot($item['book_id'], [
                     'amount' => $existing->pivot->amount + $item['quantity'],
