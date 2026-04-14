@@ -619,19 +619,16 @@ body:has(.recommend-section) main {
     font-size: 13px;
     font-weight: 500;
     letter-spacing: 0.06em;
-    width: 24px;
-    text-align: center;
-    color: var(--color-black);
-}
-
-.qty-value {
     width: 40px;
     text-align: center;
+    color: var(--color-black);
     border: none;
     background: transparent;
     font-family: 'Jost', sans-serif;
-    font-size: 14px;
     -moz-appearance: textfield;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
 }
 
 .qty-value::-webkit-outer-spin-button,

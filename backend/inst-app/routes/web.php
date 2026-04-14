@@ -13,7 +13,7 @@ Route::get('/', [BookController::class, 'home'])->name('home');
 
 // Košík
 Route::get('/basket', [BasketController::class, 'index'])->name('basket.index');
-Route::get('/basket/add/{bookId}', [BasketController::class, 'add'])->name('basket.add');
+Route::post('/basket/add/{bookId}', [BasketController::class, 'add'])->name('basket.add');
 Route::patch('/basket/update/{bookId}', [BasketController::class, 'update'])->name('basket.update');
 Route::delete('/basket/remove/{bookId}', [BasketController::class, 'remove'])->name('basket.remove');
 

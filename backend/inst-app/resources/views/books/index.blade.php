@@ -81,6 +81,9 @@
                         <li><label><input type="checkbox" name="is_recommended" value="1"
                                           {{ request('is_recommended') ? 'checked' : '' }}
                                           onchange="document.getElementById('filterForm').submit()"> We Recommend</label></li>
+                        <li><label><input type="checkbox" name="new_releases" value="1"
+                                          {{ request('new_releases') ? 'checked' : '' }}
+                                          onchange="document.getElementById('filterForm').submit()"> New Releases</label></li>
                     </ul>
                 </div>
 

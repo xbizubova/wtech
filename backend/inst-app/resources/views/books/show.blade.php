@@ -43,18 +43,14 @@
     <div class="book-detail">
 
         <div class="book-detail-cover">
-            {{-- asset('pictures/...') hľadá obrázok v public/pictures/ --}}
             <img src="{{ asset('pictures/' . $book->photo1) }}" alt="Book cover">
         </div>
 
         <div class="book-detail-info">
-            {{-- $book->name vypíše stĺpec "name" z databázy --}}
             <h1 class="book-detail-title">{{ $book->name }}</h1>
             <p class="book-detail-author">{{ $book->author }}</p>
-
             <div class="description-wrapper">
                 <p class="book-detail-description">
-                    {{-- ?? znamená "ak je detail null/prázdny, zobraz tento text" --}}
                     {{ $book->detail ?? 'Popis nie je k dispozícii.' }}
                 </p>
             </div>
@@ -62,14 +58,11 @@
         </div>
 
         <div class="book-detail-extras">
-            {{-- @if kontroluje podmienku — ak je kniha v zľave A má original_price --}}
             @if($book->is_on_sale && $book->original_price)
                 <div class="book-detail-price">
-                    {{-- number_format zaokrúhli číslo na 2 desatinné miesta --}}
                     <span class="price-original">{{ number_format($book->original_price, 2) }}€</span>
                     <span class="price-sale">{{ number_format($book->price, 2) }}€</span>
                 </div>
-                {{-- @else = inak (keď nie je v zľave) --}}
             @else
                 <div class="book-detail-price">{{ number_format($book->price, 2) }}€</div>
             @endif
@@ -77,8 +70,16 @@
             <div class="book-detail-language">{{ $book->language }}</div>
 
             <div class="book-detail-add">
-                {{-- $book->book_id je primárny kľúč z databázy --}}
-                <a href="{{ url('/basket/add/' . $book->book_id) }}">ADD TO BASKET</a>
+                <form id="basketForm" method="POST" action="{{ route('basket.add', $book->book_id) }}">
+                    @csrf
+                    <input type="hidden" name="quantity" id="qtyHidden" value="1">
+                    <button type="submit" class="btn-step" id="btnAddToBasket">ADD TO BASKET</button>
+                </form>
+                <div class="qty-stepper" id="qtyStepper" style="display:none;">
+                    <button type="button" class="qty-btn" id="qtyMinus">−</button>
+                    <input type="number" class="qty-value" id="qtyDisplay" value="1" min="1" max="{{ $book->amount }}">
+                    <button type="button" class="qty-btn" id="qtyPlus">+</button>
+                </div>
             </div>
         </div>
 
@@ -86,8 +87,6 @@
             <p class="rating-label">RATING</p>
             <div class="stars-client">
                 <h1 class="rating-value">
-                    {{-- @for je slučka — opakuje sa 5 krát (pre 5 hviezdičiek) --}}
-                    {{-- ak je $i menšie alebo rovné ratingu z DB, dá plnú ★, inak prázdnu ☆ --}}
                     @for($i = 1; $i <= 5; $i++)
                         {{ $i <= $book->rating ? '★' : '☆' }}
                     @endfor
@@ -139,6 +138,62 @@
         hamburger.classList.toggle('open');
         mobileNav.classList.toggle('open');
     });
+    const stepper = document.getElementById('qtyStepper');
+    const btnAdd = document.getElementById('btnAddToBasket');
+    const qtyHidden = document.getElementById('qtyHidden');
+    const qtyDisplay = document.getElementById('qtyDisplay');
+    const qtyMinus = document.getElementById('qtyMinus');
+    const qtyPlus = document.getElementById('qtyPlus');
+    let qty = 1;
+    const max = {{ $book->amount }};
+
+    document.getElementById('basketForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        fetch(this.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ quantity: qty })
+        }).then(() => {
+            btnAdd.style.display = 'none';
+            stepper.style.display = 'flex';
+        });
+    });
+
+    qtyMinus.addEventListener('click', () => {
+        if (qty > 1) {
+            qty--;
+            qtyDisplay.value = qty;
+            updateBasket(qty);
+        }
+    });
+
+    qtyPlus.addEventListener('click', () => {
+        if (qty < max) {
+            qty++;
+            qtyDisplay.value = qty;
+            updateBasket(qty);
+        }
+    });
+
+    qtyDisplay.addEventListener('change', () => {
+        qty = Math.min(Math.max(1, parseInt(qtyDisplay.value) || 1), max);
+        qtyDisplay.value = qty;
+        updateBasket(qty);
+    });
+
+    function updateBasket(quantity) {
+        fetch('{{ route('basket.update', $book->book_id) }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ quantity: quantity, _method: 'PATCH' })
+        });
+    }
 </script>
 
 </body>

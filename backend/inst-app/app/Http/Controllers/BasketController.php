@@ -85,7 +85,9 @@ class BasketController extends Controller
     // Aktualizovať množstvo
     public function update(Request $request, $bookId)
     {
-        $quantity = max(1, (int) $request->quantity);
+        $data = $request->json()->all();
+        $quantity = max(1, (int) ($data['quantity'] ?? $request->quantity));
+
 
         if (Auth::check()) {
             $basket = Basket::firstOrCreate(['customer_id' => Auth::id()]);

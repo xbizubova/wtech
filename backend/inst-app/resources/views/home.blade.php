@@ -57,7 +57,7 @@
             <ul>
                 <li><a href="{{ route('books.index') }}">Books <span class="menu-arrow">›</span></a></li>
                 <li><a href="{{ route('books.index', ['on_sale' => 1]) }}">Sale <span class="menu-arrow">›</span></a></li>
-                <li><a href="{{ route('books.index', ['sort' => 'newest']) }}">New Releases <span class="menu-arrow">›</span></a></li>
+                <li><a href="{{ route('books.index', ['new_releases' => 1]) }}">New Releases <span class="menu-arrow">›</span></a></li>
             </ul>
         </nav>
         <div class="recommend-content">
@@ -121,7 +121,7 @@
             <ul>
                 <li><a href="{{ route('books.index') }}">Books</a></li>
                 <li><a href="{{ route('books.index', ['on_sale' => 1]) }}">Sale</a></li>
-                <li><a href="{{ route('books.index', ['sort' => 'newest']) }}">New Releases</a></li>
+                <li><a href="{{ route('books.index', ['new_releases' => 1]) }}">New Releases </a></li>
             </ul>
         </div>
         <div class="footer-col">

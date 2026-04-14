@@ -28,6 +28,10 @@ class BookController extends Controller
         if ($request->has('on_sale') && $request->on_sale == '1') {
             $query->where('is_on_sale', true);
         }
+        // Filtrovanie podľa new releases (posledný rok)
+        if ($request->filled('new_releases')) {
+            $query->where('release_date', '>=', now()->subYear(5));
+        }
 
         // Filtrovanie podľa jazyka
         if ($request->filled('language')) {
