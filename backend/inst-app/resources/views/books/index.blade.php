@@ -34,7 +34,7 @@
 </header>
 
 <nav class="mobile-nav" id="mobileNav">
-    <a href="{{ route('login') }}">Log In</a>
+    <a href="{{ route('login') }}">Log Out</a>
     <a href="#">Basket</a>
 </nav>
 

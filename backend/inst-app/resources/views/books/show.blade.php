@@ -19,8 +19,13 @@
     {{-- route('home') vygeneruje URL na hlavnú stránku --}}
     <a href="{{ route('home') }}" class="logo">LEXEM</a>
     <nav class="header-nav">
-        {{-- route('login') je z auth.php ktorý máš v routes --}}
-        <a href="{{ route('login') }}" class="btn-login">LOG IN</a>
+        @auth
+            <a href="{{ route('logout') }}" class="btn-login"
+               onclick="event.preventDefault(); document.getElementById('logout-form').submit()">LOG OUT</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none">@csrf</form>
+        @else
+            <a href="{{ route('login') }}" class="btn-login">LOG IN</a>
+        @endauth
         <a href="{{ url('/basket') }}" class="btn-cart">
             <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
@@ -35,7 +40,7 @@
 </header>
 
 <nav class="mobile-nav" id="mobileNav">
-    <a href="{{ route('login') }}">Log In</a>
+    <a href="{{ route('login') }}">Log OUT</a>
     <a href="{{ url('/basket') }}">Basket</a>
 </nav>
 
