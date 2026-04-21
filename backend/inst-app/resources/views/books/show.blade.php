@@ -74,18 +74,17 @@
 
             <div class="book-detail-language">{{ $book->language }}</div>
 
-            <div class="book-detail-add">
-                <form id="basketForm" method="POST" action="{{ route('basket.add', $book->book_id) }}">
-                    @csrf
-                    <input type="hidden" name="quantity" id="qtyHidden" value="1">
-                    <button type="submit" class="btn-step" id="btnAddToBasket">ADD TO BASKET</button>
-                </form>
-                <div class="qty-stepper" id="qtyStepper" style="display:none;">
-                    <button type="button" class="qty-btn" id="qtyMinus">−</button>
-                    <input type="number" class="qty-value" id="qtyDisplay" value="1" min="1" max="{{ $book->amount }}">
-                    <button type="button" class="qty-btn" id="qtyPlus">+</button>
+                <div class="book-detail-add">
+                    <form id="basketForm" method="POST" action="{{ route('basket.add', $book->book_id) }}">
+                        @csrf
+                        <div class="qty-stepper">
+                            <button type="button" class="qty-btn" id="qtyMinus">−</button>
+                            <input type="number" class="qty-value" id="qtyDisplay" name="quantity" value="1" min="1" max="{{ $book->amount }}">
+                            <button type="button" class="qty-btn" id="qtyPlus">+</button>
+                        </div>
+                        <button type="submit" class="btn-step" style="margin-top: 10px;">ADD TO BASKET</button>
+                    </form>
                 </div>
-            </div>
         </div>
 
         <div class="rating">
@@ -143,35 +142,16 @@
         hamburger.classList.toggle('open');
         mobileNav.classList.toggle('open');
     });
-    const stepper = document.getElementById('qtyStepper');
-    const btnAdd = document.getElementById('btnAddToBasket');
-    const qtyHidden = document.getElementById('qtyHidden');
     const qtyDisplay = document.getElementById('qtyDisplay');
     const qtyMinus = document.getElementById('qtyMinus');
     const qtyPlus = document.getElementById('qtyPlus');
     let qty = 1;
     const max = {{ $book->amount }};
 
-    document.getElementById('basketForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        fetch(this.action, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({ quantity: qty })
-        }).then(() => {
-            btnAdd.style.display = 'none';
-            stepper.style.display = 'flex';
-        });
-    });
-
     qtyMinus.addEventListener('click', () => {
         if (qty > 1) {
             qty--;
             qtyDisplay.value = qty;
-            updateBasket(qty);
         }
     });
 
@@ -179,26 +159,13 @@
         if (qty < max) {
             qty++;
             qtyDisplay.value = qty;
-            updateBasket(qty);
         }
     });
 
     qtyDisplay.addEventListener('change', () => {
         qty = Math.min(Math.max(1, parseInt(qtyDisplay.value) || 1), max);
         qtyDisplay.value = qty;
-        updateBasket(qty);
     });
-
-    function updateBasket(quantity) {
-        fetch('{{ route('basket.update', $book->book_id) }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({ quantity: quantity, _method: 'PATCH' })
-        });
-    }
 </script>
 
 </body>

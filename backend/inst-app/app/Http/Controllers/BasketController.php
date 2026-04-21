@@ -46,12 +46,14 @@ class BasketController extends Controller
             $basket = Basket::firstOrCreate(['customer_id' => Auth::id()]);
             $existing = $basket->books()->wherePivot('book_id', $bookId)->first();
 
+            $quantity = max(1, (int) $request->quantity);
+
             if ($existing) {
                 $basket->books()->updateExistingPivot($bookId, [
-                    'amount' => $existing->pivot->amount + 1,
+                    'amount' => $existing->pivot->amount + $quantity,
                 ]);
             } else {
-                $basket->books()->attach($bookId, ['amount' => 1]);
+                $basket->books()->attach($bookId, ['amount' => $quantity]);
             }
         } else {
             $basket = session('basket', []);
@@ -65,6 +67,8 @@ class BasketController extends Controller
                 }
             }
 
+            $quantity = max(1, (int) $request->quantity);
+
             if (!$found) {
                 $basket[] = [
                     'book_id'  => $book->book_id,
@@ -72,7 +76,7 @@ class BasketController extends Controller
                     'author'   => $book->author,
                     'price'    => $book->price,
                     'photo1'   => $book->photo1,
-                    'quantity' => 1,
+                    'quantity' => $quantity,
                 ];
             }
 
