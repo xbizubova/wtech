@@ -106,6 +106,29 @@
                         @endforeach
                     </ul>
                 </div>
+
+                <div class="filter-group open">
+                    <button type="button" class="filter-toggle"
+                            onclick="this.parentElement.classList.toggle('open')">
+                        PRICE <span class="filter-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+                    </button>
+                    <div style="padding: 8px 4px;">
+                        <div class="price-range-wrapper">
+                            <div class="range-track"></div>
+                            <div class="range-fill" id="rangeFill"></div>
+                            <input type="range" id="priceMin" name="price_min"
+                                   min="0" max="100" step="1"
+                                   value="{{ request('price_min', 0) }}">
+                            <input type="range" id="priceMax" name="price_max"
+                                   min="0" max="100" step="1"
+                                   value="{{ request('price_max', 100) }}">
+                        </div>
+                        <div class="price-labels">
+                            <span id="priceMinLabel">{{ request('price_min', 0) }} €</span>
+                            <span id="priceMaxLabel">{{ request('price_max', 100) }} €</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
 
@@ -210,6 +233,47 @@
         hamburger.classList.toggle('open');
         mobileNav.classList.toggle('open');
     });
+
+    const priceMin = document.getElementById('priceMin');
+    const priceMax = document.getElementById('priceMax');
+    const priceMinLabel = document.getElementById('priceMinLabel');
+    const priceMaxLabel = document.getElementById('priceMaxLabel');
+    const rangeFill = document.getElementById('rangeFill');
+
+    function updateRange() {
+        let min = parseInt(priceMin.value);
+        let max = parseInt(priceMax.value);
+
+        if (min > max) {
+            priceMin.value = max;
+            min = max;
+        }
+        if (max < min) {
+            priceMax.value = min;
+            max = min;
+        }
+
+        const percent1 = (min / 100) * 100;
+        const percent2 = (max / 100) * 100;
+
+        rangeFill.style.left = percent1 + '%';
+        rangeFill.style.width = (percent2 - percent1) + '%';
+
+        priceMinLabel.textContent = min + ' €';
+        priceMaxLabel.textContent = max + ' €';
+    }
+
+    priceMin.addEventListener('input', updateRange);
+    priceMax.addEventListener('input', updateRange);
+
+    priceMin.addEventListener('change', () => {
+        document.getElementById('filterForm').submit();
+    });
+    priceMax.addEventListener('change', () => {
+        document.getElementById('filterForm').submit();
+    });
+
+    updateRange();
 </script>
 </body>
 </html>

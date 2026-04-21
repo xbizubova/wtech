@@ -86,6 +86,15 @@
         </div>
     </form>
 </main>
+@if($errors->any())
+    <div style="background:red; color:white; padding:16px; margin:16px;">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 <footer>
     <div class="footer-inner">
