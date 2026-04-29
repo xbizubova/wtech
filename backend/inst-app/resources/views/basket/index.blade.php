@@ -125,8 +125,8 @@
 
     @if(count($items) > 0)
         <div class="step-wrapper">
-            <a href="{{ url('/checkout/information') }}" class="btn-step">
-                Customer Info
+            <a href="{{ route('order.customer-info') }}" class="btn-step">
+                CUSTOMER INFO
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="9 18 15 12 9 6"/>
                 </svg>

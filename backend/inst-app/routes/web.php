@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BasketController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
 Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
@@ -18,9 +20,19 @@ Route::patch('/basket/update/{bookId}', [BasketController::class, 'update'])->na
 Route::delete('/basket/remove/{bookId}', [BasketController::class, 'remove'])->name('basket.remove');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/account', [AccountController::class, 'index'])->name('account');
+    Route::post('/account', [AccountController::class, 'update'])->name('account.update');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/order/customer-info', [OrderController::class, 'customerInfo'])->name('order.customer-info');
+    Route::post('/order/customer-info', [OrderController::class, 'saveCustomerInfo'])->name('order.save-customer-info');
+    Route::get('/order/shipping', [OrderController::class, 'shipping'])->name('order.shipping');
+    Route::post('/order/shipping', [OrderController::class, 'saveShipping'])->name('order.save-shipping');
+    Route::get('/order/payment', [OrderController::class, 'payment'])->name('order.payment');
+    Route::post('/order/payment', [OrderController::class, 'savePayment'])->name('order.save-payment');
+    Route::get('/order/summary', [OrderController::class, 'summary'])->name('order.summary');
+    Route::post('/order/confirm', [OrderController::class, 'confirm'])->name('order.confirm');
 
 
 });

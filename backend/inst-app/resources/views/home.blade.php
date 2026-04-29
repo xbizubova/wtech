@@ -14,6 +14,9 @@
     <a href="{{ route('home') }}" class="logo">LEXEM</a>
     <nav class="header-nav">
         @auth
+            <a href="{{ route('account') }}" class="btn-login">ACCOUNT</a>
+        @endauth
+        @auth
             <a href="{{ route('logout') }}" class="btn-login"
                onclick="event.preventDefault(); document.getElementById('logout-form').submit()">LOG OUT</a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none">@csrf</form>
