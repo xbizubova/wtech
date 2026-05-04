@@ -10,8 +10,7 @@ class AccountController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $orders = collect();
-        //$orders = $user->orders()->with('books')->get() ?? collect();
+        $orders = $user->orders()->with('items.book')->latest()->get();
         return view('account', compact('user', 'orders'));
     }
 

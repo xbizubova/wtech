@@ -78,14 +78,15 @@
             <div class="book-detail-language">{{ $book->language }}</div>
 
                 <div class="book-detail-add">
-                    <form id="basketForm" method="POST" action="{{ route('basket.add', $book->book_id) }}">
+                    <form id="basketForm" method="POST" action="{{ route('basket.add', $book->book_id) }}"
+                          style="display:flex; flex-direction:column; align-items:center; gap:12px; width:100%;">
                         @csrf
                         <div class="qty-stepper">
                             <button type="button" class="qty-btn" id="qtyMinus">−</button>
                             <input type="number" class="qty-value" id="qtyDisplay" name="quantity" value="1" min="1" max="{{ $book->amount }}">
                             <button type="button" class="qty-btn" id="qtyPlus">+</button>
                         </div>
-                        <button type="submit" class="btn-step" style="margin-top: 10px;">ADD TO BASKET</button>
+                        <button type="submit" class="btn-step" style="width:100%; justify-content:center; margin-top:0;">ADD TO BASKET</button>
                     </form>
                 </div>
         </div>

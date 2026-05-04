@@ -90,7 +90,7 @@
                     </ul>
                 </div>
 
-                <div class="filter-group open">
+                <div class="filter-group open">cd
                     <button type="button" class="filter-toggle"
                             onclick="this.parentElement.classList.toggle('open')">
                         LANGUAGE <span class="filter-arrow"><i class="fa-solid fa-chevron-down"></i></span>

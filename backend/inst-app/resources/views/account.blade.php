@@ -98,14 +98,14 @@
             <div class="order-history">
                 <div class="books-grid-4">
                     @forelse($orders as $order)
-                        @foreach($order->books as $book)
-                            <a href="{{ route('books.show', $book->book_id) }}" class="book-card">
-                                @if($book->photo1)
-                                    <img class="book-cover" src="{{ asset('pictures/' . $book->photo1) }}" alt="{{ $book->name }}">
+                        @foreach($order->items as $item)
+                            <a href="{{ route('books.show', $item->book->book_id) }}" class="book-card">
+                                @if($item->book->photo1)
+                                    <img class="book-cover" src="{{ asset('pictures/' . $item->book->photo1) }}" alt="{{ $item->book->name }}">
                                 @else
                                     <div class="book-cover"></div>
                                 @endif
-                                <p class="book-title">{{ $book->name }}</p>
+                                <p class="book-title">{{ $item->book->name }}</p>
                             </a>
                         @endforeach
                     @empty

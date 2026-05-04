@@ -30,8 +30,9 @@
 
             <div class="info">
                 <label for="password">Create a password</label>
-                <div class="input-icon1">
+                <div class="input-icon2">
                     <input id="password" type="password" name="password" required>
+                    <i class="fa-regular fa-eye" id="togglePassword" style="cursor:pointer;"></i>
                 </div>
                 @error('password')
                 <p style="color:red; font-size:0.8rem;">{{ $message }}</p>
@@ -40,9 +41,9 @@
 
             <div class="info">
                 <label for="password_confirmation">Repeat password</label>
-                <div class="input-icon1">
-                    <input id="password_confirmation" type="password"
-                           name="password_confirmation" required>
+                <div class="input-icon2">
+                    <input id="password_confirmation" type="password" name="password_confirmation" required>
+                    <i class="fa-regular fa-eye" id="togglePasswordConfirm" style="cursor:pointer;"></i>
                 </div>
             </div>
 
@@ -53,5 +54,19 @@
             </p>
         </form>
     </div>
-</x-guest-layout>
 
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const input = document.getElementById('password');
+            input.type = input.type === 'password' ? 'text' : 'password';
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+        document.getElementById('togglePasswordConfirm').addEventListener('click', function() {
+            const input = document.getElementById('password_confirmation');
+            input.type = input.type === 'password' ? 'text' : 'password';
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+</x-guest-layout>

@@ -24,7 +24,7 @@
                 <label for="password">password</label>
                 <div class="input-icon2">
                     <input id="password" type="password" name="password" required>
-                    <i class="fa-regular fa-eye"></i>
+                    <i class="fa-regular fa-eye" id="togglePassword" style="cursor:pointer;"></i>
                 </div>
                 @error('password')
                 <p style="color:red; font-size:0.8rem;">{{ $message }}</p>
@@ -40,4 +40,13 @@
             @endif
         </form>
     </div>
+
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const input = document.getElementById('password');
+            input.type = input.type === 'password' ? 'text' : 'password';
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
 </x-guest-layout>
