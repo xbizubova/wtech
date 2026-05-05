@@ -3,20 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    {{-- Blade komentár. Tu dávame názov knihy do titulku stránky --}}
-    {{-- {{ }} znamená "vypíš premennú" --}}
     <title>LEXEM — {{ $book->name }}</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-
-    {{-- asset() hľadá súbor v priečinku "public/" --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
 
 <header>
-    {{-- route('home') vygeneruje URL na hlavnú stránku --}}
     <a href="{{ route('home') }}" class="logo">LEXEM</a>
     <nav class="header-nav">
         @auth
@@ -93,16 +86,20 @@
             <div class="book-detail-language">{{ $book->language }}</div>
 
             <div class="book-detail-add">
-                <form id="basketForm" method="POST" action="{{ route('basket.add', $book->book_id) }}"
-                      style="display:flex; flex-direction:column; align-items:center; gap:12px; width:100%;">
-                    @csrf
-                    <div class="qty-stepper">
-                        <button type="button" class="qty-btn" id="qtyMinus">−</button>
-                        <input type="number" class="qty-value" id="qtyDisplay" name="quantity" value="1" min="1" max="{{ $book->amount }}">
-                        <button type="button" class="qty-btn" id="qtyPlus">+</button>
-                    </div>
-                    <button type="submit" class="btn-step" style="width:100%; justify-content:center; margin-top:0;">ADD TO BASKET</button>
-                </form>
+                @if($book->amount <= 0)
+                    <p style="text-align:center; font-family:'Jost',sans-serif; letter-spacing:0.1em; color:#999; font-size:0.85rem; text-transform:uppercase; padding:12px 0;">Out of stock</p>
+                @else
+                    <form id="basketForm" method="POST" action="{{ route('basket.add', $book->book_id) }}"
+                          style="display:flex; flex-direction:column; align-items:center; gap:12px; width:100%;">
+                        @csrf
+                        <div class="qty-stepper">
+                            <button type="button" class="qty-btn" id="qtyMinus">−</button>
+                            <input type="number" class="qty-value" id="qtyDisplay" name="quantity" value="1" min="1" max="{{ $book->amount }}">
+                            <button type="button" class="qty-btn" id="qtyPlus">+</button>
+                        </div>
+                        <button type="submit" class="btn-step" style="width:100%; justify-content:center; margin-top:0;">ADD TO BASKET</button>
+                    </form>
+                @endif
             </div>
         </div>
 
@@ -130,7 +127,6 @@
             <h4>Categories</h4>
             <ul>
                 <li><a href="{{ route('books.index') }}">Books</a></li>
-                {{-- on_sale=1 pridá filter do URL: /books?on_sale=1 --}}
                 <li><a href="{{ route('books.index', ['on_sale' => 1]) }}">Sale</a></li>
             </ul>
         </div>
@@ -146,7 +142,6 @@
 </footer>
 
 <script>
-    // Show more / Show less tlačidlo pre popis knihy
     const btn = document.getElementById('btnShowMore');
     const wrapper = document.querySelector('.description-wrapper');
     btn.addEventListener('click', () => {
@@ -154,13 +149,14 @@
         btn.textContent = wrapper.classList.contains('expanded') ? 'Show less' : 'Show more';
     });
 
-    // Hamburger menu pre mobil
     const hamburger = document.getElementById('hamburger');
     const mobileNav = document.getElementById('mobileNav');
     hamburger.addEventListener('click', () => {
         hamburger.classList.toggle('open');
         mobileNav.classList.toggle('open');
     });
+
+    @if($book->amount > 0)
     const qtyDisplay = document.getElementById('qtyDisplay');
     const qtyMinus = document.getElementById('qtyMinus');
     const qtyPlus = document.getElementById('qtyPlus');
@@ -168,23 +164,18 @@
     const max = {{ $book->amount }};
 
     qtyMinus.addEventListener('click', () => {
-        if (qty > 1) {
-            qty--;
-            qtyDisplay.value = qty;
-        }
+        if (qty > 1) { qty--; qtyDisplay.value = qty; }
     });
 
     qtyPlus.addEventListener('click', () => {
-        if (qty < max) {
-            qty++;
-            qtyDisplay.value = qty;
-        }
+        if (qty < max) { qty++; qtyDisplay.value = qty; }
     });
 
     qtyDisplay.addEventListener('change', () => {
         qty = Math.min(Math.max(1, parseInt(qtyDisplay.value) || 1), max);
         qtyDisplay.value = qty;
     });
+    @endif
 </script>
 
 </body>
