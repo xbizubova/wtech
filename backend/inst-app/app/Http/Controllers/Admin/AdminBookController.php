@@ -128,6 +128,8 @@ class AdminBookController extends Controller
             'rating'        => 'nullable|integer|min:1|max:5',
             'amount'        => 'required|integer',
             'release_date'  => 'nullable|date',
+            'new_images'    => 'nullable|array',
+            'new_images.*'  => 'image|mimes:jpeg,jpg,png,webp|max:5120',
         ]);
 
         if ($request->hasFile('photo1')) {
@@ -150,6 +152,19 @@ class AdminBookController extends Controller
             $book->categories()->sync($request->categories);
         }
 
+
+        if ($request->hasFile('new_images')) {
+            foreach ($request->file('new_images') as $index => $file) {
+                $filename = $file->getClientOriginalName();
+                $file->move(public_path('pictures'), $filename);
+                \App\Models\BookImage::create([
+                    'book_id'  => $book->book_id,
+                    'filename' => $filename,
+                    'order'    => $book->images()->max('order') + $index + 1,
+                ]);
+            }
+        }
+
         return redirect()->route('admin.books.show', $id)->with('success', 'Kniha bola upravená.');
     }
     public function restock(Request $request, $id)
@@ -167,6 +182,14 @@ class AdminBookController extends Controller
         $book->is_hidden = true;
         $book->save();
         return redirect()->route('admin.books.index')->with('success', 'Kniha bola skrytá.');
+    }
+
+    public function deleteImage($imageId)
+    {
+        $image = \App\Models\BookImage::findOrFail($imageId);
+        // voliteľne: unlink(public_path('pictures/' . $image->filename));
+        $image->delete();
+        return response()->json(['success' => true]);
     }
 
     // Obnoviť skrytú knihu
