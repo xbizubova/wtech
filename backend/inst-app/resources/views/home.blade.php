@@ -78,6 +78,8 @@
                 @endforeach
             </div>
         </div>
+
+
     </section>
 
     <section class="trending-section">
