@@ -49,41 +49,33 @@
                     <div class="form-col">
                         <div class="field-group">
                             <label class="field-label">Email</label>
-                            <input type="email" class="field-input" name="email"
-                                   value="{{ $user->email }}">
+                            <input type="email" class="field-input" name="email" value="{{ $user->email }}">
                         </div>
                         <div class="field-group">
                             <label class="field-label">First name</label>
-                            <input type="text" class="field-input" name="name"
-                                   value="{{ $user->name }}">
+                            <input type="text" class="field-input" name="name" value="{{ $user->name }}">
                         </div>
                         <div class="field-group">
                             <label class="field-label">Surname</label>
-                            <input type="text" class="field-input" name="last_name"
-                                   value="{{ $user->last_name }}">
+                            <input type="text" class="field-input" name="last_name" value="{{ $user->last_name }}">
                         </div>
                         <div class="field-group">
                             <label class="field-label">Phone number</label>
-                            <input type="tel" class="field-input" name="phone_number"
-                                   value="{{ $user->phone_number }}">
+                            <input type="tel" class="field-input" name="phone_number" value="{{ $user->phone_number }}">
                         </div>
                     </div>
-
                     <div class="form-col">
                         <div class="field-group">
                             <label class="field-label">Street and house number</label>
-                            <input type="text" class="field-input" name="address"
-                                   value="{{ $user->address }}">
+                            <input type="text" class="field-input" name="address" value="{{ $user->address }}">
                         </div>
                         <div class="field-group">
                             <label class="field-label">City</label>
-                            <input type="text" class="field-input" name="city"
-                                   value="{{ $user->city }}">
+                            <input type="text" class="field-input" name="city" value="{{ $user->city }}">
                         </div>
                         <div class="field-group">
                             <label class="field-label">State</label>
-                            <input type="text" class="field-input" name="state"
-                                   value="{{ $user->state }}">
+                            <input type="text" class="field-input" name="state" value="{{ $user->state }}">
                         </div>
                         <div class="field-group">
                             <button type="submit" class="field-group-btn">CHANGE INFORMATION</button>
@@ -96,18 +88,16 @@
         <div class="book-history">
             <h1 class="history">BOOKS YOU PURCHASED</h1>
             <div class="order-history">
-                <div class="books-grid-4">
-                    @forelse($orders as $order)
-                        @foreach($order->items as $item)
-                            <a href="{{ route('books.show', $item->book->book_id) }}" class="book-card">
-                                @if($item->book->photo1)
-                                    <img class="book-cover" src="{{ asset('pictures/' . $item->book->photo1) }}" alt="{{ $item->book->name }}">
-                                @else
-                                    <div class="book-cover"></div>
-                                @endif
-                                <p class="book-title">{{ $item->book->name }}</p>
-                            </a>
-                        @endforeach
+                <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+                    @forelse($purchasedBooks as $item)
+                        <a href="{{ route('books.show', $item->book->book_id) }}" class="book-card" style="width: 150px; flex-shrink: 0;">
+                            @if($item->book->photo1)
+                                <img class="book-cover" src="{{ asset('pictures/' . $item->book->photo1) }}" alt="{{ $item->book->name }}">
+                            @else
+                                <div class="book-cover"></div>
+                            @endif
+                            <p class="book-title">{{ $item->book->name }}</p>
+                        </a>
                     @empty
                         <p>No orders yet.</p>
                     @endforelse

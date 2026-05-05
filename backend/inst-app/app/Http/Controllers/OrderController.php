@@ -121,6 +121,17 @@ class OrderController extends Controller
                 'price'    => $book->price,
             ]);
         }
+        foreach ($items as $book) {
+            OrderItem::create([
+                'order_id' => $order->order_id,
+                'book_id'  => $book->book_id,
+                'amount'   => $book->pivot->amount,
+                'price'    => $book->price,
+            ]);
+
+            // Odobrať množstvo
+            $book->decrement('amount', $book->pivot->amount);
+        }
 
         // Vymaž košík
         $basket->books()->detach();

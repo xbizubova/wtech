@@ -11,7 +11,12 @@ class AccountController extends Controller
     {
         $user = Auth::user();
         $orders = $user->orders()->with('items.book')->latest()->get();
-        return view('account', compact('user', 'orders'));
+
+        // Zbieraj unikátne knihy naprieč všetkými objednávkami
+        $purchasedBooks = $orders->flatMap(fn($order) => $order->items)
+            ->unique('book_id');
+
+        return view('account', compact('user', 'orders', 'purchasedBooks'));
     }
 
     public function update(Request $request)
