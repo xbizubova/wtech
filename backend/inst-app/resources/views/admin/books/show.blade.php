@@ -81,6 +81,9 @@
                 </div>
 
                 <div class="book-detail-add">
+                    @if($book->amount <= 0)
+                        <p style="text-align:center; font-family:'Jost',sans-serif; letter-spacing:0.1em; color:#c0392b; font-size:0.85rem; text-transform:uppercase; padding:12px 0;">Out of stock</p>
+                    @endif
                     <button type="submit">SAVE</button>
                 </div>
             </div>
@@ -98,14 +101,32 @@
         </div>
     </form>
 
-    {{-- Vymazať knihu --}}
-    <div style="text-align:center; margin-top: 32px;">
-        <form method="POST" action="{{ route('admin.books.destroy', $book->book_id) }}"
-              onsubmit="return confirm('Naozaj chceš vymazať túto knihu?')">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="book-detail-add" style="color:red;">REMOVE</button>
-        </form>
+    <div style="text-align:center; margin-top: 32px; display:flex; flex-direction:column; align-items:center; gap:16px;">
+
+        @if($book->amount <= 0)
+            <form method="POST" action="{{ route('admin.books.restock', $book->book_id) }}" style="display:flex; align-items:center; gap:8px;">
+                @csrf
+                @method('PATCH')
+                <input type="number" name="restock_amount" min="1" value="1"
+                       style="width:70px; text-align:center; font-family:'Jost',sans-serif; font-size:0.9rem; border:1px solid #ccc; border-radius:4px; padding:6px;">
+                <button type="submit" class="book-detail-add" style="color:green;">RESTOCK</button>
+            </form>
+        @endif
+
+        @if($book->is_hidden)
+            <form method="POST" action="{{ route('admin.books.restore', $book->book_id) }}">
+                @csrf
+                @method('PATCH')
+                <button type="submit" class="book-detail-add" style="color:green;">RESTORE</button>
+            </form>
+        @else
+            <form method="POST" action="{{ route('admin.books.destroy', $book->book_id) }}"
+                  onsubmit="return confirm('Naozaj chceš skryť túto knihu?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="book-detail-add" style="color:red;">REMOVE</button>
+            </form>
+        @endif
     </div>
 </main>
 

@@ -147,23 +147,19 @@
 
             <div class="books">
                 @forelse($books as $book)
-                    <a href="{{ route('admin.books.show', $book->book_id) }}" class="book-card">
+                    <a href="{{ route('admin.books.show', $book->book_id) }}" class="book-card" style="{{ $book->is_hidden ? 'opacity:0.5; filter:grayscale(60%);' : '' }}">
                         @if($book->photo1)
-                            <img class="book-cover" src="{{ asset('pictures/' . $book->photo1) }}" alt="{{ $book->name }}">
+                            <div style="position:relative;">
+                                @if($book->is_hidden)
+                                    <span style="position:absolute; top:8px; left:8px; background:#c0392b; color:#fff; font-size:0.65rem; font-family:'Jost',sans-serif; letter-spacing:0.08em; padding:4px 8px; border-radius:2px; z-index:10; text-transform:uppercase;">Removed</span>
+                                @endif
+                                <img class="book-cover" src="{{ asset('pictures/' . $book->photo1) }}" alt="{{ $book->name }}">
+                            </div>
                         @else
                             <div class="book-cover"></div>
                         @endif
-                        <p class="book-title">{{ $book->name }}</p>
-                        <p class="book-author">{{ $book->author }}</p>
-                        @if($book->is_on_sale)
-                            <p class="book-price"><s>{{ number_format($book->original_price, 2) }}€</s> {{ number_format($book->price, 2) }}€</p>
-                            <p class="book-sale">SALE</p>
-                        @else
-                            <p class="book-price">{{ number_format($book->price, 2) }}€</p>
-                        @endif
-                    </a>
-                @empty
-                    <p>Žiadne knihy sa nenašli.</p>
+                        @empty
+                            <p>Žiadne knihy sa nenašli.</p>
                 @endforelse
             </div>
 

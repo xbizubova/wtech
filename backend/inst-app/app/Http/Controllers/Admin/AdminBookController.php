@@ -93,6 +93,7 @@ class AdminBookController extends Controller
         $data['is_on_sale']     = $request->has('is_on_sale');
         $data['is_booktok']     = $request->has('is_booktok');
         $data['is_recommended'] = $request->has('is_recommended');
+        $data['is_hidden']      = false; // nová kniha je vždy viditeľná
 
         if ($request->hasFile('photo1')) {
             $data['photo1'] = $request->file('photo1')->getClientOriginalName();
@@ -132,7 +133,6 @@ class AdminBookController extends Controller
         if ($request->hasFile('photo1')) {
             $data['photo1'] = $request->file('photo1')->getClientOriginalName();
             $request->file('photo1')->move(public_path('pictures'), $data['photo1']);
-
         }
 
         if ($request->hasFile('photo2')) {
@@ -152,13 +152,29 @@ class AdminBookController extends Controller
 
         return redirect()->route('admin.books.show', $id)->with('success', 'Kniha bola upravená.');
     }
+    public function restock(Request $request, $id)
+    {
+        $request->validate(['restock_amount' => 'required|integer|min:1']);
+        $book = Book::findOrFail($id);
+        $book->increment('amount', $request->restock_amount);
+        return redirect()->route('admin.books.show', $id)->with('success', 'Sklad bol doplnený.');
+    }
 
     public function destroy($id)
     {
+        // Namiesto vymazania len skryje knihu
         $book = Book::findOrFail($id);
-        $book->categories()->detach();
-        $book->delete();
-        return redirect()->route('admin.books.index')->with('success', 'Kniha bola vymazaná.');
+        $book->is_hidden = true;
+        $book->save();
+        return redirect()->route('admin.books.index')->with('success', 'Kniha bola skrytá.');
     }
 
+    // Obnoviť skrytú knihu
+    public function restore($id)
+    {
+        $book = Book::findOrFail($id);
+        $book->is_hidden = false;
+        $book->save();
+        return redirect()->route('admin.books.show', $id)->with('success', 'Kniha bola obnovená.');
+    }
 }

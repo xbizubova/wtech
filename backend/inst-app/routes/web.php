@@ -52,6 +52,9 @@ Route::middleware('admin')->prefix('ninkaalexsupertajnastranka')->name('admin.')
     Route::get('/books/{id}', [AdminBookController::class, 'show'])->name('books.show');
     Route::put('/books/{id}', [AdminBookController::class, 'update'])->name('books.update');
     Route::delete('/books/{id}', [AdminBookController::class, 'destroy'])->name('books.destroy');
+    Route::patch('/books/{id}/restore', [AdminBookController::class, 'restore'])->name('books.restore');
+    Route::patch('/books/{id}/restore', [AdminBookController::class, 'restore'])->name('books.restore');
+    Route::patch('/books/{id}/restock', [AdminBookController::class, 'restock'])->name('books.restock');
 });
 
 require __DIR__.'/auth.php';

@@ -12,7 +12,7 @@ class BookController extends Controller
     public function index(Request $request)
     {
         $categories = Category::all();
-        $query = Book::with(['categories', 'images']);
+        $query = Book::with(['categories', 'images'])->where('is_hidden', false);
 
         // Filtrovanie podľa booktok
         if ($request->filled('is_booktok')) {
@@ -79,13 +79,13 @@ class BookController extends Controller
 
     public function show($id)
     {
-        $book = Book::with(['categories', 'images'])->findOrFail($id);
+        $book = Book::with(['categories', 'images'])->where('is_hidden', false)->findOrFail($id);
         return view('books.show', compact('book'));
     }
     public function home()
     {
-        $recommended = Book::where('is_recommended', true)->limit(2)->get();
-        $trending = Book::where('is_booktok', true)->limit(4)->get();
+        $recommended = Book::where('is_recommended', true)->where('is_hidden', false)->limit(2)->get();
+        $trending = Book::where('is_booktok', true)->where('is_hidden', false)->limit(4)->get();
 
         return view('home', compact('recommended', 'trending'));
     }
