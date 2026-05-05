@@ -25,17 +25,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/order/customer-info', [OrderController::class, 'customerInfo'])->name('order.customer-info');
-    Route::post('/order/customer-info', [OrderController::class, 'saveCustomerInfo'])->name('order.save-customer-info');
-    Route::get('/order/shipping', [OrderController::class, 'shipping'])->name('order.shipping');
-    Route::post('/order/shipping', [OrderController::class, 'saveShipping'])->name('order.save-shipping');
-    Route::get('/order/payment', [OrderController::class, 'payment'])->name('order.payment');
-    Route::post('/order/payment', [OrderController::class, 'savePayment'])->name('order.save-payment');
-    Route::get('/order/summary', [OrderController::class, 'summary'])->name('order.summary');
-    Route::post('/order/confirm', [OrderController::class, 'confirm'])->name('order.confirm');
-
-
 });
+
+// Order routes — dostupné aj pre neprihlásených
+Route::get('/order/customer-info', [OrderController::class, 'customerInfo'])->name('order.customer-info');
+Route::post('/order/customer-info', [OrderController::class, 'saveCustomerInfo'])->name('order.save-customer-info');
+Route::get('/order/shipping', [OrderController::class, 'shipping'])->name('order.shipping');
+Route::post('/order/shipping', [OrderController::class, 'saveShipping'])->name('order.save-shipping');
+Route::get('/order/payment', [OrderController::class, 'payment'])->name('order.payment');
+Route::post('/order/payment', [OrderController::class, 'savePayment'])->name('order.save-payment');
+Route::get('/order/summary', [OrderController::class, 'summary'])->name('order.summary');
+Route::post('/order/confirm', [OrderController::class, 'confirm'])->name('order.confirm');
 
 require __DIR__.'/auth.php';
 

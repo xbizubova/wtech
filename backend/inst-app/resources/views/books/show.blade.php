@@ -94,7 +94,7 @@
                         @csrf
                         <div class="qty-stepper">
                             <button type="button" class="qty-btn" id="qtyMinus">−</button>
-                            <input type="number" class="qty-value" id="qtyDisplay" name="quantity" value="1" min="1" max="{{ $book->amount }}">
+                            <input type="number" class="qty-value" id="qtyDisplay" name="quantity" value="1" min="1" max="{{ $book->amount }}" style="width:60px;">
                             <button type="button" class="qty-btn" id="qtyPlus">+</button>
                         </div>
                         <button type="submit" class="btn-step" style="width:100%; justify-content:center; margin-top:0;">ADD TO BASKET</button>
@@ -177,6 +177,23 @@
     });
     @endif
 </script>
+
+@if(session('success'))
+    <div id="toast" style="
+    position:fixed; bottom:32px; left:50%; transform:translateX(-50%);
+    background:#2c2c2c; color:#fff;
+    padding:14px 28px; border-radius:40px;
+    font-family:'Jost',sans-serif; font-size:0.85rem; letter-spacing:0.08em;
+    z-index:9999; opacity:1; transition:opacity 0.5s ease;
+">✓ Added to basket</div>
+    <script>
+        setTimeout(() => {
+            const t = document.getElementById('toast');
+            t.style.opacity = '0';
+            setTimeout(() => t.remove(), 500);
+        }, 2500);
+    </script>
+@endif
 
 </body>
 </html>

@@ -23,18 +23,25 @@
         <div class="summary-section">
             <p class="summary-section-label">Your Books</p>
             @foreach($items as $book)
+                @php
+                    $qty = isset($book->pivot) ? $book->pivot->amount : ($book->quantity ?? 1);
+                    $photo = isset($book->pivot) ? $book->photo1 : ($book->photo1 ?? null);
+                    $name = isset($book->pivot) ? $book->name : ($book->name ?? '');
+                    $author = isset($book->pivot) ? $book->author : ($book->author ?? '');
+                    $price = isset($book->pivot) ? $book->price : ($book->price ?? 0);
+                @endphp
                 <div class="summary-book-item">
-                    @if($book->photo1)
-                        <img class="item-cover" src="{{ asset('pictures/' . $book->photo1) }}" alt="{{ $book->name }}">
+                    @if($photo)
+                        <img class="item-cover" src="{{ asset('pictures/' . $photo) }}" alt="{{ $name }}">
                     @else
                         <div class="item-cover"></div>
                     @endif
                     <div class="summary-book-info">
-                        <p class="summary-book-title">{{ $book->name }}</p>
-                        <p class="summary-book-author">{{ $book->author }}</p>
-                        <p style="font-size:13px; color:gray;">Qty: {{ $book->pivot->amount }}</p>
+                        <p class="summary-book-title">{{ $name }}</p>
+                        <p class="summary-book-author">{{ $author }}</p>
+                        <p style="font-size:13px; color:gray;">Qty: {{ $qty }}</p>
                     </div>
-                    <span class="summary-book-price">{{ number_format($book->price * $book->pivot->amount, 2) }} €</span>
+                    <span class="summary-book-price">{{ number_format($price * $qty, 2) }} €</span>
                 </div>
             @endforeach
         </div>

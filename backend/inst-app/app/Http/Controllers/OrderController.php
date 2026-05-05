@@ -77,14 +77,23 @@ class OrderController extends Controller
     // Krok 4 — Order Summary
     public function summary()
     {
-        $user = Auth::user();
-        $basket = Basket::firstOrCreate(['customer_id' => Auth::id()]);
-        $items = $basket->books;
+        $sessionBasket = session('basket', []);
+
+        if (Auth::check()) {
+            $basket = Basket::firstOrCreate(['customer_id' => Auth::id()]);
+            $items = $basket->books;
+            $subtotal = $items->sum(fn($b) => $b->price * $b->pivot->amount);
+        } else {
+            $items = collect($sessionBasket)->map(function ($item) {
+                return (object) $item;
+            });
+            $subtotal = $items->sum(fn($i) => $i->price * $i->quantity);
+        }
+
         $customer = session('order_customer', []);
         $shipping = session('order_shipping', '');
         $shippingPrice = session('order_shipping_price', 0);
         $payment = session('order_payment', '');
-        $subtotal = $items->sum(fn($b) => $b->price * $b->pivot->amount);
         $total = $subtotal + $shippingPrice;
 
         return view('order.summary', compact(
@@ -96,45 +105,61 @@ class OrderController extends Controller
     // Krok 5 — Potvrdiť objednávku
     public function confirm()
     {
-        $user = Auth::user();
-        $basket = Basket::firstOrCreate(['customer_id' => Auth::id()]);
-        $items = $basket->books;
-
         $shippingPrice = session('order_shipping_price', 0);
-        $subtotal = $items->sum(fn($b) => $b->price * $b->pivot->amount);
-        $total = $subtotal + $shippingPrice;
 
-        $order = Order::create([
-            'customer_id'     => $user->id,
-            'status'          => 'pending',
-            'total_price'     => $total,
-            'shipping_method' => session('order_shipping'),
-            'shipping_price'  => $shippingPrice,
-            'payment_method'  => session('order_payment'),
-        ]);
+        if (Auth::check()) {
+            $basket = Basket::firstOrCreate(['customer_id' => Auth::id()]);
+            $items = $basket->books;
+            $subtotal = $items->sum(fn($b) => $b->price * $b->pivot->amount);
+            $total = $subtotal + $shippingPrice;
 
-        foreach ($items as $book) {
-            OrderItem::create([
-                'order_id' => $order->order_id,
-                'book_id'  => $book->book_id,
-                'amount'   => $book->pivot->amount,
-                'price'    => $book->price,
-            ]);
-        }
-        foreach ($items as $book) {
-            OrderItem::create([
-                'order_id' => $order->order_id,
-                'book_id'  => $book->book_id,
-                'amount'   => $book->pivot->amount,
-                'price'    => $book->price,
+            $order = Order::create([
+                'customer_id'     => Auth::id(),
+                'status'          => 'pending',
+                'total_price'     => $total,
+                'shipping_method' => session('order_shipping'),
+                'shipping_price'  => $shippingPrice,
+                'payment_method'  => session('order_payment'),
             ]);
 
-            // Odobrať množstvo
-            $book->decrement('amount', $book->pivot->amount);
+            foreach ($items as $book) {
+                OrderItem::create([
+                    'order_id' => $order->order_id,
+                    'book_id'  => $book->book_id,
+                    'amount'   => $book->pivot->amount,
+                    'price'    => $book->price,
+                ]);
+                $book->decrement('amount', $book->pivot->amount);
+            }
+
+            $basket->books()->detach();
+        } else {
+            $sessionBasket = session('basket', []);
+            $subtotal = collect($sessionBasket)->sum(fn($i) => $i['price'] * $i['quantity']);
+            $total = $subtotal + $shippingPrice;
+
+            $order = Order::create([
+                'customer_id'     => null,
+                'status'          => 'pending',
+                'total_price'     => $total,
+                'shipping_method' => session('order_shipping'),
+                'shipping_price'  => $shippingPrice,
+                'payment_method'  => session('order_payment'),
+            ]);
+
+            foreach ($sessionBasket as $item) {
+                OrderItem::create([
+                    'order_id' => $order->order_id,
+                    'book_id'  => $item['book_id'],
+                    'amount'   => $item['quantity'],
+                    'price'    => $item['price'],
+                ]);
+                \App\Models\Book::find($item['book_id'])?->decrement('amount', $item['quantity']);
+            }
+
+            session()->forget('basket');
         }
 
-        // Vymaž košík
-        $basket->books()->detach();
         session()->forget(['order_customer', 'order_shipping', 'order_shipping_price', 'order_payment']);
 
         return view('order.finish', compact('order'));

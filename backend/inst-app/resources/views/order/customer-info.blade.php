@@ -43,22 +43,22 @@
                         <div class="field-group">
                             <label class="field-label">Email</label>
                             <input type="email" class="field-input" name="email"
-                                   value="{{ old('email', $user->email) }}" required>
+                                   value="{{ old('email', $user?->email) }}" required>
                         </div>
                         <div class="field-group">
                             <label class="field-label">First name</label>
                             <input type="text" class="field-input" name="name"
-                                   value="{{ old('name', $user->name) }}" required>
+                                   value="{{ old('name', $user?->name) }}" required>
                         </div>
                         <div class="field-group">
                             <label class="field-label">Surname</label>
                             <input type="text" class="field-input" name="last_name"
-                                   value="{{ old('last_name', $user->last_name) }}">
+                                   value="{{ old('last_name', $user?->last_name) }}">
                         </div>
                         <div class="field-group">
                             <label class="field-label">Phone number</label>
                             <input type="tel" class="field-input" name="phone_number"
-                                   value="{{ old('phone_number', $user->phone_number) }}">
+                                   value="{{ old('phone_number', $user?->phone_number) }}">
                         </div>
                     </div>
 
@@ -66,17 +66,17 @@
                         <div class="field-group">
                             <label class="field-label">Street and house number</label>
                             <input type="text" class="field-input" name="address"
-                                   value="{{ old('address', $user->address) }}" required>
+                                   value="{{ old('address', $user?->address) }}" required>
                         </div>
                         <div class="field-group">
                             <label class="field-label">City</label>
                             <input type="text" class="field-input" name="city"
-                                   value="{{ old('city', $user->city) }}" required>
+                                   value="{{ old('city', $user?->city) }}" required>
                         </div>
                         <div class="field-group">
                             <label class="field-label">State</label>
                             <input type="text" class="field-input" name="state"
-                                   value="{{ old('state', $user->state) }}" required>
+                                   value="{{ old('state', $user?->state) }}" required>
                         </div>
                         <div class="form-checkboxes">
                             <label class="checkbox-label">

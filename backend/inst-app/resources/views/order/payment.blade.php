@@ -70,7 +70,13 @@
         </div>
 
         <div class="step-wrapper">
-            <button type="submit" class="btn-step">
+            <button type="button" class="btn-step" onclick="
+        if (!document.querySelector('.checkbox-input').checked) {
+            alert('You must agree to the Terms and Conditions!');
+            return;
+        }
+        this.closest('form').submit();
+    ">
                 Order Summary
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="9 18 15 12 9 6"/>
