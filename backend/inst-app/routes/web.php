@@ -6,10 +6,11 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\BasketController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminBookController;
 
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
 Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
-
 
 Route::get('/', [BookController::class, 'home'])->name('home');
 
@@ -37,18 +38,14 @@ Route::post('/order/payment', [OrderController::class, 'savePayment'])->name('or
 Route::get('/order/summary', [OrderController::class, 'summary'])->name('order.summary');
 Route::post('/order/confirm', [OrderController::class, 'confirm'])->name('order.confirm');
 
-require __DIR__.'/auth.php';
+// Admin login — BEZ middleware a BEZ prefix groupy
+Route::get('/ninkaalexsupertajnastranka', [AdminController::class, 'showLogin'])->name('admin.login');
+Route::post('/ninkaalexsupertajnastranka', [AdminController::class, 'login'])->name('admin.login.post');
+Route::post('/ninkaalexsupertajnastranka/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\AdminBookController;
-
-// Admin routes
-Route::get('/admin/login', [AdminController::class, 'showLogin'])->name('admin.login');
-Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login.post');
-Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
-
-Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [AdminController::class, 'home'])->name('home');
+// Admin chránené routes — s middleware a prefix
+Route::middleware('admin')->prefix('ninkaalexsupertajnastranka')->name('admin.')->group(function () {
+    Route::get('/home', [AdminController::class, 'home'])->name('home');
     Route::get('/books', [AdminBookController::class, 'index'])->name('books.index');
     Route::get('/books/create', [AdminBookController::class, 'create'])->name('books.create');
     Route::post('/books', [AdminBookController::class, 'store'])->name('books.store');
@@ -56,3 +53,5 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::put('/books/{id}', [AdminBookController::class, 'update'])->name('books.update');
     Route::delete('/books/{id}', [AdminBookController::class, 'destroy'])->name('books.destroy');
 });
+
+require __DIR__.'/auth.php';
