@@ -51,7 +51,22 @@
     <div class="book-detail">
 
         <div class="book-detail-cover">
-            <img src="{{ asset('pictures/' . $book->photo1) }}" alt="Book cover">
+            <img id="mainImage" src="{{ asset('pictures/' . ($book->images->first()->filename ?? $book->photo1)) }}" alt="Book cover">
+
+            @if($book->images->count() > 1)
+                <div style="display:flex; gap:8px; margin-top:12px; justify-content:center;">
+                    @foreach($book->images as $image)
+                        <img
+                            src="{{ asset('pictures/' . $image->filename) }}"
+                            alt="Book image"
+                            onclick="document.getElementById('mainImage').src = this.src"
+                            style="width:60px; height:80px; object-fit:cover; cursor:pointer; border-radius:6px; opacity:0.7; transition:opacity 0.2s;"
+                            onmouseover="this.style.opacity='1'"
+                            onmouseout="this.style.opacity='0.7'"
+                        >
+                    @endforeach
+                </div>
+            @endif
         </div>
 
         <div class="book-detail-info">
@@ -77,18 +92,18 @@
 
             <div class="book-detail-language">{{ $book->language }}</div>
 
-                <div class="book-detail-add">
-                    <form id="basketForm" method="POST" action="{{ route('basket.add', $book->book_id) }}"
-                          style="display:flex; flex-direction:column; align-items:center; gap:12px; width:100%;">
-                        @csrf
-                        <div class="qty-stepper">
-                            <button type="button" class="qty-btn" id="qtyMinus">−</button>
-                            <input type="number" class="qty-value" id="qtyDisplay" name="quantity" value="1" min="1" max="{{ $book->amount }}">
-                            <button type="button" class="qty-btn" id="qtyPlus">+</button>
-                        </div>
-                        <button type="submit" class="btn-step" style="width:100%; justify-content:center; margin-top:0;">ADD TO BASKET</button>
-                    </form>
-                </div>
+            <div class="book-detail-add">
+                <form id="basketForm" method="POST" action="{{ route('basket.add', $book->book_id) }}"
+                      style="display:flex; flex-direction:column; align-items:center; gap:12px; width:100%;">
+                    @csrf
+                    <div class="qty-stepper">
+                        <button type="button" class="qty-btn" id="qtyMinus">−</button>
+                        <input type="number" class="qty-value" id="qtyDisplay" name="quantity" value="1" min="1" max="{{ $book->amount }}">
+                        <button type="button" class="qty-btn" id="qtyPlus">+</button>
+                    </div>
+                    <button type="submit" class="btn-step" style="width:100%; justify-content:center; margin-top:0;">ADD TO BASKET</button>
+                </form>
+            </div>
         </div>
 
         <div class="rating">

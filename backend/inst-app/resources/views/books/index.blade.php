@@ -164,21 +164,33 @@
 
             <div class="books">
                 @forelse($books as $book)
-                    <a href="{{ route('books.show', $book->book_id) }}" class="book-card">
+                    @php $images = $book->images; $imageCount = $images->count(); @endphp
+                    <a href="{{ route('books.show', $book->book_id) }}" class="book-card" style="position:relative;">
                         @if($book->photo1)
-                            <img class="book-cover" src="{{ asset('pictures/' . $book->photo1) }}"
-                                 alt="{{ $book->name }}">
+                            <div style="position:relative;">
+                                <img class="book-cover book-cover-img"
+                                     src="{{ asset('pictures/' . $book->photo1) }}"
+                                     alt="{{ $book->name }}"
+                                     data-images="{{ $images->pluck('filename')->map(fn($f) => asset('pictures/' . $f))->toJson() }}"
+                                     data-index="0">
+                                @if($imageCount > 1)
+                                    <button type="button" onclick="event.preventDefault(); prevImage(this)"
+                                            style="position:absolute; left:4px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.8); border:none; border-radius:50%; width:28px; height:28px; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center;">‹</button>
+                                    <button type="button" onclick="event.preventDefault(); nextImage(this)"
+                                            style="position:absolute; right:4px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.8); border:none; border-radius:50%; width:28px; height:28px; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center;">›</button>
+                                @endif
+                            </div>
                         @else
                             <div class="book-cover"></div>
                         @endif
                         <p class="book-title">{{ $book->name }}</p>
                         <p class="book-author">{{ $book->author }}</p>
-                            @if($book->is_on_sale)
-                                <p class="book-price"><s>{{ number_format($book->original_price, 2) }}€</s> {{ number_format($book->price, 2) }}€</p>
-                                <p class="book-sale">SALE</p>
-                            @else
-                                <p class="book-price">{{ number_format($book->price, 2) }}€</p>
-                            @endif
+                        @if($book->is_on_sale)
+                            <p class="book-price"><s>{{ number_format($book->original_price, 2) }}€</s> {{ number_format($book->price, 2) }}€</p>
+                            <p class="book-sale">SALE</p>
+                        @else
+                            <p class="book-price">{{ number_format($book->price, 2) }}€</p>
+                        @endif
                     </a>
                 @empty
                     <p>Žiadne knihy sa nenašli.</p>
@@ -306,6 +318,24 @@
     });
 
     updateRange();
+
+    function nextImage(btn) {
+        const img = btn.closest('div').querySelector('.book-cover-img');
+        const images = JSON.parse(img.dataset.images);
+        let index = parseInt(img.dataset.index);
+        index = (index + 1) % images.length;
+        img.src = images[index];
+        img.dataset.index = index;
+    }
+
+    function prevImage(btn) {
+        const img = btn.closest('div').querySelector('.book-cover-img');
+        const images = JSON.parse(img.dataset.images);
+        let index = parseInt(img.dataset.index);
+        index = (index - 1 + images.length) % images.length;
+        img.src = images[index];
+        img.dataset.index = index;
+    }
 </script>
 
 </body>

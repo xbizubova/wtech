@@ -12,7 +12,7 @@ class BookController extends Controller
     public function index(Request $request)
     {
         $categories = Category::all();
-        $query = Book::with('categories');
+        $query = Book::with(['categories', 'images']);
 
         // Filtrovanie podľa booktok
         if ($request->filled('is_booktok')) {

@@ -25,4 +25,9 @@ class Book extends Model
             ->withPivot('amount')
             ->withTimestamps();
     }
+
+    public function images()
+    {
+        return $this->hasMany(BookImage::class, 'book_id')->orderBy('order');
+    }
 }
