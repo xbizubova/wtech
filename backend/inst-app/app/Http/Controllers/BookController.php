@@ -79,13 +79,13 @@ class BookController extends Controller
 
     public function show($id)
     {
-        $book = Book::with('categories')->findOrFail($id);
+        $book = Book::with(['categories', 'images'])->findOrFail($id);
         return view('books.show', compact('book'));
     }
     public function home()
     {
-        $recommended = Book::where('is_recommended', true)->where('amount', '>', 0)->limit(2)->get();
-        $trending = Book::where('is_booktok', true)->where('amount', '>', 0)->limit(4)->get();
+        $recommended = Book::where('is_recommended', true)->limit(2)->get();
+        $trending = Book::where('is_booktok', true)->limit(4)->get();
 
         return view('home', compact('recommended', 'trending'));
     }

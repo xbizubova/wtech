@@ -67,9 +67,15 @@
             <h2 class="section-title">We Recommend</h2>
             <div class="books-grid-2">
                 @foreach($recommended as $book)
-                    <a href="{{ route('books.show', $book->book_id) }}" class="book-card">
+                    @php $outOfStock = $book->amount <= 0; @endphp
+                    <a href="{{ route('books.show', $book->book_id) }}" class="book-card" style="{{ $outOfStock ? 'opacity:0.5; filter:grayscale(60%);' : '' }}">
                         @if($book->photo1)
-                            <img class="book-cover" src="{{ asset('pictures/' . $book->photo1) }}" alt="{{ $book->name }}">
+                            <div style="position:relative;">
+                                @if($outOfStock)
+                                    <span style="position:absolute; top:8px; left:8px; background:#c0392b; color:#fff; font-size:0.65rem; font-family:'Jost',sans-serif; letter-spacing:0.08em; padding:4px 8px; border-radius:2px; z-index:10; text-transform:uppercase;">Out of stock</span>
+                                @endif
+                                <img class="book-cover" src="{{ asset('pictures/' . $book->photo1) }}" alt="{{ $book->name }}">
+                            </div>
                         @else
                             <div class="book-cover"></div>
                         @endif
@@ -88,9 +94,15 @@
         </div>
         <div class="books-grid-4">
             @foreach($trending as $book)
-                <a href="{{ route('books.show', $book->book_id) }}" class="book-card">
+                @php $outOfStock = $book->amount <= 0; @endphp
+                <a href="{{ route('books.show', $book->book_id) }}" class="book-card" style="{{ $outOfStock ? 'opacity:0.5; filter:grayscale(60%);' : '' }}">
                     @if($book->photo1)
-                        <img class="book-cover" src="{{ asset('pictures/' . $book->photo1) }}" alt="{{ $book->name }}">
+                        <div style="position:relative;">
+                            @if($outOfStock)
+                                <span style="position:absolute; top:8px; left:8px; background:#c0392b; color:#fff; font-size:0.65rem; font-family:'Jost',sans-serif; letter-spacing:0.08em; padding:4px 8px; border-radius:2px; z-index:10; text-transform:uppercase;">Out of stock</span>
+                            @endif
+                            <img class="book-cover" src="{{ asset('pictures/' . $book->photo1) }}" alt="{{ $book->name }}">
+                        </div>
                     @else
                         <div class="book-cover"></div>
                     @endif
