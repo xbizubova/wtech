@@ -60,7 +60,6 @@
 
         {{-- FILTRE --}}
         <form method="GET" action="{{ route('books.index') }}" id="filterForm">
-            {{-- zachovaj search a sort --}}
             @if(request('search'))
                 <input type="hidden" name="search" value="{{ request('search') }}">
             @endif
@@ -164,21 +163,38 @@
 
             <div class="books">
                 @forelse($books as $book)
-                    <a href="{{ route('books.show', $book->book_id) }}" class="book-card">
+                    @php $images = $book->images; $imageCount = $images->count(); $outOfStock = $book->amount <= 0; @endphp
+                    <a href="{{ route('books.show', $book->book_id) }}" class="book-card" style="position:relative; {{ $outOfStock ? 'opacity:0.5; filter:grayscale(60%);' : '' }}">
+
                         @if($book->photo1)
-                            <img class="book-cover" src="{{ asset('pictures/' . $book->photo1) }}"
-                                 alt="{{ $book->name }}">
+                            <div style="position:relative;">
+                                {{-- Out of stock badge --}}
+                                @if($outOfStock)
+                                    <span style="position:absolute; top:8px; left:8px; background:#c0392b; color:#fff; font-size:0.65rem; font-family:'Jost',sans-serif; letter-spacing:0.08em; padding:4px 8px; border-radius:2px; z-index:10; text-transform:uppercase;">Out of stock</span>
+                                @endif
+                                <img class="book-cover book-cover-img"
+                                     src="{{ asset('pictures/' . $book->photo1) }}"
+                                     alt="{{ $book->name }}"
+                                     data-images="{{ $images->pluck('filename')->map(fn($f) => asset('pictures/' . $f))->toJson() }}"
+                                     data-index="0">
+                                @if($imageCount > 1)
+                                    <button type="button" onclick="event.preventDefault(); prevImage(this)"
+                                            style="position:absolute; left:4px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.8); border:none; border-radius:50%; width:28px; height:28px; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center;">‹</button>
+                                    <button type="button" onclick="event.preventDefault(); nextImage(this)"
+                                            style="position:absolute; right:4px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.8); border:none; border-radius:50%; width:28px; height:28px; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center;">›</button>
+                                @endif
+                            </div>
                         @else
                             <div class="book-cover"></div>
                         @endif
                         <p class="book-title">{{ $book->name }}</p>
                         <p class="book-author">{{ $book->author }}</p>
-                            @if($book->is_on_sale)
-                                <p class="book-price"><s>{{ number_format($book->original_price, 2) }}€</s> {{ number_format($book->price, 2) }}€</p>
-                                <p class="book-sale">SALE</p>
-                            @else
-                                <p class="book-price">{{ number_format($book->price, 2) }}€</p>
-                            @endif
+                        @if($book->is_on_sale)
+                            <p class="book-price"><s>{{ number_format($book->original_price, 2) }}€</s> {{ number_format($book->price, 2) }}€</p>
+                            <p class="book-sale">SALE</p>
+                        @else
+                            <p class="book-price">{{ number_format($book->price, 2) }}€</p>
+                        @endif
                     </a>
                 @empty
                     <p>Žiadne knihy sa nenašli.</p>
@@ -187,31 +203,19 @@
 
             {{-- STRÁNKOVANIE --}}
             <div class="numbering">
-                {{-- Previous --}}
                 @if ($books->onFirstPage())
                     <span class="page-disabled">«</span>
                 @else
                     <a href="{{ $books->previousPageUrl() }}">«</a>
                 @endif
 
-                {{-- Čísla stránok - max 3 --}}
                 @php
                     $current = $books->currentPage();
                     $last = $books->lastPage();
-
-                    if ($last <= 3) {
-                        $start = 1;
-                        $end = $last;
-                    } elseif ($current == 1) {
-                        $start = 1;
-                        $end = 3;
-                    } elseif ($current == $last) {
-                        $start = $last - 2;
-                        $end = $last;
-                    } else {
-                        $start = $current - 1;
-                        $end = $current + 1;
-                    }
+                    if ($last <= 3) { $start = 1; $end = $last; }
+                    elseif ($current == 1) { $start = 1; $end = 3; }
+                    elseif ($current == $last) { $start = $last - 2; $end = $last; }
+                    else { $start = $current - 1; $end = $current + 1; }
                 @endphp
 
                 @for ($page = $start; $page <= $end; $page++)
@@ -222,7 +226,6 @@
                     @endif
                 @endfor
 
-                {{-- Next --}}
                 @if ($books->hasMorePages())
                     <a href="{{ $books->nextPageUrl() }}">»</a>
                 @else
@@ -275,37 +278,39 @@
     function updateRange() {
         let min = parseInt(priceMin.value);
         let max = parseInt(priceMax.value);
-
-        if (min > max) {
-            priceMin.value = max;
-            min = max;
-        }
-        if (max < min) {
-            priceMax.value = min;
-            max = min;
-        }
-
+        if (min > max) { priceMin.value = max; min = max; }
+        if (max < min) { priceMax.value = min; max = min; }
         const percent1 = (min / 100) * 100;
         const percent2 = (max / 100) * 100;
-
         rangeFill.style.left = percent1 + '%';
         rangeFill.style.width = (percent2 - percent1) + '%';
-
         priceMinLabel.textContent = min + ' €';
         priceMaxLabel.textContent = max + ' €';
     }
 
     priceMin.addEventListener('input', updateRange);
     priceMax.addEventListener('input', updateRange);
-
-    priceMin.addEventListener('change', () => {
-        document.getElementById('filterForm').submit();
-    });
-    priceMax.addEventListener('change', () => {
-        document.getElementById('filterForm').submit();
-    });
-
+    priceMin.addEventListener('change', () => { document.getElementById('filterForm').submit(); });
+    priceMax.addEventListener('change', () => { document.getElementById('filterForm').submit(); });
     updateRange();
+
+    function nextImage(btn) {
+        const img = btn.closest('div').querySelector('.book-cover-img');
+        const images = JSON.parse(img.dataset.images);
+        let index = parseInt(img.dataset.index);
+        index = (index + 1) % images.length;
+        img.src = images[index];
+        img.dataset.index = index;
+    }
+
+    function prevImage(btn) {
+        const img = btn.closest('div').querySelector('.book-cover-img');
+        const images = JSON.parse(img.dataset.images);
+        let index = parseInt(img.dataset.index);
+        index = (index - 1 + images.length) % images.length;
+        img.src = images[index];
+        img.dataset.index = index;
+    }
 </script>
 
 </body>
