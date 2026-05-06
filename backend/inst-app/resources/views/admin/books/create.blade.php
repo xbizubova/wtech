@@ -6,6 +6,130 @@
     <title>Admin — Add Book</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <style>
+        .admin-wrap {
+            max-width: 1100px;
+            margin: 48px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 40px;
+        }
+        .admin-left { display: flex; flex-direction: column; gap: 16px; }
+        .cover-placeholder {
+            width: 100%;
+            aspect-ratio: 2/3;
+            background: #eceae4;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #bbb;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .upload-btn-wrap { display: flex; flex-direction: column; gap: 6px; }
+        .upload-btn-wrap label.field-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #999;
+            font-family: 'Jost', sans-serif;
+        }
+        .admin-right { display: flex; flex-direction: column; gap: 32px; }
+        .admin-section {
+            background: #f5f3ef;
+            border-radius: 12px;
+            padding: 24px 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .admin-section h3 {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #999;
+            margin: 0 0 4px 0;
+        }
+        .field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .field-item { display: flex; flex-direction: column; gap: 4px; }
+        .field-item label {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #999;
+        }
+        .field-item input,
+        .field-item textarea {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.9rem;
+            background: #eceae4;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: #2c2c2c;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .field-item textarea { resize: vertical; min-height: 120px; }
+        .field-item.full { grid-column: 1 / -1; }
+        .checks-row { display: flex; flex-wrap: wrap; gap: 12px; }
+        .check-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            color: #2c2c2c;
+            cursor: pointer;
+        }
+        .categories-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+        .cat-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #eceae4;
+            border-radius: 20px;
+            padding: 5px 12px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+        }
+        .cat-label input { margin: 0; }
+        .stars-row { display: flex; gap: 6px; }
+        .stars-row .star {
+            font-size: 1.8rem;
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.15s;
+        }
+        .stars-row .star.active { color: #2c2c2c; }
+        .btn-save {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            background: #2c2c2c;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 28px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-save:hover { background: #111; }
+    </style>
 </head>
 <body>
 
@@ -20,81 +144,133 @@
     </nav>
 </header>
 
-<main>
-    <form method="POST" action="{{ route('admin.books.store') }}" enctype="multipart/form-data">
-        @csrf
-        <div class="book-detail">
+<form method="POST" action="{{ route('admin.books.store') }}" enctype="multipart/form-data">
+    @csrf
 
-            <div class="book-detail-cover">
-                <div class="field-group">
-                    <label class="field-label">Photo 1</label>
-                    <input type="file" name="photo1" accept="image/*">
+    <div class="admin-wrap">
+
+        {{-- ── ĽAVÝ STĹPEC: obrázky ── --}}
+        <div class="admin-left">
+            <div class="cover-placeholder" id="coverPreview">No image</div>
+
+            <div class="upload-btn-wrap">
+                <label class="field-label">Images</label>
+                <input type="file" name="new_images[]" multiple accept="image/*"
+                       onchange="previewCover(this)">
+            </div>
+        </div>
+
+        {{-- ── PRAVÝ STĹPEC: formulár ── --}}
+        <div class="admin-right">
+
+            @if($errors->any())
+                <div style="background:#fdecea; border-radius:8px; padding:16px; font-family:'Jost',sans-serif; font-size:0.85rem; color:#c0392b;">
+                    <ul style="margin:0; padding-left:16px;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
-                <div class="field-group">
-                    <label class="field-label">Photo 2</label>
-                    <input type="file" name="photo2" accept="image/*">
+            @endif
+
+            {{-- Základné info --}}
+            <div class="admin-section">
+                <h3>Basic informations</h3>
+                <div class="field-row">
+                    <div class="field-item full">
+                        <label>Title</label>
+                        <input type="text" name="name" value="{{ old('name') }}" placeholder="Book Title" required>
+                    </div>
+                    <div class="field-item full">
+                        <label>Author</label>
+                        <input type="text" name="author" value="{{ old('author') }}" placeholder="Book Author" required>
+                    </div>
+                    <div class="field-item full">
+                        <label>Description</label>
+                        <textarea name="detail" placeholder="Book Description">{{ old('detail') }}</textarea>
+                    </div>
                 </div>
             </div>
 
-            <div class="book-detail-info">
-                <input type="text" class="book-detail-title-write" name="name" placeholder="Title" required>
-                <input type="text" class="book-detail-author-write" name="author" placeholder="Author" required>
-                <div class="description-wrapper expanded">
-                    <label class="field-label">Description</label>
-                    <textarea class="big-field-input" name="detail" rows="10" placeholder="Add book description"></textarea>
+            {{-- Cena & sklad --}}
+            <div class="admin-section">
+                <h3>Price and Storage</h3>
+                <div class="field-row">
+                    <div class="field-item">
+                        <label>Price (€)</label>
+                        <input type="number" step="0.01" name="price" value="{{ old('price') }}" placeholder="0.00" required>
+                    </div>
+                    <div class="field-item">
+                        <label>Original price (€)</label>
+                        <input type="number" step="0.01" name="original_price" value="{{ old('original_price') }}" placeholder="0.00">
+                    </div>
+                    <div class="field-item">
+                        <label>In stock</label>
+                        <input type="number" name="amount" value="{{ old('amount') }}" placeholder="0" required>
+                    </div>
+                    <div class="field-item">
+                        <label>Language</label>
+                        <input type="text" name="language" value="{{ old('language') }}" placeholder="EN / SK / CZ" required>
+                    </div>
+                    <div class="field-item">
+                        <label>Date of issue</label>
+                        <input type="date" name="release_date" value="{{ old('release_date') }}">
+                    </div>
                 </div>
             </div>
 
-            <div class="book-detail-extras">
-                <input type="number" step="0.01" class="book-detail-price" name="price" placeholder="Price in €" required>
-                <input type="number" step="0.01" class="book-detail-price" name="original_price" placeholder="Original price (if on sale)">
-                <input type="text" class="book-detail-language" name="language" placeholder="Language (EN/SK/CZ)" required>
-                <input type="number" class="book-detail-language" name="amount" placeholder="Amount in stock" required>
-                <input type="date" class="book-detail-language" name="release_date">
-
-                <div class="field-group">
-                    <label><input type="checkbox" name="is_on_sale"> On Sale</label>
-                    <label><input type="checkbox" name="is_booktok"> Booktok Trending</label>
-                    <label><input type="checkbox" name="is_recommended"> We Recommend</label>
+            {{-- Príznaky --}}
+            <div class="admin-section">
+                <h3>Properties</h3>
+                <div class="checks-row">
+                    <label class="check-label">
+                        <input type="checkbox" name="is_on_sale" {{ old('is_on_sale') ? 'checked' : '' }}>
+                        On Sale
+                    </label>
+                    <label class="check-label">
+                        <input type="checkbox" name="is_booktok" {{ old('is_booktok') ? 'checked' : '' }}>
+                        Booktok Trending
+                    </label>
+                    <label class="check-label">
+                        <input type="checkbox" name="is_recommended" {{ old('is_recommended') ? 'checked' : '' }}>
+                        We Recommend
+                    </label>
                 </div>
+            </div>
 
-                <div class="field-group">
-                    <label class="field-label">Categories</label>
+            {{-- Kategórie --}}
+            <div class="admin-section">
+                <h3>Categories</h3>
+                <div class="categories-grid">
                     @foreach($categories as $category)
-                        <label>
-                            <input type="checkbox" name="categories[]" value="{{ $category->category_id }}">
+                        <label class="cat-label">
+                            <input type="checkbox" name="categories[]" value="{{ $category->category_id }}"
+                                {{ in_array($category->category_id, old('categories', [])) ? 'checked' : '' }}>
                             {{ $category->type }}
                         </label>
                     @endforeach
                 </div>
-
-                <div class="book-detail-add">
-                    <button type="submit">SAVE</button>
-                </div>
             </div>
 
-            <div class="rating">
-                <p class="rating-label">RATING</p>
-                <input type="hidden" name="rating" id="ratingValue" value="0">
-                <div class="stars">
+            {{-- Rating --}}
+            <div class="admin-section">
+                <h3>Rating</h3>
+                <input type="hidden" name="rating" id="ratingValue" value="{{ old('rating', 0) }}">
+                <div class="stars-row">
                     @for($i = 1; $i <= 5; $i++)
-                        <span class="star" data-value="{{ $i }}">★</span>
+                        <span class="star {{ old('rating', 0) >= $i ? 'active' : '' }}" data-value="{{ $i }}">★</span>
                     @endfor
                 </div>
             </div>
 
+            {{-- Uložiť --}}
+            <div style="display:flex; justify-content:flex-end;">
+                <button type="submit" class="btn-save">ADD A BOOK</button>
+            </div>
+
         </div>
-    </form>
-</main>
-@if($errors->any())
-    <div style="background:red; color:white; padding:16px; margin:16px;">
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
     </div>
-@endif
+</form>
 
 <footer>
     <div class="footer-inner">
@@ -131,13 +307,16 @@
         });
     });
 
-    const hamburger = document.getElementById('hamburger');
-    const mobileNav = document.getElementById('mobileNav');
-    if (hamburger) {
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('open');
-            mobileNav.classList.toggle('open');
-        });
+    function previewCover(input) {
+        const preview = document.getElementById('coverPreview');
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                preview.innerHTML = `<img src="${e.target.result}"
+                    style="width:100%; height:100%; object-fit:cover; border-radius:10px;">`;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
     }
 </script>
 </body>

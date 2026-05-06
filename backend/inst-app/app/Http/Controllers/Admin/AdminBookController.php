@@ -87,6 +87,8 @@ class AdminBookController extends Controller
             'release_date'   => 'nullable|date',
             'photo1'         => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
             'photo2'         => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
+            'new_images'   => 'nullable|array',
+            'new_images.*' => 'image|mimes:jpeg,jpg,png,webp|max:5120',
         ]);
 
         // Checkboxy — ak sú zaškrtnuté, has() vráti true, inak false
@@ -109,6 +111,24 @@ class AdminBookController extends Controller
 
         if ($request->filled('categories')) {
             $book->categories()->attach($request->categories);
+        }
+        if ($request->hasFile('new_images')) {
+            foreach ($request->file('new_images') as $index => $file) {
+                $filename = $file->getClientOriginalName();
+                $file->move(public_path('pictures'), $filename);
+
+                // prvý obrázok nastav aj ako photo1
+                if ($index === 0) {
+                    $book->photo1 = $filename;
+                    $book->save();
+                }
+
+                \App\Models\BookImage::create([
+                    'book_id'  => $book->book_id,
+                    'filename' => $filename,
+                    'order'    => $index + 1,
+                ]);
+            }
         }
 
         return redirect()->route('admin.books.index')->with('success', 'Kniha bola pridaná.');
