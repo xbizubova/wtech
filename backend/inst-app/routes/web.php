@@ -56,6 +56,7 @@ Route::middleware('admin')->prefix('ninkaalexsupertajnastranka')->name('admin.')
     Route::patch('/books/{id}/restore', [AdminBookController::class, 'restore'])->name('books.restore');
     Route::patch('/books/{id}/restock', [AdminBookController::class, 'restock'])->name('books.restock');
     Route::delete('/books/images/{imageId}', [AdminBookController::class, 'deleteImage'])->name('books.images.delete');
+    Route::post('/books/{id}/images', [AdminBookController::class, 'uploadImages'])->name('books.uploadImages');
 });
 
 require __DIR__.'/auth.php';

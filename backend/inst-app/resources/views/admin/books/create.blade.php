@@ -6,130 +6,7 @@
     <title>Admin — Add Book</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <style>
-        .admin-wrap {
-            max-width: 1100px;
-            margin: 48px auto;
-            padding: 0 24px;
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 40px;
-        }
-        .admin-left { display: flex; flex-direction: column; gap: 16px; }
-        .cover-placeholder {
-            width: 100%;
-            aspect-ratio: 2/3;
-            background: #eceae4;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #bbb;
-            font-family: 'Jost', sans-serif;
-            font-size: 0.75rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-        .upload-btn-wrap { display: flex; flex-direction: column; gap: 6px; }
-        .upload-btn-wrap label.field-label {
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #999;
-            font-family: 'Jost', sans-serif;
-        }
-        .admin-right { display: flex; flex-direction: column; gap: 32px; }
-        .admin-section {
-            background: #f5f3ef;
-            border-radius: 12px;
-            padding: 24px 28px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .admin-section h3 {
-            font-family: 'Jost', sans-serif;
-            font-size: 0.7rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: #999;
-            margin: 0 0 4px 0;
-        }
-        .field-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .field-item { display: flex; flex-direction: column; gap: 4px; }
-        .field-item label {
-            font-family: 'Jost', sans-serif;
-            font-size: 0.65rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #999;
-        }
-        .field-item input,
-        .field-item textarea {
-            font-family: 'Jost', sans-serif;
-            font-size: 0.9rem;
-            background: #eceae4;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 14px;
-            color: #2c2c2c;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .field-item textarea { resize: vertical; min-height: 120px; }
-        .field-item.full { grid-column: 1 / -1; }
-        .checks-row { display: flex; flex-wrap: wrap; gap: 12px; }
-        .check-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Jost', sans-serif;
-            font-size: 0.8rem;
-            letter-spacing: 0.05em;
-            color: #2c2c2c;
-            cursor: pointer;
-        }
-        .categories-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-        .cat-label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: #eceae4;
-            border-radius: 20px;
-            padding: 5px 12px;
-            font-family: 'Jost', sans-serif;
-            font-size: 0.75rem;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-        }
-        .cat-label input { margin: 0; }
-        .stars-row { display: flex; gap: 6px; }
-        .stars-row .star {
-            font-size: 1.8rem;
-            color: #ccc;
-            cursor: pointer;
-            transition: color 0.15s;
-        }
-        .stars-row .star.active { color: #2c2c2c; }
-        .btn-save {
-            font-family: 'Jost', sans-serif;
-            font-size: 0.75rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            background: #2c2c2c;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 28px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .btn-save:hover { background: #111; }
-    </style>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 </head>
 <body>
 
@@ -193,31 +70,35 @@
             </div>
 
             {{-- Cena & sklad --}}
-            <div class="admin-section">
-                <h3>Price and Storage</h3>
-                <div class="field-row">
-                    <div class="field-item">
-                        <label>Price (€)</label>
-                        <input type="number" step="0.01" name="price" value="{{ old('price') }}" placeholder="0.00" required>
-                    </div>
-                    <div class="field-item">
-                        <label>Original price (€)</label>
-                        <input type="number" step="0.01" name="original_price" value="{{ old('original_price') }}" placeholder="0.00">
-                    </div>
-                    <div class="field-item">
-                        <label>In stock</label>
-                        <input type="number" name="amount" value="{{ old('amount') }}" placeholder="0" required>
-                    </div>
-                    <div class="field-item">
-                        <label>Language</label>
-                        <input type="text" name="language" value="{{ old('language') }}" placeholder="EN / SK / CZ" required>
-                    </div>
-                    <div class="field-item">
-                        <label>Date of issue</label>
-                        <input type="date" name="release_date" value="{{ old('release_date') }}">
+                <div class="admin-section">
+                    <h3>Price and Storage</h3>
+                    <div class="field-row">
+                        <div class="field-item">
+                            <label>Price (€)</label>
+                            <input type="number" step="0.01" name="price" value="{{ old('price') }}" placeholder="0.00" required id="priceInput">
+                        </div>
+                        <div class="field-item">
+                            <label>Discount (%)</label>
+                            <input type="number" step="1" name="discount" value="{{ old('discount') }}" placeholder="0" min="0" max="100" id="discountInput">
+                        </div>
+                        <div class="field-item">
+                            <label>Final price (€)</label>
+                            <input type="text" id="finalPrice" placeholder="—" readonly style="opacity:0.6;">
+                        </div>
+                        <div class="field-item">
+                            <label>In stock</label>
+                            <input type="number" name="amount" value="{{ old('amount') }}" placeholder="0" required>
+                        </div>
+                        <div class="field-item">
+                            <label>Language</label>
+                            <input type="text" name="language" value="{{ old('language') }}" placeholder="EN / SK / CZ" required>
+                        </div>
+                        <div class="field-item">
+                            <label>Date of issue</label>
+                            <input type="date" name="release_date" value="{{ old('release_date') }}">
+                        </div>
                     </div>
                 </div>
-            </div>
 
             {{-- Príznaky --}}
             <div class="admin-section">
@@ -297,6 +178,22 @@
 </footer>
 
 <script>
+    const priceInput = document.getElementById('priceInput');
+    const discountInput = document.getElementById('discountInput');
+    const finalPrice = document.getElementById('finalPrice');
+
+    function calcFinal() {
+        const price = parseFloat(priceInput?.value) || 0;
+        const discount = parseFloat(discountInput?.value) || 0;
+        if (price > 0 && discount > 0) {
+            finalPrice.value = (price * (1 - discount / 100)).toFixed(2) + ' €';
+        } else {
+            finalPrice.value = price > 0 ? price.toFixed(2) + ' €' : '—';
+        }
+    }
+
+    priceInput?.addEventListener('input', calcFinal);
+    discountInput?.addEventListener('input', calcFinal);
     const stars = document.querySelectorAll('.star');
     const ratingValue = document.getElementById('ratingValue');
     stars.forEach(star => {
@@ -309,13 +206,25 @@
 
     function previewCover(input) {
         const preview = document.getElementById('coverPreview');
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = e => {
-                preview.innerHTML = `<img src="${e.target.result}"
-                    style="width:100%; height:100%; object-fit:cover; border-radius:10px;">`;
-            };
-            reader.readAsDataURL(input.files[0]);
+        if (input.files && input.files.length > 0) {
+            preview.innerHTML = '';
+            Array.from(input.files).forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    if (index === 0) {
+                        // prvý obrázok ako hlavný náhľad
+                        preview.innerHTML = `<img src="${e.target.result}"
+                        style="width:100%; height:100%; object-fit:cover; border-radius:10px;">`;
+                    } else {
+                        // ďalšie obrázky ako miniatúry pod ním
+                        const thumb = document.createElement('img');
+                        thumb.src = e.target.result;
+                        thumb.style = 'width:72px; height:96px; object-fit:cover; border-radius:6px; margin-top:8px;';
+                        preview.parentElement.appendChild(thumb);
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
         }
     }
 </script>

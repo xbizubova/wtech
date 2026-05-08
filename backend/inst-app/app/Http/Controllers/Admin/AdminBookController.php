@@ -211,6 +211,33 @@ class AdminBookController extends Controller
         $image->delete();
         return response()->json(['success' => true]);
     }
+    public function uploadImages(Request $request, $id)
+    {
+        $book = Book::findOrFail($id);
+
+        $request->validate([
+            'new_images.*' => 'required|image|mimes:jpeg,jpg,png,webp|max:5120',
+        ]);
+
+        if ($request->hasFile('new_images')) {
+            $first = $book->images->isEmpty();
+            foreach ($request->file('new_images') as $file) {
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('pictures'), $filename);
+                \App\Models\BookImage::create([
+                    'book_id'    => $book->book_id,
+                    'filename'   => $filename,
+                    'is_primary' => $first,
+                ]);
+                if ($first) {
+                    $book->update(['photo1' => $filename]);
+                    $first = false;
+                }
+            }
+        }
+
+        return back()->with('success', 'Obrázky boli pridané.');
+    }
 
     // Obnoviť skrytú knihu
     public function restore($id)

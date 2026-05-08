@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 </head>
 <body>
 
@@ -37,8 +38,15 @@
 </header>
 
 <nav class="mobile-nav" id="mobileNav">
-    <a href="{{ route('login') }}">Log In</a>
-    <a href="#">Basket</a>
+    @auth
+        <a href="{{ route('account') }}">Account</a>
+        <a href="{{ route('logout') }}"
+           onclick="event.preventDefault(); document.getElementById('logout-form-mobile').submit()">Log Out</a>
+        <form id="logout-form-mobile" action="{{ route('logout') }}" method="POST" style="display:none">@csrf</form>
+    @else
+        <a href="{{ route('login') }}">Log In</a>
+    @endauth
+    <a href="{{ url('/basket') }}">Basket</a>
 </nav>
 
 <section class="hero">

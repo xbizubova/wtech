@@ -2184,3 +2184,413 @@ body:has(.account-container) main {
     cursor: default;
     padding: 6px 12px;
 }
+.admin-wrap {
+    max-width: 1100px;
+    margin: 48px auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+}
+.admin-left { display: flex; flex-direction: column; gap: 16px; }
+.cover-placeholder {
+    width: 100%;
+    aspect-ratio: 2/3;
+    background: #eceae4;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #bbb;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+.upload-btn-wrap { display: flex; flex-direction: column; gap: 6px; }
+.upload-btn-wrap label.field-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #999;
+    font-family: 'Jost', sans-serif;
+}
+.admin-right { display: flex; flex-direction: column; gap: 32px; }
+.admin-section {
+    background: #f5f3ef;
+    border-radius: 12px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.admin-section h3 {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #999;
+    margin: 0 0 4px 0;
+}
+.field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+.field-item { display: flex; flex-direction: column; gap: 4px; }
+.field-item label {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #999;
+}
+.field-item input,
+.field-item textarea {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    background: #eceae4;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #2c2c2c;
+    width: 100%;
+    box-sizing: border-box;
+}
+.field-item textarea { resize: vertical; min-height: 120px; }
+.field-item.full { grid-column: 1 / -1; }
+.checks-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.check-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    color: #2c2c2c;
+    cursor: pointer;
+}
+.categories-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.cat-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #eceae4;
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+}
+.cat-label input { margin: 0; }
+.stars-row { display: flex; gap: 6px; }
+.stars-row .star {
+    font-size: 1.8rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+.stars-row .star.active { color: #2c2c2c; }
+.btn-save {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: #2c2c2c;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-save:hover { background: #111; }
+.admin-wrap {
+    max-width: 1100px;
+    margin: 48px auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+}
+
+/* ── ľavý stĺpec ── */
+.admin-left { display: flex; flex-direction: column; gap: 16px; }
+
+.admin-cover {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.gallery-thumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.gallery-thumb {
+    position: relative;
+    width: 72px;
+    height: 96px;
+}
+
+.gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.gallery-thumb img.active { border-color: #2c2c2c; }
+
+.gallery-thumb .thumb-delete {
+    position: absolute;
+    top: -6px; right: -6px;
+    background: #c0392b;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 20px; height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+}
+
+.upload-btn-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.upload-btn-wrap label.field-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #999;
+    font-family: 'Jost', sans-serif;
+}
+
+/* ── pravý stĺpec ── */
+.admin-right {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.admin-section {
+    background: #f5f3ef;
+    border-radius: 12px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.admin-section h3 {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #999;
+    margin: 0 0 4px 0;
+}
+
+.field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.field-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.field-item label {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #999;
+}
+
+.field-item input,
+.field-item textarea,
+.field-item select {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    background: #eceae4;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #2c2c2c;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.field-item textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.field-item.full { grid-column: 1 / -1; }
+
+/* checkboxy */
+.checks-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.check-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    color: #2c2c2c;
+    cursor: pointer;
+}
+
+/* kategórie */
+.categories-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.cat-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #eceae4;
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+}
+
+.cat-label input { margin: 0; }
+
+/* hviezdy */
+.stars-row {
+    display: flex;
+    gap: 6px;
+}
+
+.stars-row .star {
+    font-size: 1.8rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+
+.stars-row .star.active { color: #2c2c2c; }
+
+/* akčné tlačidlá */
+.admin-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-save {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: #2c2c2c;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-save:hover { background: #111; }
+
+.btn-danger {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: transparent;
+    color: #c0392b;
+    border: 1.5px solid #c0392b;
+    border-radius: 8px;
+    padding: 11px 22px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-danger:hover { background: #c0392b; color: #fff; }
+
+.btn-success {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: transparent;
+    color: #27ae60;
+    border: 1.5px solid #27ae60;
+    border-radius: 8px;
+    padding: 11px 22px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-success:hover { background: #27ae60; color: #fff; }
+
+.restock-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.restock-wrap input {
+    width: 64px;
+    text-align: center;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.out-of-stock-badge {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #c0392b;
+    background: #fdecea;
+    border-radius: 6px;
+    padding: 6px 12px;
+}
+@media (max-width: 768px) {
+    .admin-wrap {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-left {
+        order: -1;
+    }
+
+    .field-row {
+        grid-template-columns: 1fr;
+    }
+}

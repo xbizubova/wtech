@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <div class="login-box">
+       <div class="login-box">
         <h2>LOG IN</h2>
 
         {{-- Chybová správa pri zlom hesle --}}
