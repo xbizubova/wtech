@@ -62,7 +62,7 @@
                 <form method="POST" action="{{ route('admin.books.uploadImages', $book->book_id) }}"
                       enctype="multipart/form-data">
                     @csrf
-                    <label class="field-label">Pridať fotky</label>
+                    <label class="field-label">Add Images</label>
                     <input type="file" name="new_images[]" multiple accept="image/*">
                     <button type="submit" class="btn-save" style="margin-top: 8px;">UPLOAD IMAGES</button>
                 </form>
@@ -74,18 +74,24 @@
 
             {{-- Základné info --}}
             <div class="admin-section">
-                <h3>Základné informácie</h3>
+                <h3>Basic informations</h3>
                 <div class="field-row">
                     <div class="field-item full">
-                        <label>Názov</label>
+                        <label>Title</label>
                         <input type="text" name="name" value="{{ $book->name }}" required>
+                        @error('name')
+                        <span style="color:#c0392b; font-size:0.75rem; font-family:'Jost',sans-serif;">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="field-item full">
-                        <label>Autor</label>
+                        <label>Author</label>
                         <input type="text" name="author" value="{{ $book->author }}" required>
+                        @error('author')
+                        <span style="color:#c0392b; font-size:0.75rem; font-family:'Jost',sans-serif;">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="field-item full">
-                        <label>Popis</label>
+                        <label>Description</label>
                         <textarea name="detail">{{ $book->detail }}</textarea>
                     </div>
                 </div>
@@ -93,47 +99,62 @@
 
             {{-- Cena & sklad --}}
             <div class="admin-section">
-                <h3>Cena & sklad</h3>
+                <h3>Price and Storage</h3>
                 <div class="field-row">
                     <div class="field-item">
-                        <label>Cena (€)</label>
+                        <label>Price (€)</label>
                         <input type="number" step="0.01" name="price" value="{{ $book->price }}" required id="priceInput">
+                        @error('price')
+                        <span style="color:#c0392b; font-size:0.75rem; font-family:'Jost',sans-serif;">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="field-item">
-                        <label>Zľava (%)</label>
+                        <label>Discount (%)</label>
                         <input type="number" step="1" name="discount" min="0" max="100" id="discountInput"
                                value="{{ $book->sale ? round((1 - $book->sale->price_modifier) * 100) : '' }}">
+                        @error('discount')
+                        <span style="color:#c0392b; font-size:0.75rem; font-family:'Jost',sans-serif;">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="field-item">
-                        <label>Finálna cena (€)</label>
+                        <label>Final Price (€)</label>
                         <input type="text" id="finalPrice" readonly style="opacity:0.6;"
                                value="{{ $book->is_on_sale && $book->sale ? $book->final_price . ' €' : $book->price . ' €' }}">
                     </div>
                     <div class="field-item">
-                        <label>Začiatok zľavy</label>
+                        <label>Sale Start</label>
                         <input type="date" name="start_sale" value="{{ $book->sale?->start_sale }}">
                     </div>
                     <div class="field-item">
-                        <label>Koniec zľavy</label>
+                        <label>Sale End</label>
                         <input type="date" name="end_sale" value="{{ $book->sale?->end_sale }}">
                     </div>
                     <div class="field-item">
-                        <label>Množstvo na sklade</label>
+                        <label>In Stock</label>
                         <input type="number" name="amount" value="{{ $book->amount }}" required>
+                        @error('amount')
+                        <span style="color:#c0392b; font-size:0.75rem; font-family:'Jost',sans-serif;">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="field-item">
-                        <label>Jazyk</label>
+                        <label>Language</label>
                         <input type="text" name="language" value="{{ $book->language }}" placeholder="EN / SK / CZ" required>
+                        @error('language')
+                        <span style="color:#c0392b; font-size:0.75rem; font-family:'Jost',sans-serif;">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="field-item">
-                        <label>Dátum vydania</label>
+                        <label>Release Date</label>
                         <input type="date" name="release_date" value="{{ $book->release_date }}">
+                        @error('release_date')
+                        <span style="color:#c0392b; font-size:0.75rem; font-family:'Jost',sans-serif;">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
             </div>
             {{-- Príznaky --}}
             <div class="admin-section">
-                <h3>Príznaky</h3>
+                <h3>Properties</h3>
                 <div class="checks-row">
                     <label class="check-label">
                         <input type="checkbox" name="is_booktok" {{ $book->is_booktok ? 'checked' : '' }}>
@@ -148,7 +169,7 @@
 
             {{-- Kategórie --}}
             <div class="admin-section">
-                <h3>Kategórie</h3>
+                <h3>Categories</h3>
                 <div class="categories-grid">
                     @foreach($categories as $category)
                         <label class="cat-label">
@@ -173,14 +194,14 @@
 
             {{-- Akcie --}}
             <div class="admin-section">
-                <h3>Akcie</h3>
+                <h3>Actions</h3>
                 <div class="admin-actions">
 
                     @if($book->amount <= 0)
                         <span class="out-of-stock-badge">Out of stock</span>
                     @endif
 
-                    <button type="submit" class="btn-save">Uložiť zmeny</button>
+                    <button type="submit" class="btn-save">Save Changes</button>
 
                     @if($book->amount <= 0)
                         {{-- restock je mimo hlavného formu --}}
@@ -254,7 +275,7 @@
 
     // mazanie obrázka cez AJAX
     function deleteImage(imageId, btn) {
-        if (!confirm('Vymazať tento obrázok?')) return;
+        if (!confirm('Delete this image?')) return;
         fetch(`/ninkaalexsupertajnastranka/books/images/${imageId}`, {
             method: 'DELETE',
             headers: {

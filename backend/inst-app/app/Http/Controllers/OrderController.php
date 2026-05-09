@@ -81,7 +81,7 @@ class OrderController extends Controller
 
         if (Auth::check()) {
             $basket = Basket::firstOrCreate(['customer_id' => Auth::id()]);
-            $items = $basket->books;
+            $items = $basket->books()->with('images')->get();
             $subtotal = $items->sum(fn($b) => $b->price * $b->pivot->amount);
         } else {
             $items = collect($sessionBasket)->map(function ($item) {
@@ -109,7 +109,7 @@ class OrderController extends Controller
 
         if (Auth::check()) {
             $basket = Basket::firstOrCreate(['customer_id' => Auth::id()]);
-            $items = $basket->books;
+            $items = $basket->books()->with('images')->get();
             $subtotal = $items->sum(fn($b) => $b->price * $b->pivot->amount);
             $total = $subtotal + $shippingPrice;
 

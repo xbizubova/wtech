@@ -41,7 +41,7 @@ class BasketController extends Controller
     // Pridať knihu do košíka
     public function add(Request $request, $bookId)
     {
-        $book = Book::findOrFail($bookId);
+        $book = Book::with('images')->findOrFail($bookId);
 
         if (Auth::check()) {
             $basket = Basket::firstOrCreate(['customer_id' => Auth::id()]);
@@ -76,13 +76,14 @@ class BasketController extends Controller
                     'name'     => $book->name,
                     'author'   => $book->author,
                     'price'    => $book->price,
-                    'photo1'   => $book->photo1,
+                    'photo1'   => $book->images->first()?->filename,
                     'quantity' => $quantity,
                 ];
             }
 
             session(['basket' => $basket]);
         }
+
 
         return back()->with('success', 'Kniha pridaná do košíka.');
     }

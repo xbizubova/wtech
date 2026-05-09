@@ -34,6 +34,9 @@
                 <label class="field-label">Images</label>
                 <input type="file" name="new_images[]" multiple accept="image/*"
                        onchange="previewCovers(this)">
+                @error('new_images.*')
+                <span style="color:#c0392b; font-size:0.75rem; font-family:'Jost',sans-serif;">{{ $message }}</span>
+                @enderror
             </div>
         </div>
 
@@ -56,15 +59,23 @@
                 <div class="field-row">
                     <div class="field-item full">
                         <label>Title</label>
-                        <input type="text" name="name" value="{{ old('name') }}" placeholder="Book Title" required>
+                        <input type="text" name="name" value="{{ old('name') }}" placeholder="Book Title" required
+                               style="{{ $errors->has('name') ? 'border: 1.5px solid #c0392b;' : '' }}">
+                        @error('name')
+                        <span style="color:#c0392b; font-size:0.75rem; font-family:'Jost',sans-serif;">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="field-item full">
                         <label>Author</label>
                         <input type="text" name="author" value="{{ old('author') }}" placeholder="Book Author" required>
+                        @error('author')
+                        <span style="color:#c0392b; font-size:0.75rem; font-family:'Jost',sans-serif;">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="field-item full">
                         <label>Description</label>
                         <textarea name="detail" placeholder="Book Description">{{ old('detail') }}</textarea>
+
                     </div>
                 </div>
             </div>
@@ -76,11 +87,17 @@
                         <div class="field-item">
                             <label>Price (€)</label>
                             <input type="number" step="0.01" name="price" value="{{ old('price') }}" placeholder="0.00" required id="priceInput">
+                            @error('price')
+                            <span style="color:#c0392b; font-size:0.75rem; font-family:'Jost',sans-serif;">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="field-item">
                             <label>Discount (%)</label>
                             <input type="number" step="1" name="discount" value="{{ old('discount') }}" placeholder="0" min="0" max="100" id="discountInput">
                         </div>
+                        @error('discount')
+                        <span style="color:#c0392b; font-size:0.75rem; font-family:'Jost',sans-serif;">{{ $message }}</span>
+                        @enderror
                         <div class="field-item">
                             <label>Final price (€)</label>
                             <input type="text" id="finalPrice" placeholder="—" readonly style="opacity:0.6;">
@@ -88,6 +105,7 @@
                         <div class="field-item">
                             <label>Sale start</label>
                             <input type="date" name="start_sale" value="{{ old('start_sale') }}">
+
                         </div>
                         <div class="field-item">
                             <label>Sale end</label>
@@ -96,14 +114,23 @@
                         <div class="field-item">
                             <label>In stock</label>
                             <input type="number" name="amount" value="{{ old('amount') }}" placeholder="0" required>
+                            @error('amount')
+                            <span style="color:#c0392b; font-size:0.75rem; font-family:'Jost',sans-serif;">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="field-item">
                             <label>Language</label>
                             <input type="text" name="language" value="{{ old('language') }}" placeholder="EN / SK / CZ" required>
+                            @error('language')
+                            <span style="color:#c0392b; font-size:0.75rem; font-family:'Jost',sans-serif;">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="field-item">
                             <label>Date of issue</label>
                             <input type="date" name="release_date" value="{{ old('release_date') }}">
+                            @error('release_date')
+                            <span style="color:#c0392b; font-size:0.75rem; font-family:'Jost',sans-serif;">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                 </div>

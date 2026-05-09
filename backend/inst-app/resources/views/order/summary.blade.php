@@ -26,8 +26,12 @@
             @foreach($items as $book)
                 @php
                     $qty = isset($book->pivot) ? $book->pivot->amount : ($book->quantity ?? 1);
-                    $image = $book->images->first();
-                    $photo = $image?->filename;
+                    $photo = null;
+                    if (isset($book->pivot) && method_exists($book, 'relationLoaded') && $book->relationLoaded('images')) {
+                        $photo = $book->images->first()?->filename;
+                    } elseif (isset($book->photo1)) {
+                        $photo = $book->photo1;
+                    }
                     $name = $book->name ?? '';
                     $author = $book->author ?? '';
                     $price = $book->price ?? 0;

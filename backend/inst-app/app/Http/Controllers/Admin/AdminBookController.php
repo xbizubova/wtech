@@ -98,7 +98,7 @@ class AdminBookController extends Controller
             'detail'       => 'nullable|string',
             'rating'       => 'nullable|integer|min:1|max:5',
             'amount'       => 'required|integer',
-            'release_date' => 'nullable|date',
+            'release_date' => 'nullable|date|before_or_equal:today',
             'new_images'   => 'nullable|array',
             'new_images.*' => 'image|mimes:jpeg,jpg,png,webp|max:5120',
             // sale polia
@@ -168,7 +168,7 @@ class AdminBookController extends Controller
             'detail'       => 'nullable|string',
             'rating'       => 'nullable|integer|min:1|max:5',
             'amount'       => 'required|integer',
-            'release_date' => 'nullable|date',
+            'release_date' => 'nullable|date|before_or_equal:today',
             'new_images'   => 'nullable|array',
             'new_images.*' => 'image|mimes:jpeg,jpg,png,webp|max:5120',
             // sale polia
