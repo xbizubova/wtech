@@ -26,10 +26,11 @@
             @foreach($items as $book)
                 @php
                     $qty = isset($book->pivot) ? $book->pivot->amount : ($book->quantity ?? 1);
-                    $photo = isset($book->pivot) ? $book->photo1 : ($book->photo1 ?? null);
-                    $name = isset($book->pivot) ? $book->name : ($book->name ?? '');
-                    $author = isset($book->pivot) ? $book->author : ($book->author ?? '');
-                    $price = isset($book->pivot) ? $book->price : ($book->price ?? 0);
+                    $image = $book->images->first();
+                    $photo = $image?->filename;
+                    $name = $book->name ?? '';
+                    $author = $book->author ?? '';
+                    $price = $book->price ?? 0;
                 @endphp
                 <div class="summary-book-item">
                     @if($photo)

@@ -16,12 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('author');
             $table->decimal('price', 8, 2);
-            $table->decimal('original_price', 8, 2)->nullable();
             $table->text('detail')->nullable();
             $table->string('language')->nullable();
             $table->integer('rating')->nullable();
-            $table->string('photo1')->nullable();
-            $table->string('photo2')->nullable();
             $table->integer('amount')->default(0);
             $table->date('release_date')->nullable();
             $table->boolean('is_on_sale')->default(false);

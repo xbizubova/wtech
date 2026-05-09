@@ -29,11 +29,11 @@
         {{-- ── ĽAVÝ STĹPEC: obrázky ── --}}
         <div class="admin-left">
             <div class="cover-placeholder" id="coverPreview">No image</div>
-
+            <div id="thumbsPreview" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;"></div>
             <div class="upload-btn-wrap">
                 <label class="field-label">Images</label>
                 <input type="file" name="new_images[]" multiple accept="image/*"
-                       onchange="previewCover(this)">
+                       onchange="previewCovers(this)">
             </div>
         </div>
 
@@ -86,6 +86,14 @@
                             <input type="text" id="finalPrice" placeholder="—" readonly style="opacity:0.6;">
                         </div>
                         <div class="field-item">
+                            <label>Sale start</label>
+                            <input type="date" name="start_sale" value="{{ old('start_sale') }}">
+                        </div>
+                        <div class="field-item">
+                            <label>Sale end</label>
+                            <input type="date" name="end_sale" value="{{ old('end_sale') }}">
+                        </div>
+                        <div class="field-item">
                             <label>In stock</label>
                             <input type="number" name="amount" value="{{ old('amount') }}" placeholder="0" required>
                         </div>
@@ -104,10 +112,6 @@
             <div class="admin-section">
                 <h3>Properties</h3>
                 <div class="checks-row">
-                    <label class="check-label">
-                        <input type="checkbox" name="is_on_sale" {{ old('is_on_sale') ? 'checked' : '' }}>
-                        On Sale
-                    </label>
                     <label class="check-label">
                         <input type="checkbox" name="is_booktok" {{ old('is_booktok') ? 'checked' : '' }}>
                         Booktok Trending
@@ -194,6 +198,7 @@
 
     priceInput?.addEventListener('input', calcFinal);
     discountInput?.addEventListener('input', calcFinal);
+    calcFinal();
     const stars = document.querySelectorAll('.star');
     const ratingValue = document.getElementById('ratingValue');
     stars.forEach(star => {
@@ -204,28 +209,35 @@
         });
     });
 
-    function previewCover(input) {
+    function previewCovers(input) {
         const preview = document.getElementById('coverPreview');
+        const thumbs = document.getElementById('thumbsPreview');
+        thumbs.innerHTML = '';
+
         if (input.files && input.files.length > 0) {
-            preview.innerHTML = '';
             Array.from(input.files).forEach((file, index) => {
                 const reader = new FileReader();
                 reader.onload = e => {
                     if (index === 0) {
-                        // prvý obrázok ako hlavný náhľad
                         preview.innerHTML = `<img src="${e.target.result}"
                         style="width:100%; height:100%; object-fit:cover; border-radius:10px;">`;
                     } else {
-                        // ďalšie obrázky ako miniatúry pod ním
                         const thumb = document.createElement('img');
                         thumb.src = e.target.result;
-                        thumb.style = 'width:72px; height:96px; object-fit:cover; border-radius:6px; margin-top:8px;';
-                        preview.parentElement.appendChild(thumb);
+                        thumb.style = 'width:72px; height:96px; object-fit:cover; border-radius:6px;';
+                        thumbs.appendChild(thumb);
                     }
                 };
                 reader.readAsDataURL(file);
             });
         }
+    }
+
+    function switchPreviewCover(el) {
+        document.querySelectorAll('#previewThumbs img').forEach(i => i.classList.remove('active'));
+        el.classList.add('active');
+        document.getElementById('coverPreview').innerHTML =
+            `<img src="${el.src}" style="width:100%; height:100%; object-fit:cover; border-radius:10px;">`;
     }
 </script>
 </body>

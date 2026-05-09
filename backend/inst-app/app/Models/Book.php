@@ -6,13 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
-    protected $primaryKey = 'book_id';
     protected $fillable = [
-        'name', 'author', 'price', 'original_price', 'detail',
-        'language', 'rating', 'photo1', 'photo2',
-        'amount', 'release_date', 'is_on_sale',
-        'is_booktok', 'is_recommended'
+        'name', 'author', 'price', 'detail',
+        'language', 'rating', 'amount', 'release_date',
+        'is_booktok', 'is_recommended', 'is_hidden'
     ];
+    protected $primaryKey = 'book_id';
 
     public function categories()
     {
@@ -29,5 +28,31 @@ class Book extends Model
     public function images()
     {
         return $this->hasMany(BookImage::class, 'book_id')->orderBy('order');
+    }
+
+    public function sale()
+    {
+        return $this->hasOne(BookSale::class, 'book_id');
+    }
+
+    public function getIsOnSaleAttribute(): bool
+    {
+        if (!$this->sale) return false;
+        $today = now()->toDateString();
+        $start = $this->sale->start_sale;
+        $end = $this->sale->end_sale;
+
+        if ($start && $today < $start) return false;
+        if ($end && $today > $end) return false;
+
+        return $this->sale->price_modifier !== null;
+    }
+
+    public function getFinalPriceAttribute()
+    {
+        if ($this->is_on_sale && $this->sale?->price_modifier) {
+            return round($this->price * $this->sale->price_modifier, 2);
+        }
+        return $this->price;
     }
 }

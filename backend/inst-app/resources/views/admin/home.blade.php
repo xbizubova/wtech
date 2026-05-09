@@ -60,8 +60,8 @@
             <div class="books-grid-2">
                 @foreach($recommended as $book)
                     <a href="{{ route('admin.books.show', $book->book_id) }}" class="book-card">
-                        @if($book->photo1)
-                            <img class="book-cover" src="{{ asset('pictures/' . $book->photo1) }}" alt="{{ $book->name }}">
+                        @if($book->images->isNotEmpty())
+                            <img class="book-cover" src="{{ asset('pictures/' . $book->images->first()->filename) }}" alt="{{ $book->name }}">
                         @else
                             <div class="book-cover"></div>
                         @endif
@@ -79,8 +79,8 @@
         <div class="books-grid-4">
             @foreach($trending as $book)
                 <a href="{{ route('admin.books.show', $book->book_id) }}" class="book-card">
-                    @if($book->photo1)
-                        <img class="book-cover" src="{{ asset('pictures/' . $book->photo1) }}" alt="{{ $book->name }}">
+                    @if($book->images->isNotEmpty())
+                        <img class="book-cover" src="{{ asset('pictures/' . $book->images->first()->filename) }}" alt="{{ $book->name }}">
                     @else
                         <div class="book-cover"></div>
                     @endif

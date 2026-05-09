@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\BookSale;
 
 class AdminBookController extends Controller
 {
     public function index(Request $request)
     {
         $categories = Category::all();
-        $query = Book::with('categories');
+        $query = Book::with(['categories', 'images', 'sale']);
 
         if ($request->filled('search')) {
             $query->where(function($q) use ($request) {
@@ -22,7 +23,14 @@ class AdminBookController extends Controller
         }
 
         if ($request->has('on_sale') && $request->on_sale == '1') {
-            $query->where('is_on_sale', true);
+            $today = now()->toDateString();
+            $query->whereHas('sale', function($q) use ($today) {
+                $q->where(function($q) use ($today) {
+                    $q->whereNull('start_sale')->orWhere('start_sale', '<=', $today);
+                })->where(function($q) use ($today) {
+                    $q->whereNull('end_sale')->orWhere('end_sale', '>=', $today);
+                });
+            });
         }
 
         if ($request->has('is_booktok') && $request->is_booktok == '1') {
@@ -47,6 +55,13 @@ class AdminBookController extends Controller
             });
         }
 
+        if ($request->filled('price_min')) {
+            $query->where('price', '>=', $request->price_min);
+        }
+        if ($request->filled('price_max')) {
+            $query->where('price', '<=', $request->price_max);
+        }
+
         $sort = $request->get('sort', 'price_asc');
         match($sort) {
             'price_asc'  => $query->orderBy('price', 'asc'),
@@ -62,7 +77,7 @@ class AdminBookController extends Controller
 
     public function show($id)
     {
-        $book = Book::with('categories')->findOrFail($id);
+        $book = Book::with(['categories', 'images', 'sale'])->findOrFail($id);
         $categories = Category::all();
         return view('admin.books.show', compact('book', 'categories'));
     }
@@ -76,59 +91,66 @@ class AdminBookController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name'           => 'required|string',
-            'author'         => 'required|string',
-            'price'          => 'required|numeric',
-            'original_price' => 'nullable|numeric',
-            'language'       => 'required|string',
-            'detail'         => 'nullable|string',
-            'rating'         => 'nullable|integer|min:1|max:5',
-            'amount'         => 'required|integer',
-            'release_date'   => 'nullable|date',
-            'photo1'         => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
-            'photo2'         => 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120',
+            'name'         => 'required|string',
+            'author'       => 'required|string',
+            'price'        => 'required|numeric',
+            'language'     => 'required|string',
+            'detail'       => 'nullable|string',
+            'rating'       => 'nullable|integer|min:1|max:5',
+            'amount'       => 'required|integer',
+            'release_date' => 'nullable|date',
             'new_images'   => 'nullable|array',
             'new_images.*' => 'image|mimes:jpeg,jpg,png,webp|max:5120',
+            // sale polia
+            'discount'     => 'nullable|integer|min:0|max:100',
+            'start_sale'   => 'nullable|date',
+            'end_sale'     => 'nullable|date',
         ]);
 
-        // Checkboxy — ak sú zaškrtnuté, has() vráti true, inak false
-        $data['is_on_sale']     = $request->has('is_on_sale');
+        //$data['is_on_sale']     = $request->has('is_on_sale');
         $data['is_booktok']     = $request->has('is_booktok');
         $data['is_recommended'] = $request->has('is_recommended');
-        $data['is_hidden']      = false; // nová kniha je vždy viditeľná
+        $data['is_hidden']      = false;
 
-        if ($request->hasFile('photo1')) {
-            $data['photo1'] = $request->file('photo1')->getClientOriginalName();
-            $request->file('photo1')->move(public_path('pictures'), $data['photo1']);
-        }
-
-        if ($request->hasFile('photo2')) {
-            $data['photo2'] = $request->file('photo2')->getClientOriginalName();
-            $request->file('photo2')->move(public_path('pictures'), $data['photo2']);
-        }
+        // Vyberieme sale dáta pred vytvorením knihy
+        $discount   = $data['discount'] ?? null;
+        $startSale  = $data['start_sale'] ?? null;
+        $endSale    = $data['end_sale'] ?? null;
+        unset($data['discount'], $data['start_sale'], $data['end_sale']);
 
         $book = Book::create($data);
+        $book->refresh();
 
         if ($request->filled('categories')) {
             $book->categories()->attach($request->categories);
         }
+
+        // Uložíme obrázky
         if ($request->hasFile('new_images')) {
             foreach ($request->file('new_images') as $index => $file) {
-                $filename = $file->getClientOriginalName();
-                $file->move(public_path('pictures'), $filename);
+                $originalName = $file->getClientOriginalName();
 
-                // prvý obrázok nastav aj ako photo1
-                if ($index === 0) {
-                    $book->photo1 = $filename;
-                    $book->save();
+                // Ak súbor ešte neexistuje, skopíruj ho
+                if (!file_exists(public_path('pictures/' . $originalName))) {
+                    $file->move(public_path('pictures'), $originalName);
                 }
 
                 \App\Models\BookImage::create([
                     'book_id'  => $book->book_id,
-                    'filename' => $filename,
+                    'filename' => $originalName,
                     'order'    => $index + 1,
                 ]);
             }
+        }
+
+        // Uložíme zľavu ak je zadaná
+        if ($discount && $discount > 0) {
+            BookSale::create([
+                'book_id'        => $book->book_id,
+                'price_modifier' => round(1 - $discount / 100, 4),
+                'start_sale'     => $startSale,
+                'end_sale'       => $endSale,
+            ]);
         }
 
         return redirect()->route('admin.books.index')->with('success', 'Kniha bola pridaná.');
@@ -139,32 +161,31 @@ class AdminBookController extends Controller
         $book = Book::findOrFail($id);
 
         $data = $request->validate([
-            'name'          => 'required|string',
-            'author'        => 'required|string',
-            'price'         => 'required|numeric',
-            'original_price'=> 'nullable|numeric',
-            'language'      => 'required|string',
-            'detail'        => 'nullable|string',
-            'rating'        => 'nullable|integer|min:1|max:5',
-            'amount'        => 'required|integer',
-            'release_date'  => 'nullable|date',
-            'new_images'    => 'nullable|array',
-            'new_images.*'  => 'image|mimes:jpeg,jpg,png,webp|max:5120',
+            'name'         => 'required|string',
+            'author'       => 'required|string',
+            'price'        => 'required|numeric',
+            'language'     => 'required|string',
+            'detail'       => 'nullable|string',
+            'rating'       => 'nullable|integer|min:1|max:5',
+            'amount'       => 'required|integer',
+            'release_date' => 'nullable|date',
+            'new_images'   => 'nullable|array',
+            'new_images.*' => 'image|mimes:jpeg,jpg,png,webp|max:5120',
+            // sale polia
+            'discount'     => 'nullable|integer|min:0|max:100',
+            'start_sale'   => 'nullable|date',
+            'end_sale'     => 'nullable|date',
         ]);
 
-        if ($request->hasFile('photo1')) {
-            $data['photo1'] = $request->file('photo1')->getClientOriginalName();
-            $request->file('photo1')->move(public_path('pictures'), $data['photo1']);
-        }
-
-        if ($request->hasFile('photo2')) {
-            $data['photo2'] = $request->file('photo2')->getClientOriginalName();
-            $request->file('photo2')->move(public_path('pictures'), $data['photo2']);
-        }
-
-        $data['is_on_sale']     = $request->has('is_on_sale');
+        //$data['is_on_sale']     = $request->has('is_on_sale');
         $data['is_booktok']     = $request->has('is_booktok');
         $data['is_recommended'] = $request->has('is_recommended');
+
+        // Vyberieme sale dáta pred updateom knihy
+        $discount  = $data['discount'] ?? null;
+        $startSale = $data['start_sale'] ?? null;
+        $endSale   = $data['end_sale'] ?? null;
+        unset($data['discount'], $data['start_sale'], $data['end_sale']);
 
         $book->update($data);
 
@@ -172,21 +193,42 @@ class AdminBookController extends Controller
             $book->categories()->sync($request->categories);
         }
 
-
+        // Uložíme nové obrázky
         if ($request->hasFile('new_images')) {
             foreach ($request->file('new_images') as $index => $file) {
-                $filename = $file->getClientOriginalName();
-                $file->move(public_path('pictures'), $filename);
+                $originalName = $file->getClientOriginalName();
+
+                // Ak súbor ešte neexistuje, skopíruj ho
+                if (!file_exists(public_path('pictures/' . $originalName))) {
+                    $file->move(public_path('pictures'), $originalName);
+                }
+
                 \App\Models\BookImage::create([
                     'book_id'  => $book->book_id,
-                    'filename' => $filename,
-                    'order'    => $book->images()->max('order') + $index + 1,
+                    'filename' => $originalName,
+                    'order'    => $index + 1,
                 ]);
             }
         }
 
+        // Aktualizujeme zľavu
+        if ($discount && $discount > 0) {
+            BookSale::updateOrCreate(
+                ['book_id' => $book->book_id],
+                [
+                    'price_modifier' => round(1 - $discount / 100, 4),
+                    'start_sale'     => $startSale,
+                    'end_sale'       => $endSale,
+                ]
+            );
+        } else {
+            // Ak je discount 0 alebo prázdny, zmažeme zľavu
+            BookSale::where('book_id', $book->book_id)->delete();
+        }
+
         return redirect()->route('admin.books.show', $id)->with('success', 'Kniha bola upravená.');
     }
+
     public function restock(Request $request, $id)
     {
         $request->validate(['restock_amount' => 'required|integer|min:1']);
@@ -197,7 +239,6 @@ class AdminBookController extends Controller
 
     public function destroy($id)
     {
-        // Namiesto vymazania len skryje knihu
         $book = Book::findOrFail($id);
         $book->is_hidden = true;
         $book->save();
@@ -207,10 +248,10 @@ class AdminBookController extends Controller
     public function deleteImage($imageId)
     {
         $image = \App\Models\BookImage::findOrFail($imageId);
-        // voliteľne: unlink(public_path('pictures/' . $image->filename));
         $image->delete();
         return response()->json(['success' => true]);
     }
+
     public function uploadImages(Request $request, $id)
     {
         $book = Book::findOrFail($id);
@@ -220,26 +261,20 @@ class AdminBookController extends Controller
         ]);
 
         if ($request->hasFile('new_images')) {
-            $first = $book->images->isEmpty();
-            foreach ($request->file('new_images') as $file) {
-                $filename = time() . '_' . $file->getClientOriginalName();
+            foreach ($request->file('new_images') as $index => $file) {
+                $filename = time() . '_' . $index . '_' . $file->getClientOriginalName();
                 $file->move(public_path('pictures'), $filename);
                 \App\Models\BookImage::create([
-                    'book_id'    => $book->book_id,
-                    'filename'   => $filename,
-                    'is_primary' => $first,
+                    'book_id' => $book->book_id,
+                    'filename' => $filename,
+                    'order'   => $book->images()->max('order') + $index + 1,
                 ]);
-                if ($first) {
-                    $book->update(['photo1' => $filename]);
-                    $first = false;
-                }
             }
         }
 
         return back()->with('success', 'Obrázky boli pridané.');
     }
 
-    // Obnoviť skrytú knihu
     public function restore($id)
     {
         $book = Book::findOrFail($id);

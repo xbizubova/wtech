@@ -82,10 +82,10 @@
         </div>
 
         <div class="book-detail-extras">
-            @if($book->is_on_sale && $book->original_price)
+            @if($book->is_on_sale && $book->sale)
                 <div class="book-detail-price">
-                    <span class="price-original">{{ number_format($book->original_price, 2) }}€</span>
-                    <span class="price-sale">{{ number_format($book->price, 2) }}€</span>
+                    <span class="price-original">{{ number_format($book->price, 2) }}€</span>
+                    <span class="price-sale">{{ number_format($book->final_price, 2) }}€</span>
                 </div>
             @else
                 <div class="book-detail-price">{{ number_format($book->price, 2) }}€</div>

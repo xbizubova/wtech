@@ -33,11 +33,10 @@ class AdminController extends Controller
 
     public function home()
     {
-        $recommended = Book::where('is_recommended', true)->limit(2)->get();
-        $trending = Book::where('is_booktok', true)->limit(4)->get();
+        $recommended = Book::with('images')->where('is_recommended', true)->limit(2)->get();
+        $trending = Book::with('images')->where('is_booktok', true)->limit(4)->get();
         return view('admin.home', compact('recommended', 'trending'));
     }
-
     public function logout(Request $request)
     {
         Auth::guard('admin')->logout();

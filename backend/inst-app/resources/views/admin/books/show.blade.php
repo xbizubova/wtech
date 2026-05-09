@@ -29,15 +29,18 @@
 
         {{-- ── ĽAVÝ STĹPEC: obrázky ── --}}
         <div class="admin-left">
-
             {{-- hlavný obrázok --}}
-            <img id="mainCover"
-                 src="{{ asset('pictures/' . ($book->images->first()->filename ?? $book->photo1 ?? '')) }}"
-                 alt="{{ $book->name }}"
-                 class="admin-cover">
+            @if($book->images->isNotEmpty())
+                <img id="mainCover"
+                     src="{{ asset('pictures/' . $book->images->first()->filename) }}"
+                     alt="{{ $book->name }}"
+                     class="admin-cover">
+            @else
+                <div class="cover-placeholder">No image</div>
+            @endif
 
-            {{-- miniatúry existujúcich obrázkov --}}
-            @if($book->images->count())
+            {{-- miniatúry --}}
+            @if($book->images->count() > 1)
                 <div class="gallery-thumbs">
                     @foreach($book->images as $img)
                         <div class="gallery-thumb">
@@ -94,11 +97,25 @@
                 <div class="field-row">
                     <div class="field-item">
                         <label>Cena (€)</label>
-                        <input type="number" step="0.01" name="price" value="{{ $book->price }}" required>
+                        <input type="number" step="0.01" name="price" value="{{ $book->price }}" required id="priceInput">
                     </div>
                     <div class="field-item">
-                        <label>Pôvodná cena (€)</label>
-                        <input type="number" step="0.01" name="original_price" value="{{ $book->original_price }}">
+                        <label>Zľava (%)</label>
+                        <input type="number" step="1" name="discount" min="0" max="100" id="discountInput"
+                               value="{{ $book->sale ? round((1 - $book->sale->price_modifier) * 100) : '' }}">
+                    </div>
+                    <div class="field-item">
+                        <label>Finálna cena (€)</label>
+                        <input type="text" id="finalPrice" readonly style="opacity:0.6;"
+                               value="{{ $book->is_on_sale && $book->sale ? $book->final_price . ' €' : $book->price . ' €' }}">
+                    </div>
+                    <div class="field-item">
+                        <label>Začiatok zľavy</label>
+                        <input type="date" name="start_sale" value="{{ $book->sale?->start_sale }}">
+                    </div>
+                    <div class="field-item">
+                        <label>Koniec zľavy</label>
+                        <input type="date" name="end_sale" value="{{ $book->sale?->end_sale }}">
                     </div>
                     <div class="field-item">
                         <label>Množstvo na sklade</label>
@@ -114,15 +131,10 @@
                     </div>
                 </div>
             </div>
-
             {{-- Príznaky --}}
             <div class="admin-section">
                 <h3>Príznaky</h3>
                 <div class="checks-row">
-                    <label class="check-label">
-                        <input type="checkbox" name="is_on_sale" {{ $book->is_on_sale ? 'checked' : '' }}>
-                        On Sale
-                    </label>
                     <label class="check-label">
                         <input type="checkbox" name="is_booktok" {{ $book->is_booktok ? 'checked' : '' }}>
                         Booktok Trending
@@ -265,6 +277,25 @@
                 }
             });
     }
+    //zlava
+    const priceInput = document.getElementById('priceInput');
+    const discountInput = document.getElementById('discountInput');
+    const finalPrice = document.getElementById('finalPrice');
+
+    function calcFinal() {
+        const price = parseFloat(priceInput?.value) || 0;
+        const discount = parseFloat(discountInput?.value) || 0;
+        if (price > 0 && discount > 0) {
+            finalPrice.value = (price * (1 - discount / 100)).toFixed(2) + ' €';
+        } else {
+            finalPrice.value = price > 0 ? price.toFixed(2) + ' €' : '—';
+        }
+    }
+
+    priceInput?.addEventListener('input', calcFinal);
+    discountInput?.addEventListener('input', calcFinal);
+    calcFinal();
+
 
     // hviezdy
     const stars = document.querySelectorAll('.star');

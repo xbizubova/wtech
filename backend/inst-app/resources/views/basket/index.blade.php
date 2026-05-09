@@ -56,9 +56,13 @@
             @forelse($items as $item)
                 <div class="basket-item" data-id="{{ $item['book_id'] }}" data-price="{{ $item['price'] }}">
 
-                    <img class="item-cover"
-                         src="{{ asset('pictures/' . $item['photo1']) }}"
-                         alt="{{ $item['name'] }}">
+                    @if(isset($item['photo1']) && $item['photo1'])
+                        <img class="item-cover"
+                             src="{{ asset('pictures/' . $item['photo1']) }}"
+                             alt="{{ $item['name'] }}">
+                    @else
+                        <div class="item-cover"></div>
+                    @endif
 
                     <div class="item-info">
                         <p class="item-title">{{ $item['name'] }}</p>

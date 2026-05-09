@@ -92,8 +92,8 @@
                 <div style="display: flex; flex-wrap: wrap; gap: 16px;">
                     @forelse($purchasedBooks as $item)
                         <a href="{{ route('books.show', $item->book->book_id) }}" class="book-card" style="width: 150px; flex-shrink: 0;">
-                            @if($item->book->photo1)
-                                <img class="book-cover" src="{{ asset('pictures/' . $item->book->photo1) }}" alt="{{ $item->book->name }}">
+                            @if($item->book->images->isNotEmpty())
+                                <img class="book-cover" src="{{ asset('pictures/' . $item->book->images->first()->filename) }}" alt="{{ $item->book->name }}">
                             @else
                                 <div class="book-cover"></div>
                             @endif

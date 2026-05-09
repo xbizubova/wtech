@@ -20,6 +20,7 @@ class Basket extends Model
     public function books()
     {
         return $this->belongsToMany(Book::class, 'book_basket', 'basket_id', 'book_id')
+            ->with('images')
             ->withPivot('amount')
             ->withTimestamps();
     }

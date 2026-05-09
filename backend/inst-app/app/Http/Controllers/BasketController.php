@@ -14,13 +14,14 @@ class BasketController extends Controller
     {
         if (Auth::check()) {
             $basket = Basket::firstOrCreate(['customer_id' => Auth::id()]);
-            return $basket->books->map(function ($book) {
+            return $basket->books()->with('images')->get()->map(function ($book) {
+                $image = $book->images->first();
                 return [
                     'book_id'  => $book->book_id,
                     'name'     => $book->name,
                     'author'   => $book->author,
                     'price'    => $book->price,
-                    'photo1'   => $book->photo1,
+                    'photo1'   => $image?->filename,
                     'quantity' => $book->pivot->amount,
                 ];
             })->toArray();

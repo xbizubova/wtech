@@ -148,32 +148,43 @@
 
             <div class="books">
                 @forelse($books as $book)
+                    @php $images = $book->images; $imageCount = $images->count(); @endphp
                     <a href="{{ route('admin.books.show', $book->book_id) }}" class="book-card"
                        style="position:relative; {{ ($book->is_hidden || $book->amount <= 0) ? 'opacity:0.5; filter:grayscale(60%);' : '' }}">
 
-                        @if($book->photo1)
-                            <div style="position:relative;">
-                                @if($book->is_hidden)
-                                    <span style="position:absolute; top:8px; left:8px; background:#c0392b; color:#fff; font-size:0.65rem; font-family:'Jost',sans-serif; letter-spacing:0.08em; padding:4px 8px; border-radius:2px; z-index:10; text-transform:uppercase;">Removed</span>
+                        <div style="position:relative;">
+                            @if($book->is_hidden)
+                                <span style="position:absolute; top:8px; left:8px; background:#c0392b; color:#fff; font-size:0.65rem; font-family:'Jost',sans-serif; letter-spacing:0.08em; padding:4px 8px; border-radius:2px; z-index:10; text-transform:uppercase;">Removed</span>
+                            @endif
+                            @if($book->amount <= 0)
+                                <span style="position:absolute; top:8px; right:8px; background:#c0392b; color:#fff; font-size:0.65rem; font-family:'Jost',sans-serif; letter-spacing:0.08em; padding:4px 8px; border-radius:2px; z-index:10; text-transform:uppercase;">Out of stock</span>
+                            @endif
+
+                            @if($imageCount > 0)
+                                <img class="book-cover book-cover-img"
+                                     src="{{ asset('pictures/' . $images->first()->filename) }}"
+                                     alt="{{ $book->name }}"
+                                     data-images="{{ $images->pluck('filename')->map(fn($f) => asset('pictures/' . $f))->toJson() }}"
+                                     data-index="0">
+                                @if($imageCount > 1)
+                                    <button type="button" onclick="event.preventDefault(); prevImage(this)"
+                                            style="position:absolute; left:4px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.8); border:none; border-radius:50%; width:28px; height:28px; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center;">‹</button>
+                                    <button type="button" onclick="event.preventDefault(); nextImage(this)"
+                                            style="position:absolute; right:4px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.8); border:none; border-radius:50%; width:28px; height:28px; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center;">›</button>
                                 @endif
-                                @if($book->amount <= 0)
-                                    <span style="position:absolute; top:8px; right:8px; background:#c0392b; color:#fff; font-size:0.65rem; font-family:'Jost',sans-serif; letter-spacing:0.08em; padding:4px 8px; border-radius:2px; z-index:10; text-transform:uppercase;">Out of stock</span>
-                                @endif
-                                <img class="book-cover" src="{{ asset('pictures/' . $book->photo1) }}" alt="{{ $book->name }}">
-                            </div>
-                        @else
-                            <div class="book-cover"></div>
-                        @endif
+                            @else
+                                <div class="book-cover"></div>
+                            @endif
+                        </div>
 
                         <p class="book-title">{{ $book->name }}</p>
                         <p class="book-author">{{ $book->author }}</p>
-                        @if($book->is_on_sale)
-                            <p class="book-price"><s>{{ number_format($book->original_price, 2) }}€</s> {{ number_format($book->price, 2) }}€</p>
+                        @if($book->is_on_sale && $book->sale)
+                            <p class="book-price"><s>{{ number_format($book->price, 2) }}€</s> {{ number_format($book->final_price, 2) }}€</p>
                             <p class="book-sale">SALE</p>
                         @else
                             <p class="book-price">{{ number_format($book->price, 2) }}€</p>
                         @endif
-
                     </a>
                 @empty
                     <p>Žiadne knihy sa nenašli.</p>
@@ -256,37 +267,39 @@
     function updateRange() {
         let min = parseInt(priceMin.value);
         let max = parseInt(priceMax.value);
-
-        if (min > max) {
-            priceMin.value = max;
-            min = max;
-        }
-        if (max < min) {
-            priceMax.value = min;
-            max = min;
-        }
-
+        if (min > max) { priceMin.value = max; min = max; }
+        if (max < min) { priceMax.value = min; max = min; }
         const percent1 = (min / 100) * 100;
         const percent2 = (max / 100) * 100;
-
         rangeFill.style.left = percent1 + '%';
         rangeFill.style.width = (percent2 - percent1) + '%';
-
         priceMinLabel.textContent = min + ' €';
         priceMaxLabel.textContent = max + ' €';
     }
 
     priceMin.addEventListener('input', updateRange);
     priceMax.addEventListener('input', updateRange);
-
-    priceMin.addEventListener('change', () => {
-        document.getElementById('filterForm').submit();
-    });
-    priceMax.addEventListener('change', () => {
-        document.getElementById('filterForm').submit();
-    });
-
+    priceMin.addEventListener('change', () => { document.getElementById('filterForm').submit(); });
+    priceMax.addEventListener('change', () => { document.getElementById('filterForm').submit(); });
     updateRange();
+
+    function nextImage(btn) {
+        const img = btn.closest('div').querySelector('.book-cover-img');
+        const images = JSON.parse(img.dataset.images);
+        let index = parseInt(img.dataset.index);
+        index = (index + 1) % images.length;
+        img.src = images[index];
+        img.dataset.index = index;
+    }
+
+    function prevImage(btn) {
+        const img = btn.closest('div').querySelector('.book-cover-img');
+        const images = JSON.parse(img.dataset.images);
+        let index = parseInt(img.dataset.index);
+        index = (index - 1 + images.length) % images.length;
+        img.src = images[index];
+        img.dataset.index = index;
+    }
 </script>
 </body>
 </html>
