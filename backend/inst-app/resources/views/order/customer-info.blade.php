@@ -7,6 +7,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+
+    <style>
+        .toast-error {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #c0392b;
+            color: white;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-family: 'Jost', sans-serif;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            z-index: 9999;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            animation: fadeout 0.5s ease 4s forwards;
+        }
+
+        @keyframes fadeout {
+            to { opacity: 0; pointer-events: none; }
+        }
+    </style>
 </head>
 <body>
 
@@ -25,18 +48,10 @@
 </nav>
 
 <main>
-    <form method="POST" action="{{ route('order.save-customer-info') }}">
+    <form method="POST" action="{{ route('order.save-customer-info') }}" novalidate>
         @csrf
         <div class="shipping-container">
             <h1 class="shipping-title">Customer Information</h1>
-
-            @if($errors->any())
-                <div style="color:red; margin-bottom:16px;">
-                    @foreach($errors->all() as $error)
-                        <p>{{ $error }}</p>
-                    @endforeach
-                </div>
-            @endif
 
             <div class="shipping-form">
                 <div class="form-grid">
@@ -105,6 +120,12 @@
             </button>
         </div>
     </form>
+
+    @if($errors->any())
+        <div class="toast-error">
+            You need to fill out all the information.
+        </div>
+    @endif
 </main>
 
 <footer>

@@ -30,14 +30,14 @@ class BookSeeder extends Seeder
                 'detail' => 'Serena Paris is orphaned, pack-less, and one of a kind. Coming forward as the first Human-Were hybrid was supposed to heal a centuries-long rift between species. Instead, it made her a target, prey to ruthless political machinations between Weres, Vampyres, and Humans. With her enemies closing in, she has only one option left — if the Alpha of the Northwest pack will have her. As Alpha, Koen Alexander commands absolute obedience, and nothing will stop him from keeping his mate safe.',
                 'price' => 15.99, 'language' => 'EN', 'rating' => 4, 'amount' => 10,
                 'release_date' => '2024-01-01', 'is_booktok' => true,
-                'photo' => ['mate.JPG', 'mate_backside.jpeg'], 'categories' => [$romance->category_id, $ya->category_id ],
+                'photo' => ['mate.JPG', 'mate_backside.jpeg', 'mate_preview.jpg'], 'categories' => [$romance->category_id, $ya->category_id ],
             ],
             [
                 'name' => 'Problematic Summer Romance', 'author' => 'Ali Hazelwood',
                 'detail' => 'Maya Killgore is twenty-three and still figuring out her life. Conor Harkness is thirty-eight, and Maya cannot stop thinking about him. The power dynamic is too imbalanced, and any relationship between them would be problematic in too many ways to count. But when Maya\'s brother decides to get married in Taormina, she and Conor end up stuck together in a romantic Sicilian villa for over a week — and not everything is as it seems.',
                 'price' => 11.99, 'language' => 'EN', 'rating' => 4, 'amount' => 6,
                 'release_date' => '2023-06-01',    'is_recommended' => true,
-                'photo' => 'problematic_summer_romance.JPG', 'categories' => [$romance->category_id, $ya->category_id],
+                'photo' => ['problematic_summer_romance.JPG','problematic_summer_romance_backside.jpg','psr_previw.jpg'], 'categories' => [$romance->category_id, $ya->category_id],
                 'sale' => ['price_modifier' => 0.92, 'start_sale' => '2026-01-01', 'end_sale' => '2026-12-31'],
             ],
             [
@@ -45,7 +45,7 @@ class BookSeeder extends Seeder
                 'detail' => 'Nora Seedová sa ocitne v tajomnej Polnočnej knižnici — mieste medzi životom a smrťou, kde každá kniha predstavuje iný život, ktorý mohla žiť. Dostane šancu preskúmať životy plné iných rozhodnutí a objaviť, čo v skutočnosti znamená žiť naplno. Dojemný román o ľútosti, druhých šanciach a sile nádeje.',
                 'price' => 13.99, 'language' => 'SK', 'rating' => 4, 'amount' => 10,
                 'release_date' => '2024-08-13', 'is_recommended' => true,
-                'photo' => 'polnocna_kniznica.JPG', 'categories' => [$romance->category_id],
+                'photo' => ['polnocna_kniznica.JPG','polnocna_kniznica_backside.jpg', 'pk_preview.jpg'], 'categories' => [$romance->category_id],
             ],
 
             // Young Adult
@@ -54,7 +54,7 @@ class BookSeeder extends Seeder
                 'detail' => 'Miles Halter leaves his safe life behind to attend a boarding school in Alabama, where he becomes obsessed with the fascinating and self-destructive Alaska Young. A powerful coming-of-age story about love, loss, and the search for meaning. Before and after — nothing is ever the same.',
                 'price' => 12.99, 'language' => 'EN', 'rating' => 4, 'amount' => 8,
                 'release_date' => '2005-03-03',     'is_recommended' => true,
-                'photo' => 'looking_for_alaska.JPG', 'categories' => [$ya->category_id, $ya->category_id],
+                'photo' => ['looking_for_alaska.JPG', 'lookinf_for_alaska_backside.jpg','lfa_preview.jpg'], 'categories' => [$ya->category_id, $ya->category_id],
             ],
             [
                 'name' => 'Dievča z atramentu a hviezd', 'author' => 'Kiran Millwood Hargrave',
@@ -107,7 +107,7 @@ class BookSeeder extends Seeder
                 'detail' => 'For over a century, humanity has lived behind enormous walls, protected from the man-eating Titans that roam outside. But when a colossal Titan breaches the wall, young Eren Yeager watches in horror as his world is destroyed. Swearing revenge, he vows to join the fight against the Titans. The legendary manga series begins here — shocking, brutal, and impossible to put down.',
                 'price' => 8.00, 'language' => 'EN', 'rating' => 4, 'amount' => 15,
                 'release_date' => '2009-09-09',
-                'photo' => 'attack_on_titan_1.JPG', 'categories' => [$manga->category_id, $thriller->category_id ],
+                'photo' => ['attack_on_titan_1.JPG','aot1_backside.jpg', 'aot_preview.jpg'], 'categories' => [$manga->category_id, $thriller->category_id ],
                 'sale' => ['price_modifier' => 0.90, 'start_sale' => '2026-01-01', 'end_sale' => '2026-12-31'],
             ],
             [
@@ -115,7 +115,7 @@ class BookSeeder extends Seeder
                 'detail' => 'Eren, Mikasa, and Armin begin their grueling military training. As the cadets push themselves to the limit, dark secrets about the Titans start to surface. The second volume builds the world and deepens the mystery, setting the stage for shocking revelations that will change everything.',
                 'price' => 8.00, 'language' => 'EN', 'rating' => 5, 'amount' => 15,
                 'release_date' => '2009-12-09',
-                'photo' => 'attack_on_titan_2.JPG', 'categories' => [$manga->category_id, $thriller->category_id],
+                'photo' => ['attack_on_titan_2.JPG','aot2_backside.jpg', 'aot2_preview.jpg'], 'categories' => [$manga->category_id, $thriller->category_id],
                 'sale' => ['price_modifier' => 0.90, 'start_sale' => '2026-01-01', 'end_sale' => '2026-12-31'],
             ],
             [
@@ -123,7 +123,7 @@ class BookSeeder extends Seeder
                 'detail' => 'Training is over and the cadets face their first real battle. Volume three delivers a massive twist that redefines everything readers thought they knew about the Titans. Isayama proves once again that no one is safe — and the story is only just beginning.',
                 'price' => 8.00, 'language' => 'EN', 'rating' => 5, 'amount' => 15,
                 'release_date' => '2010-03-09',
-                'photo' => 'attack_on_titan_3.JPG', 'categories' => [$manga->category_id, $thriller->category_id],
+                'photo' => ['attack_on_titan_3.JPG', 'aot3_backside.jpg', 'aot3_preview.jpg'], 'categories' => [$manga->category_id, $thriller->category_id],
                 'sale' => ['price_modifier' => 0.90, 'start_sale' => '2026-01-01', 'end_sale' => '2026-12-31'],
             ],
             [
@@ -131,7 +131,7 @@ class BookSeeder extends Seeder
                 'detail' => 'The Survey Corps ventures beyond the walls on their most dangerous mission yet. Volume four expands the world and uncovers new secrets about the origin of the Titans. Tension is rising, alliances are shifting, and no character is guaranteed to survive.',
                 'price' => 8.00, 'language' => 'EN', 'rating' => 5, 'amount' => 15,
                 'release_date' => '2010-06-09',
-                'photo' => 'attack_on_titan_4.JPG', 'categories' => [$manga->category_id, $thriller->category_id],
+                'photo' => ['attack_on_titan_4.JPG', 'aot4_backside.jpg', 'aot4_preview.jpg'], 'categories' => [$manga->category_id, $thriller->category_id],
                 'sale' => ['price_modifier' => 0.90, 'start_sale' => '2026-01-01', 'end_sale' => '2026-12-31'],
             ],
             [
@@ -139,7 +139,7 @@ class BookSeeder extends Seeder
                 'detail' => 'Volume five delivers one of the most emotional moments of the entire series. Sacrifices mount as Eren begins to grasp the true scale of the threat they face. Isayama\'s ability to combine brutal action with deeply human moments is on full display in this unforgettable installment.',
                 'price' => 8.00, 'language' => 'EN', 'rating' => 5, 'amount' => 15,
                 'release_date' => '2010-09-09',
-                'photo' => 'attack_on_titan_5.JPG', 'categories' => [$manga->category_id, $thriller->category_id],
+                'photo' => ['attack_on_titan_5.JPG', 'aot5_backside.jpg', 'aot5_preview.jpg'], 'categories' => [$manga->category_id, $thriller->category_id],
                 'sale' => ['price_modifier' => 0.90, 'start_sale' => '2026-01-01', 'end_sale' => '2026-12-31'],
             ],
 
