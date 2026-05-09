@@ -42,12 +42,17 @@ class BasketController extends Controller
     public function add(Request $request, $bookId)
     {
         $book = Book::with('images')->findOrFail($bookId);
+        $quantity = max(1, (int) $request->quantity);
 
+        // Skontroluj dostupné množstvo
         if (Auth::check()) {
             $basket = Basket::firstOrCreate(['customer_id' => Auth::id()]);
             $existing = $basket->books()->wherePivot('book_id', $bookId)->first();
+            $currentInBasket = $existing ? $existing->pivot->amount : 0;
 
-            $quantity = max(1, (int) $request->quantity);
+            if ($currentInBasket + $quantity > $book->amount) {
+                return back()->with('error', 'Not enough books in Stock. Amount in Stock: ' . ($book->amount - $currentInBasket));
+            }
 
             if ($existing) {
                 $basket->books()->updateExistingPivot($bookId, [
@@ -59,18 +64,28 @@ class BasketController extends Controller
         } else {
             $basket = session('basket', []);
             $found = false;
+            $currentInBasket = 0;
 
-            foreach ($basket as &$item) {
+            foreach ($basket as $item) {
                 if ($item['book_id'] == $bookId) {
-                    $item['quantity']++;
+                    $currentInBasket = $item['quantity'];
                     $found = true;
                     break;
                 }
             }
 
-            $quantity = max(1, (int) $request->quantity);
+            if ($currentInBasket + $quantity > $book->amount) {
+                return back()->with('error', 'Not enough books in Stock. Amount in Stock: ' . ($book->amount - $currentInBasket));
+            }
 
-            if (!$found) {
+            if ($found) {
+                foreach ($basket as &$item) {
+                    if ($item['book_id'] == $bookId) {
+                        $item['quantity'] += $quantity;
+                        break;
+                    }
+                }
+            } else {
                 $basket[] = [
                     'book_id'  => $book->book_id,
                     'name'     => $book->name,
@@ -83,17 +98,19 @@ class BasketController extends Controller
 
             session(['basket' => $basket]);
         }
-
-
-        return back()->with('success', 'Kniha pridaná do košíka.');
+        return back()->with('success', 'Book added to basket successfully!.');
     }
 
     // Aktualizovať množstvo
     public function update(Request $request, $bookId)
     {
-        $data = $request->json()->all();
-        $quantity = max(1, (int) ($data['quantity'] ?? $request->quantity));
+        $quantity = max(1, (int) $request->quantity);
+        $book = Book::findOrFail($bookId);
 
+        // Skontroluj dostupné množstvo
+        if ($quantity > $book->amount) {
+            return back()->with('error', 'Not enough books in Stock. Amount in Stock: ' . $book->amount);
+        }
 
         if (Auth::check()) {
             $basket = Basket::firstOrCreate(['customer_id' => Auth::id()]);
@@ -109,7 +126,7 @@ class BasketController extends Controller
             session(['basket' => $basket]);
         }
 
-        return back();
+        return back()->with('success', 'Basket updated successfully!.');
     }
 
     // Odstrániť knihu

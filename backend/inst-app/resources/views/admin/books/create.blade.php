@@ -13,13 +13,22 @@
 <header>
     <a href="{{ route('admin.home') }}" class="logo">LEXEM</a>
     <nav class="header-nav">
-        <a href="#" class="btn-login">ACCOUNT</a>
         <form method="POST" action="{{ route('admin.logout') }}" style="display:inline">
             @csrf
             <button type="submit" class="btn-login">LOG OUT</button>
         </form>
     </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
 </header>
+
+<nav class="mobile-nav" id="mobileNav">
+    <form method="POST" action="{{ route('admin.logout') }}">
+        @csrf
+        <button type="submit">LOG OUT</button>
+    </form>
+</nav>
 
 <form method="POST" action="{{ route('admin.books.store') }}" enctype="multipart/form-data">
     @csrf

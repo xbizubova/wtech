@@ -124,6 +124,23 @@
 
     </div>
 </main>
+@if(session('error'))
+    <div id="toast-error" style="
+        position:fixed; bottom:32px; left:50%; transform:translateX(-50%);
+        background:#c0392b; color:#fff;
+        padding:14px 28px; border-radius:40px;
+        font-family:'Jost',sans-serif; font-size:0.85rem; letter-spacing:0.08em;
+        z-index:9999;">
+        {{ session('error') }}
+    </div>
+    <script>
+        setTimeout(() => {
+            const t = document.getElementById('toast-error');
+            t.style.opacity = '0';
+            setTimeout(() => t.remove(), 500);
+        }, 2500);
+    </script>
+@endif
 
 <footer>
     <div class="footer-inner">
