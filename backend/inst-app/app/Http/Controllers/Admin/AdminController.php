@@ -27,7 +27,7 @@ class AdminController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Nesprávny email alebo heslo.',
+            'email' => 'Wrong mail or password.',
         ]);
     }
 

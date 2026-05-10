@@ -12,7 +12,7 @@ class AccountController extends Controller
         $user = Auth::user();
         $orders = $user->orders()->with('items.book')->latest()->get();
 
-        // Zbieraj unikátne knihy naprieč všetkými objednávkami
+        // Zobraz unikátne knihy naprieč všetkými objednávkami
         $purchasedBooks = $orders->flatMap(fn($order) => $order->items)
             ->unique('book_id');
 

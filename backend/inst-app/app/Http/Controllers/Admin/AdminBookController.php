@@ -15,13 +15,14 @@ class AdminBookController extends Controller
         $categories = Category::all();
         $query = Book::with(['categories', 'images', 'sale']);
 
+        //vyhladavanie
         if ($request->filled('search')) {
             $query->where(function($q) use ($request) {
                 $q->where('name', 'like', '%' . $request->search . '%')
                     ->orWhere('author', 'like', '%' . $request->search . '%');
             });
         }
-
+        // filtrovanie podla zlavy
         if ($request->has('on_sale') && $request->on_sale == '1') {
             $today = now()->toDateString();
             $query->whereHas('sale', function($q) use ($today) {
@@ -32,36 +33,36 @@ class AdminBookController extends Controller
                 });
             });
         }
-
+        // filtrovanie podla booktok
         if ($request->has('is_booktok') && $request->is_booktok == '1') {
             $query->where('is_booktok', true);
         }
-
+        // filtrovanie podla recommended
         if ($request->has('is_recommended') && $request->is_recommended == '1') {
             $query->where('is_recommended', true);
         }
-
+        //// filtrovanie podla new realeases poslednych 5 rokov
         if ($request->has('new_releases') && $request->new_releases == '1') {
             $query->where('release_date', '>=', now()->subYear(5));
         }
-
+        // filtrovanie podla jazyka
         if ($request->filled('language')) {
             $query->whereIn('language', $request->language);
         }
-
+        //// filtrovanie podla kategorie/žanru
         if ($request->filled('type')) {
             $query->whereHas('categories', function($q) use ($request) {
                 $q->whereIn('categories.category_id', $request->type);
             });
         }
-
+        //// filtrovanie podla ceny
         if ($request->filled('price_min')) {
             $query->where('price', '>=', $request->price_min);
         }
         if ($request->filled('price_max')) {
             $query->where('price', '<=', $request->price_max);
         }
-
+        //pre spravne zoradovanie ked je kniha v zlave
         $query->leftJoin('book_sales', function($join) {
             $today = now()->toDateString();
             $join->on('book_sales.book_id', '=', 'books.book_id')
@@ -76,6 +77,7 @@ class AdminBookController extends Controller
         })
             ->selectRaw('books.*, COALESCE(books.price * book_sales.price_modifier, books.price) as computed_price');
 
+        //zoradovanie
         $sort = $request->get('sort', 'price_asc');
         match($sort) {
             'price_asc'  => $query->orderBy('computed_price', 'asc'),
@@ -85,7 +87,7 @@ class AdminBookController extends Controller
             default      => $query->orderBy('computed_price', 'asc'),
         };
 
-
+        //strankovanie
         $books = $query->paginate(6)->withQueryString();
 
         $minPrice = Book::min('price');
@@ -108,6 +110,7 @@ class AdminBookController extends Controller
         return view('admin.books.create', compact('categories'));
     }
 
+    // pre pridavanie novej knihy
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -176,6 +179,7 @@ class AdminBookController extends Controller
         return redirect()->route('admin.books.index')->with('success', 'Kniha bola pridaná.');
     }
 
+    // pre upravovanie už existujucej knihy
     public function update(Request $request, $id)
     {
         $book = Book::findOrFail($id);
