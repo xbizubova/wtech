@@ -107,7 +107,7 @@ class BookSeeder extends Seeder
                 'detail' => 'For over a century, humanity has lived behind enormous walls, protected from the man-eating Titans that roam outside. But when a colossal Titan breaches the wall, young Eren Yeager watches in horror as his world is destroyed. Swearing revenge, he vows to join the fight against the Titans. The legendary manga series begins here — shocking, brutal, and impossible to put down.',
                 'price' => 8.00, 'language' => 'EN', 'rating' => 4, 'amount' => 15,
                 'release_date' => '2009-09-09',
-                'photo' => ['attack_on_titan_1.JPG','aot1_backside.jpg', 'aot_preview.jpg'], 'categories' => [$manga->category_id, $thriller->category_id ],
+                'photo' => ['attack_on_titan_1.JPG','aot1_backside.jpg', 'aot1_previw.jpg'], 'categories' => [$manga->category_id, $thriller->category_id ],
                 'sale' => ['price_modifier' => 0.90, 'start_sale' => '2026-01-01', 'end_sale' => '2026-12-31'],
             ],
             [
@@ -420,7 +420,7 @@ class BookSeeder extends Seeder
             [
                 'name' => 'Obrazová encyklopédia koní', 'author' => 'Elwyn Hartley Edwards',
                 'detail' => 'Vyčerpávajúci vizuálny sprievodca svetom koní od uznávaného odborníka. Pokrýva stovky plemien z celého sveta, históriu domestikácie, jazdecké disciplíny a starostlivosť o koňa. Bohatá fotografická príloha robí z tejto knihy povinnosť pre každého milovníka koní.',
-                'price' => 22.99, 'language' => 'SK', 'rating' => 5, 'amount' => 6,
+                'price' => 22.99, 'language' => 'CZ', 'rating' => 5, 'amount' => 6,
                 'release_date' => '2000-01-01',
                 'photo' => 'encyklopedia_koni.JPG', 'categories' => [$encyclo->category_id],
             ],

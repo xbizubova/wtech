@@ -35,7 +35,7 @@ class BookController extends Controller
                 });
             });
         }
-        // Filtrovanie podľa new releases (posledný rok)
+        // Filtrovanie podľa new releases
         if ($request->filled('new_releases')) {
             $query->where('release_date', '>=', now()->subYear(5));
         }
@@ -69,19 +69,35 @@ class BookController extends Controller
         }
 
         // Zoraďovanie
+        $query->leftJoin('book_sales', function($join) {
+            $today = now()->toDateString();
+            $join->on('book_sales.book_id', '=', 'books.book_id')
+                ->where(function($q) use ($today) {
+                    $q->whereNull('book_sales.start_sale')
+                        ->orWhere('book_sales.start_sale', '<=', $today);
+                })
+                ->where(function($q) use ($today) {
+                    $q->whereNull('book_sales.end_sale')
+                        ->orWhere('book_sales.end_sale', '>=', $today);
+                });
+        })
+            ->selectRaw('books.*, COALESCE(books.price * book_sales.price_modifier, books.price) as computed_price');
+
         $sort = $request->get('sort', 'price_asc');
         match($sort) {
-            'price_asc'  => $query->orderBy('price', 'asc'),
-            'price_desc' => $query->orderBy('price', 'desc'),
-            'name_asc'   => $query->orderBy('name', 'asc'),
-            'name_desc'  => $query->orderBy('name', 'desc'),
-            default      => $query->orderBy('price', 'asc'),
+            'price_asc'  => $query->orderBy('computed_price', 'asc'),
+            'price_desc' => $query->orderBy('computed_price', 'desc'),
+            'name_asc'   => $query->orderBy('books.name', 'asc'),
+            'name_desc'  => $query->orderBy('books.name', 'desc'),
+            default      => $query->orderBy('computed_price', 'asc'),
         };
 
         // Stránkovanie
         $books = $query->paginate(6)->withQueryString();
+        $minPrice = Book::min('price');
+        $maxPrice = Book::max('price');
 
-        return view('books.index', compact('books', 'categories'));
+        return view('books.index', compact('books', 'categories', 'minPrice', 'maxPrice'));
     }
 
     public function show($id)

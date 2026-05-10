@@ -42,7 +42,7 @@ class AdminBookController extends Controller
         }
 
         if ($request->has('new_releases') && $request->new_releases == '1') {
-            $query->where('release_date', '>=', now()->subYear());
+            $query->where('release_date', '>=', now()->subYear(5));
         }
 
         if ($request->filled('language')) {
@@ -62,17 +62,37 @@ class AdminBookController extends Controller
             $query->where('price', '<=', $request->price_max);
         }
 
+        $query->leftJoin('book_sales', function($join) {
+            $today = now()->toDateString();
+            $join->on('book_sales.book_id', '=', 'books.book_id')
+                ->where(function($q) use ($today) {
+                    $q->whereNull('book_sales.start_sale')
+                        ->orWhere('book_sales.start_sale', '<=', $today);
+                })
+                ->where(function($q) use ($today) {
+                    $q->whereNull('book_sales.end_sale')
+                        ->orWhere('book_sales.end_sale', '>=', $today);
+                });
+        })
+            ->selectRaw('books.*, COALESCE(books.price * book_sales.price_modifier, books.price) as computed_price');
+
         $sort = $request->get('sort', 'price_asc');
         match($sort) {
-            'price_asc'  => $query->orderBy('price', 'asc'),
-            'price_desc' => $query->orderBy('price', 'desc'),
-            'name_asc'   => $query->orderBy('name', 'asc'),
-            'name_desc'  => $query->orderBy('name', 'desc'),
-            default      => $query->orderBy('price', 'asc'),
+            'price_asc'  => $query->orderBy('computed_price', 'asc'),
+            'price_desc' => $query->orderBy('computed_price', 'desc'),
+            'name_asc'   => $query->orderBy('books.name', 'asc'),
+            'name_desc'  => $query->orderBy('books.name', 'desc'),
+            default      => $query->orderBy('computed_price', 'asc'),
         };
 
+
         $books = $query->paginate(6)->withQueryString();
-        return view('admin.books.index', compact('books', 'categories'));
+
+        $minPrice = Book::min('price');
+        $maxPrice = Book::max('price');
+
+        return view('admin.books.index', compact('books', 'categories', 'minPrice', 'maxPrice'));
+
     }
 
     public function show($id)
