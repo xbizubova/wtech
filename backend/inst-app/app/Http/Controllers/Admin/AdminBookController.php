@@ -41,7 +41,7 @@ class AdminBookController extends Controller
         if ($request->has('is_recommended') && $request->is_recommended == '1') {
             $query->where('is_recommended', true);
         }
-        //// filtrovanie podla new realeases poslednych 5 rokov
+        //filtrovanie podla new realeases poslednych 5 rokov
         if ($request->has('new_releases') && $request->new_releases == '1') {
             $query->where('release_date', '>=', now()->subYear(5));
         }
@@ -49,19 +49,21 @@ class AdminBookController extends Controller
         if ($request->filled('language')) {
             $query->whereIn('language', $request->language);
         }
-        //// filtrovanie podla kategorie/žanru
+        //filtrovanie podla kategorie/žanru
         if ($request->filled('type')) {
             $query->whereHas('categories', function($q) use ($request) {
                 $q->whereIn('categories.category_id', $request->type);
             });
         }
-        //// filtrovanie podla ceny
+        // filtrovanie podla ceny
         if ($request->filled('price_min')) {
             $query->where('price', '>=', $request->price_min);
         }
         if ($request->filled('price_max')) {
             $query->where('price', '<=', $request->price_max);
         }
+
+
         //pre spravne zoradovanie ked je kniha v zlave
         $query->leftJoin('book_sales', function($join) {
             $today = now()->toDateString();
